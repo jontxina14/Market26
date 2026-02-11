@@ -79,7 +79,7 @@ public class DataAccess  {
 		try { 
 	       
 		    //Create sellers 
-			Seller seller1=new Seller("seller1@gmail.com","Aitor Fernandez","123");
+			Seller seller1=new Seller("seller1@gmail.com","123","123");
 			Seller seller2=new Seller("seller22@gmail.com","Ane Gaztañaga","123");
 			Seller seller3=new Seller("seller3@gmail.com","Test Seller","123");
 
@@ -261,9 +261,9 @@ public void open(){
 	
 	public boolean isRegistered(String user, String pass) {
 		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.pass=?2",Seller.class);   
-			query.setParameter(1, user);
-			query.setParameter(2,pass);
-		return query.getResultList().isEmpty();
+		query.setParameter(1, user);
+		query.setParameter(2,pass);
+		return !query.getResultList().isEmpty();
 	}
 
 	
