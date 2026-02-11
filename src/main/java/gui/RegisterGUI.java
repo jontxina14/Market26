@@ -1,42 +1,74 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.util.ResourceBundle;
 
 public class RegisterGUI extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RegisterGUI frame = new RegisterGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private JPanel contentPane;
+    private JTextField textFieldUsername;
+    private JPasswordField passwordField;
+    private JPasswordField repeatPasswordField;
 
-	/**
-	 * Create the frame.
-	 */
-	public RegisterGUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+    public RegisterGUI() {
 
-	}
+        ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
 
+        setTitle(bundle.getString("MainGUI.Register"));
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(450, 320);
+        setResizable(false);
+
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(40, 60, 40, 60));
+        contentPane.setLayout(new BorderLayout(10, 20));
+        setContentPane(contentPane);
+
+        JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 15));
+
+        // USERNAME
+        JLabel lblUsername = new JLabel(bundle.getString("RegisterGUI.Username"));
+        lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
+        textFieldUsername = new JTextField();
+
+        // PASSWORD
+        JLabel lblPassword = new JLabel(bundle.getString("RegisterGUI.Password"));
+        lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
+        passwordField = new JPasswordField();
+
+        // REPEAT PASSWORD
+        JLabel lblRepeat = new JLabel(bundle.getString("RegisterGUI.RepeatPassword"));
+        lblRepeat.setHorizontalAlignment(SwingConstants.RIGHT);
+        repeatPasswordField = new JPasswordField();
+
+        formPanel.add(lblUsername);
+        formPanel.add(textFieldUsername);
+        formPanel.add(lblPassword);
+        formPanel.add(passwordField);
+        formPanel.add(lblRepeat);
+        formPanel.add(repeatPasswordField);
+
+        contentPane.add(formPanel, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
+
+        JButton btnRegister = new JButton(bundle.getString("MainGUI.Register"));
+        JButton btnClose = new JButton(bundle.getString("RegisterGUI.CloseButton"));
+
+        btnRegister.setPreferredSize(new Dimension(140, 28));
+        btnClose.setPreferredSize(new Dimension(140, 28));
+
+        buttonPanel.add(btnRegister);
+        buttonPanel.add(btnClose);
+
+        contentPane.add(buttonPanel, BorderLayout.SOUTH);
+        
+        
+        btnClose.addActionListener(e -> dispose());
+
+    }
 }

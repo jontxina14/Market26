@@ -22,7 +22,6 @@ public class LoginGUI extends JFrame {
         setTitle(bundle.getString("MainGUI.Login"));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(450, 280);
-        setLocationRelativeTo(null);
         setResizable(false);
 
         contentPane = new JPanel();
@@ -30,69 +29,52 @@ public class LoginGUI extends JFrame {
         contentPane.setLayout(new BorderLayout(10, 20));
         setContentPane(contentPane);
 
-        // ===== PANEL FORMULARIO =====
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 15));
 
         // USERNAME
-        JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         JLabel lblUsername = new JLabel(bundle.getString("LoginGUI.Username"));
+        lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
         textFieldUsername = new JTextField();
-        textFieldUsername.setPreferredSize(new Dimension(120, 25));
-
-        userPanel.add(lblUsername);
-        userPanel.add(textFieldUsername);
 
         // PASSWORD
-        JPanel passPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         JLabel lblPassword = new JLabel(bundle.getString("LoginGUI.Password"));
+        lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
         textFieldPassword = new JPasswordField();
-        textFieldPassword.setPreferredSize(new Dimension(120, 25));
 
-        passPanel.add(lblPassword);
-        passPanel.add(textFieldPassword);
-
-        formPanel.add(userPanel);
-        formPanel.add(passPanel);
+        formPanel.add(lblUsername);
+        formPanel.add(textFieldUsername);
+        formPanel.add(lblPassword);
+        formPanel.add(textFieldPassword);
 
         contentPane.add(formPanel, BorderLayout.CENTER);
 
-        // ===== BOTÓN =====
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
 
         JButton btnLogin = new JButton(bundle.getString("LoginGUI.LoginButton"));
-        btnLogin.setPreferredSize(new Dimension(100, 28));
-        
-        JButton btnClose = new JButton(bundle.getString("LoginGUI.CloseButton")); 
-        btnClose.setPreferredSize(new Dimension(100, 28));
-        
+        btnLogin.setPreferredSize(new Dimension(140, 28));
+
+        JButton btnClose = new JButton(bundle.getString("LoginGUI.CloseButton"));
+        btnClose.setPreferredSize(new Dimension(140, 28));
+
         buttonPanel.add(btnLogin);
         buttonPanel.add(btnClose);
 
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
-        // ===== ACCIÓN =====
         btnLogin.addActionListener((ActionEvent e) -> {
 
-        	BLFacade facade = MainGUI.getBusinessLogic();
-        	boolean b = facade.isRegistered(
-        			textFieldUsername.getText(),
-        			new String(textFieldPassword.getPassword())
-        			);
+            BLFacade facade = MainGUI.getBusinessLogic();
+            boolean b = facade.isRegistered(
+                    textFieldUsername.getText(),
+                    new String(textFieldPassword.getPassword())
+            );
 
-        	if (b) {
-        		new RegisteredMainGUI(null).setVisible(true);
-        		dispose();
-        	} else {
-        		JOptionPane.showMessageDialog(
-        				null,
-        				bundle.getString("LoginGUI.LoginError"),
-        				bundle.getString("LoginGUI.LoginButton"),
-        				JOptionPane.ERROR_MESSAGE
-        				);
-        	}
+            if (b) {
+                new RegisteredMainGUI(null).setVisible(true);
+                dispose();
+            }
         });
-        btnClose.addActionListener(e -> dispose());
 
+        btnClose.addActionListener(e -> dispose());
     }
 }
