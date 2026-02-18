@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.util.ResourceBundle;
 
 import businessLogic.BLFacade;
+import domain.Seller;
 
 public class LoginGUI extends JFrame {
 
@@ -64,12 +65,12 @@ public class LoginGUI extends JFrame {
         btnLogin.addActionListener((ActionEvent e) -> {
 
             BLFacade facade = MainGUI.getBusinessLogic();
-            boolean b = facade.isRegistered(
+            Seller b = facade.isRegistered(
                     textFieldUsername.getText(),
                     new String(textFieldPassword.getPassword())
             );
 
-            if (b) {
+            if (b != null) {
                 new RegisteredMainGUI(null).setVisible(true);
                 dispose();
             }

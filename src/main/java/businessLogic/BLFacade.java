@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Sale;
+import domain.Seller;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -64,7 +65,7 @@ public interface BLFacade  {
 		
 	@WebMethod public Image downloadImage(String imageName);
 	
-	@WebMethod public boolean isRegistered(String user, String pass);
+	@WebMethod public Seller isRegistered(String user, String pass);
 	
 
 	

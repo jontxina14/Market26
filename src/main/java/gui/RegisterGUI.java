@@ -3,7 +3,13 @@ package gui;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import businessLogic.BLFacade;
+import businessLogic.BLFacadeImplementation;
+
 import java.util.ResourceBundle;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RegisterGUI extends JFrame {
 
@@ -57,6 +63,23 @@ public class RegisterGUI extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
 
         JButton btnRegister = new JButton(bundle.getString("MainGUI.Register"));
+        /*
+        btnRegister.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		String password = new String(passwordField.getPassword());
+        		String password2 = new String(repeatPasswordField.getPassword());
+        		BLFacade facade = MainGUI.getBusinessLogic();
+        		if(password.equals(password2)) {
+        			facade.isRegistered(textFieldUsername.getText(), password2);
+        		}
+        			
+
+        		
+        		
+        	}
+        });
+        
+        */
         JButton btnClose = new JButton(bundle.getString("RegisterGUI.CloseButton"));
 
         btnRegister.setPreferredSize(new Dimension(140, 28));
