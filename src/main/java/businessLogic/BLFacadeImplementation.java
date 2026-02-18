@@ -115,8 +115,11 @@ public class BLFacadeImplementation  implements BLFacade {
     	return b;
     }
     
-    public void register(Seller seller) {
+    @WebMethod public void register(Seller seller) {
+    	//GALDETU: open/close BLFacaden?
+    	dbManager.open();
     	dbManager.register(seller);
+    	dbManager.close();
     }
 
     

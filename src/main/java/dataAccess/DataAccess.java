@@ -260,10 +260,15 @@ public class DataAccess  {
 	}
 
 	public Seller isRegistered(String user, String pass) {
-		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.pass=?2", Seller.class);   
+		//TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.pass=?2", Seller.class);
+		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1", Seller.class);   
+
 		query.setParameter(1, user);
-		query.setParameter(2,pass);
+		//GALDETU hau kendu 
+		//query.setParameter(2,pass);
 		System.out.println(query.getResultList());
+		
+		//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
 		return (query.getResultList().isEmpty()) ? null: query.getResultList().get(0);
 	}
 	
@@ -271,6 +276,8 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		db.persist(seller);
 		db.getTransaction().commit();
+		//TODO KENDU
+		System.out.println("DATACCES COMMIT");
 	}
 	
 	

@@ -6,8 +6,10 @@ import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
+import configuration.UtilDate;
 import domain.Seller;
 
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -20,6 +22,7 @@ public class RegisterGUI extends JFrame {
     private JTextField textFieldUsername;
     private JPasswordField passwordField;
     private JPasswordField repeatPasswordField;
+    private JTextField textFieldEmail;
 
     public RegisterGUI() {
 
@@ -54,6 +57,16 @@ public class RegisterGUI extends JFrame {
 
         formPanel.add(lblUsername);
         formPanel.add(textFieldUsername);
+        
+        //EMAIL
+        JLabel lblEmail = new JLabel(bundle.getString("RegisterGUI.Email"));
+        lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+        formPanel.add(lblEmail);
+        
+  
+        
+        textFieldEmail = new JTextField();
+        formPanel.add(textFieldEmail);
         formPanel.add(lblPassword);
         formPanel.add(passwordField);
         formPanel.add(lblRepeat);
@@ -71,10 +84,10 @@ public class RegisterGUI extends JFrame {
         		String password2 = new String(repeatPasswordField.getPassword());
         		BLFacade facade = MainGUI.getBusinessLogic();
         		if(password.equals(password2)) {
-        			Seller erabiltzailea = facade.isRegistered(textFieldUsername.getText(), password2);
-        			if(erabiltzailea == null) {
+        			if(facade.isRegistered(textFieldUsername.getText(), password2) == null) {
         				//TODO new Seller
-        				facade.register();
+
+        				facade.register(new Seller(textFieldEmail.getText(),textFieldUsername.getText(),password));
         			}
         			else {
         				//TODO GUI-ean jarri
