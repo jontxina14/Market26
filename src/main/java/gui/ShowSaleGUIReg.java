@@ -144,6 +144,12 @@ public class ShowSaleGUIReg extends JFrame {
 		});
 		buyButton.setBounds(145, 268, 101, 30);
 		getContentPane().add(buyButton);
+		
+		
+		JButton addToWishlistButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.addToWishListButton"));
+		addToWishlistButton.setBounds(84, 306, 84, 20);
+		
+		getContentPane().add(addToWishlistButton);
 		setVisible(true);
 		
 		
