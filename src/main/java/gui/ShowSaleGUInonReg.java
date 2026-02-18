@@ -14,7 +14,7 @@ import businessLogic.BLFacade;
 import domain.Sale;
 
 
-public class ShowSaleGUI extends JFrame {
+public class ShowSaleGUInonReg extends JFrame {
 	
     File targetFile;
     BufferedImage targetImg;
@@ -45,7 +45,7 @@ public class ShowSaleGUI extends JFrame {
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
-	public ShowSaleGUI(Sale sale) { 
+	public ShowSaleGUInonReg(Sale sale) { 
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
@@ -130,7 +130,10 @@ public class ShowSaleGUI extends JFrame {
 		statusField = new JLabel(Utils.getStatus(sale.getStatus())); 
 		statusField.setBounds(137, 191, 92, 16);
 		getContentPane().add(statusField);
-		setVisible(true);
+		
+		
+		
+		
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)
     {
@@ -140,7 +143,5 @@ public class ShowSaleGUI extends JFrame {
         g.dispose();
         return resizedImage;
     }
-	
-	
 }
 

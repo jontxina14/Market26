@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -27,7 +28,10 @@ public class Seller implements Serializable {
 	private String pass;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+
 	private List<Sale> sales = new ArrayList<Sale>();
+	private LinkedList<String> whishList;
+
 
 	public Seller() {
 		super();
@@ -37,6 +41,7 @@ public class Seller implements Serializable {
 		this.email = email;
 		this.name = name;
 		this.pass = pass;
+		this.whishList  = new LinkedList<String>();
 	}
 	
 	
@@ -59,6 +64,14 @@ public class Seller implements Serializable {
 
 	
 	
+	public LinkedList<String> getWhishList() {
+		return whishList;
+	}
+
+	public void setWhishList(LinkedList<String> whishList) {
+		this.whishList = whishList;
+	}
+
 	public String toString(){
 		return email+";"+name+sales;
 	}

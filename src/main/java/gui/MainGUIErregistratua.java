@@ -103,7 +103,7 @@ public class MainGUIErregistratua extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new QuerySalesGUI();
+				JFrame a = new QuerySalesGUInonRegistered();
 
 				a.setVisible(true);
 			}

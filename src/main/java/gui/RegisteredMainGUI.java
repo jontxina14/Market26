@@ -49,7 +49,7 @@ public class RegisteredMainGUI extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
-	public RegisteredMainGUI( String mail) {
+	public RegisteredMainGUI(String mail) {
 		super();
 
 		this.sellerMail=mail;
@@ -103,7 +103,7 @@ public class RegisteredMainGUI extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new QuerySalesGUI();
+				JFrame a = new QuerySalesGUIRegistered();
 
 				a.setVisible(true);
 			}

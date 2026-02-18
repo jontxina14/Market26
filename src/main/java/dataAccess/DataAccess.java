@@ -16,6 +16,7 @@ import javax.jws.WebMethod;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
@@ -88,9 +89,10 @@ public class DataAccess  {
 			Date today = UtilDate.trim(new Date());
 
 
-			seller1.addSale("futbol baloia", "oso polita, gutxi erabilita", 10, 2,  today, null);
-			seller1.addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",20,  2,  today, null);
-			seller1.addSale("samsung 42\" telebista", "berria, erabili gabe", 175, 1,  today, null);
+
+			seller1.addSale("futbol baloia", "oso polita, gutxi erabilita", 2, 10,  today, null);
+			seller1.addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",2,  20,  today, null);
+			seller1.addSale("samsung 42\" telebista", "berria, erabili gabe", 1, 175,  today, null);
 
 
 			seller2.addSale("imac 27", "7 urte, dena ondo dabil", 1, 200,today, null);
@@ -259,6 +261,7 @@ public class DataAccess  {
 		System.out.println("DataAcess closed");
 	}
 
+
 	public Seller isRegistered(String user, String pass) {
 		//TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.pass=?2", Seller.class);
 		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1", Seller.class);   
@@ -267,11 +270,34 @@ public class DataAccess  {
 		//GALDETU hau kendu 
 		//query.setParameter(2,pass);
 		System.out.println(query.getResultList());
-		
+
 		//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
-		return (query.getResultList().isEmpty()) ? null: query.getResultList().get(0);
+		return (query.getResultList().isEmpty()) ? null : query.getResultList().get(0);
+
 	}
-	
+
+
+	public boolean removeSale(int saleNumber) {
+		db.getTransaction().begin();
+
+		Query query = db.createQuery(
+				"DELETE FROM Sale s WHERE s.saleNumber = :num"
+				);
+		query.setParameter("num", saleNumber);
+
+		int deleted = query.executeUpdate();
+
+		db.getTransaction().commit();
+
+		if (deleted > 0) {
+			System.out.println("Sale deleted correctly");
+			return true;
+		} else {
+			System.out.println("No sale found with that number");
+			return false;
+		}
+	}
+
 	public void register(Seller seller) {
 		db.getTransaction().begin();
 		db.persist(seller);
@@ -279,8 +305,15 @@ public class DataAccess  {
 		//TODO KENDU
 		System.out.println("DATACCES COMMIT");
 	}
-	
-	
+
+
+
+
+	public boolean addtToWhishlist(int saleNumber) {
+		return false;
+	}
+
+
 
 
 }
