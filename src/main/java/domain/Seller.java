@@ -28,10 +28,10 @@ public class Seller implements Serializable {
 	private String pass;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
-
 	private List<Sale> sales = new ArrayList<Sale>();
-	private LinkedList<String> whishList;
-
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Sale> wishList = new ArrayList<>();
 
 	public Seller() {
 		super();
@@ -41,7 +41,6 @@ public class Seller implements Serializable {
 		this.email = email;
 		this.name = name;
 		this.pass = pass;
-		this.whishList  = new LinkedList<String>();
 	}
 	
 	
@@ -64,12 +63,14 @@ public class Seller implements Serializable {
 
 	
 	
-	public LinkedList<String> getWhishList() {
-		return whishList;
+	public void addToWishList(Sale sale) {
+	    if (!wishList.contains(sale)) {
+	        wishList.add(sale);
+	    }
 	}
 
-	public void setWhishList(LinkedList<String> whishList) {
-		this.whishList = whishList;
+	public List<Sale> getWishList() {
+	    return wishList;
 	}
 
 	public String toString(){

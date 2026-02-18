@@ -65,11 +65,14 @@ public interface BLFacade  {
 		
 	@WebMethod public Image downloadImage(String imageName);
 	
-	@WebMethod public Seller isRegistered(String user, String pass);
+	@WebMethod public Seller isRegistered(String mail, String pass);
 	
 	@WebMethod public void register(Seller seller);
 
 	@WebMethod public boolean removeSale(int SaleNumber);
+	
+	@WebMethod boolean addToWishList(String mail, int saleNumber);
+
 	
 
 	

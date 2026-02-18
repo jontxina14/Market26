@@ -108,9 +108,9 @@ public class BLFacadeImplementation  implements BLFacade {
         return null;
     }
     
-    @WebMethod public Seller isRegistered(String user, String pass) {
+    @WebMethod public Seller isRegistered(String mail, String pass) {
     	dbManager.open();
-    	Seller b = dbManager.isRegistered(user,pass);
+    	Seller b = dbManager.isRegistered(mail,pass);
     	dbManager.close();
     	return b;
     }
@@ -127,6 +127,13 @@ public class BLFacadeImplementation  implements BLFacade {
         boolean b = dbManager.removeSale(SaleNumber);
         dbManager.close();
         return b;
+    }
+    
+    @WebMethod public boolean addToWishList(String mail, int saleNumber) {
+        dbManager.open();
+        boolean result = dbManager.addToWishList(mail, saleNumber);
+        dbManager.close();
+        return result;
     }
 
 

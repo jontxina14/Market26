@@ -82,7 +82,7 @@ public class RegisterGUI extends JFrame {
         	public void actionPerformed(ActionEvent arg0) {
         		String password = new String(passwordField.getPassword());
         		String password2 = new String(repeatPasswordField.getPassword());
-        		BLFacade facade = MainGUI.getBusinessLogic();
+        		BLFacade facade = MainGUInonReg.getBusinessLogic();
         		if(password.equals(password2)) {
         			if(facade.isRegistered(textFieldUsername.getText(), password2) == null) {
         				//TODO new Seller

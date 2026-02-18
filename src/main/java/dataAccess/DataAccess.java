@@ -262,19 +262,20 @@ public class DataAccess  {
 	}
 
 
-	public Seller isRegistered(String user, String pass) {
-		//TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.pass=?2", Seller.class);
-		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1", Seller.class);   
+	public Seller isRegistered(String email, String pass) {
 
-		query.setParameter(1, user);
-		//GALDETU hau kendu 
-		//query.setParameter(2,pass);
-		System.out.println(query.getResultList());
+	    TypedQuery<Seller> query = db.createQuery(
+	        "SELECT s FROM Seller s WHERE s.email = ?1 AND s.pass = ?2",
+	        Seller.class
+	    );
 
-		//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
-		return (query.getResultList().isEmpty()) ? null : query.getResultList().get(0);
+	    query.setParameter(1, email);
+	    query.setParameter(2, pass);
 
+	  //@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
+	    return query.getResultList().isEmpty()? null: query.getResultList().get(0);
 	}
+
 
 
 	public boolean removeSale(int saleNumber) {
@@ -307,10 +308,28 @@ public class DataAccess  {
 	}
 
 
+	
 
+	public boolean addToWishList(String mail, int saleNumber) {
 
-	public boolean addtToWhishlist(int saleNumber) {
-		return false;
+	    db.getTransaction().begin();
+
+	    Seller seller = db.find(Seller.class, mail);
+	    Sale sale = db.find(Sale.class, saleNumber);
+
+	    if (seller == null || sale == null) {
+	        db.getTransaction().commit();
+	        return false;
+	    }
+
+	    seller.addToWishList(sale);
+	    System.out.println("ondo gehituta");
+
+	    db.persist(seller);
+
+	    db.getTransaction().commit();
+
+	    return true;
 	}
 
 

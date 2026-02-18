@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
-public class QuerySalesGUIRegistered extends JFrame {
+public class QuerySalesGUInonReg extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products")); 
@@ -38,7 +38,7 @@ public class QuerySalesGUIRegistered extends JFrame {
 	private JTextField jTextFieldSearch;
 	
 
-	public QuerySalesGUIRegistered() {
+	public QuerySalesGUInonReg() {
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -90,7 +90,7 @@ public class QuerySalesGUIRegistered extends JFrame {
 					tableModelProducts.setDataVector(null, columnNamesProducts);
 					tableModelProducts.setColumnCount(4); // another column added to allocate product object
 
-					BLFacade facade = MainGUI.getBusinessLogic();
+					BLFacade facade = MainGUInonReg.getBusinessLogic();
 					Date today = UtilDate.trim(new Date());
 
 					List<domain.Sale> sales=facade.getPublishedSales(jTextFieldSearch.getText(),today);
@@ -131,7 +131,7 @@ public class QuerySalesGUIRegistered extends JFrame {
 		            	Point point = mouseEvent.getPoint();
 				        int row = table.rowAtPoint(point);
 		            	Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-			            new ShowSaleGUIReg(s);
+			            new ShowSaleGUInonReg(s);
 		            }
 		        }
 		 });

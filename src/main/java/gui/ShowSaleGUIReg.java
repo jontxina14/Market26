@@ -45,7 +45,7 @@ public class ShowSaleGUIReg extends JFrame {
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
-	public ShowSaleGUIReg(Sale sale) { 
+	public ShowSaleGUIReg(String currentUserMail,Sale sale) { 
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
@@ -118,7 +118,7 @@ public class ShowSaleGUIReg extends JFrame {
 		getContentPane().add(labelStatus);
 		
 		
-		BLFacade facade = MainGUI.getBusinessLogic();
+		BLFacade facade = MainGUInonReg.getBusinessLogic();
 		String file=sale.getFile();
 		if (file!=null) {
 			Image img=facade.downloadImage(file);
@@ -135,7 +135,7 @@ public class ShowSaleGUIReg extends JFrame {
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(sale.getSaleNumber());
-				BLFacade facade = MainGUI.getBusinessLogic();
+				BLFacade facade = MainGUInonReg.getBusinessLogic();
 				boolean b = facade.removeSale(sale.getSaleNumber());
 				if(b) {
 					dispose();
@@ -147,6 +147,11 @@ public class ShowSaleGUIReg extends JFrame {
 		
 		
 		JButton addToWishlistButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.addToWishListButton"));
+		addToWishlistButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				facade.addToWishList(currentUserMail, sale.getSaleNumber());
+			}
+		});
 		addToWishlistButton.setBounds(84, 306, 84, 20);
 		
 		getContentPane().add(addToWishlistButton);

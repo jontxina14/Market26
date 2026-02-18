@@ -91,7 +91,7 @@ public class CreateSaleGUI extends JFrame {
 					jLabelMsg.setText(error);
 				else
 					try {
-						BLFacade facade = MainGUI.getBusinessLogic();
+						BLFacade facade = MainGUInonReg.getBusinessLogic();
 						float price = Float.parseFloat(jTextFieldPrice.getText());
 						String s=(String)jComboBoxStatus.getSelectedItem();
 						int numStatus=status.indexOf(s);
