@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
+import domain.Seller;
 
 import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
@@ -34,7 +35,7 @@ public class RegisterGUI extends JFrame {
         contentPane.setLayout(new BorderLayout(10, 20));
         setContentPane(contentPane);
 
-        JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 15));
+        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 15));
 
         // USERNAME
         JLabel lblUsername = new JLabel(bundle.getString("RegisterGUI.Username"));
@@ -63,14 +64,25 @@ public class RegisterGUI extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
 
         JButton btnRegister = new JButton(bundle.getString("MainGUI.Register"));
-        /*
+        
         btnRegister.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		String password = new String(passwordField.getPassword());
         		String password2 = new String(repeatPasswordField.getPassword());
         		BLFacade facade = MainGUI.getBusinessLogic();
         		if(password.equals(password2)) {
-        			facade.isRegistered(textFieldUsername.getText(), password2);
+        			Seller erabiltzailea = facade.isRegistered(textFieldUsername.getText(), password2);
+        			if(erabiltzailea == null) {
+        				//TODO new Seller
+        				facade.register();
+        			}
+        			else {
+        				//TODO GUI-ean jarri
+        				System.out.println("Jada existizen da");
+        			}
+        		}else {
+        			//TODO GUI-ean
+        			System.out.println("Pasahitzak ez dira berdinak");
         		}
         			
 
@@ -79,7 +91,7 @@ public class RegisterGUI extends JFrame {
         	}
         });
         
-        */
+        
         JButton btnClose = new JButton(bundle.getString("RegisterGUI.CloseButton"));
 
         btnRegister.setPreferredSize(new Dimension(140, 28));

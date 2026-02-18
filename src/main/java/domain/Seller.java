@@ -27,7 +27,7 @@ public class Seller implements Serializable {
 	private String pass;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
-	private List<Sale> sales=new ArrayList<Sale>();
+	private List<Sale> sales = new ArrayList<Sale>();
 
 	public Seller() {
 		super();

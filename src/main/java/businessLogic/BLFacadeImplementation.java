@@ -114,6 +114,10 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     	return b;
     }
+    
+    public void register(Seller seller) {
+    	dbManager.register(seller);
+    }
 
     
 }

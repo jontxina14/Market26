@@ -67,6 +67,9 @@ public interface BLFacade  {
 	
 	@WebMethod public Seller isRegistered(String user, String pass);
 	
+	@WebMethod public void register(Seller seller);
+
+	
 
 	
 }

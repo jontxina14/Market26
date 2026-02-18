@@ -266,6 +266,14 @@ public class DataAccess  {
 		System.out.println(query.getResultList());
 		return (query.getResultList().isEmpty()) ? null: query.getResultList().get(0);
 	}
+	
+	public void register(Seller seller) {
+		db.getTransaction().begin();
+		db.persist(seller);
+		db.getTransaction().commit();
+	}
+	
+	
 
 
 }
