@@ -66,6 +66,8 @@ public interface BLFacade  {
 	
 	@WebMethod public boolean isRegistered(String user, String pass);
 	
+	@WebMethod public boolean removeSale(int SaleNumber);
+	
 
 	
 }

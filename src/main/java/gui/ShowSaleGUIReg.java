@@ -14,7 +14,7 @@ import businessLogic.BLFacade;
 import domain.Sale;
 
 
-public class ShowSaleGUI extends JFrame {
+public class ShowSaleGUIReg extends JFrame {
 	
     File targetFile;
     BufferedImage targetImg;
@@ -45,7 +45,7 @@ public class ShowSaleGUI extends JFrame {
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
-	public ShowSaleGUI(Sale sale) { 
+	public ShowSaleGUIReg(Sale sale) { 
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
@@ -130,7 +130,25 @@ public class ShowSaleGUI extends JFrame {
 		statusField = new JLabel(Utils.getStatus(sale.getStatus())); 
 		statusField.setBounds(137, 191, 92, 16);
 		getContentPane().add(statusField);
+		
+		JButton buyButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.buyButton")); //$NON-NLS-1$ //$NON-NLS-2$
+		buyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(sale.getSaleNumber());
+				BLFacade facade = MainGUI.getBusinessLogic();
+				boolean b = facade.removeSale(sale.getSaleNumber());
+				if(b) {
+					dispose();
+				}
+			}
+		});
+		buyButton.setBounds(145, 268, 101, 30);
+		getContentPane().add(buyButton);
 		setVisible(true);
+		
+		
+		
+		
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)
     {
@@ -140,7 +158,5 @@ public class ShowSaleGUI extends JFrame {
         g.dispose();
         return resizedImage;
     }
-	
-	
 }
 

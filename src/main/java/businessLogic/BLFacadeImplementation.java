@@ -113,6 +113,14 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     	return b;
     }
+    
+	@WebMethod public boolean removeSale(int SaleNumber) {
+		dbManager.open();
+		boolean b = dbManager.removeSale(SaleNumber);
+		dbManager.close();
+		return b;
+	}
+
 
     
 }

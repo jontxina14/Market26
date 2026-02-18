@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
-public class QuerySalesGUI extends JFrame {
+public class QuerySalesGUInonRegistered extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products")); 
@@ -38,7 +38,7 @@ public class QuerySalesGUI extends JFrame {
 	private JTextField jTextFieldSearch;
 	
 
-	public QuerySalesGUI() {
+	public QuerySalesGUInonRegistered() {
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -131,7 +131,7 @@ public class QuerySalesGUI extends JFrame {
 		            	Point point = mouseEvent.getPoint();
 				        int row = table.rowAtPoint(point);
 		            	Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-			            new ShowSaleGUI(s);
+			            new ShowSaleGUInonReg(s);
 		            }
 		        }
 		 });

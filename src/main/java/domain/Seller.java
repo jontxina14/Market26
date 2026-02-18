@@ -29,7 +29,7 @@ public class Seller implements Serializable {
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales=new ArrayList<Sale>();
-	private LinkedList<String> whishLits = new LinkedList<String>();
+	private LinkedList<String> whishList = new LinkedList<String>();
 
 	public Seller() {
 		super();
