@@ -19,7 +19,7 @@ public class ShowSaleGUInonReg extends JFrame {
     File targetFile;
     BufferedImage targetImg;
     public JPanel panel_1;
-    private static final int baseSize = 160;
+    private static final int baseSize = 220;
 	private static final String basePath="src/main/resources/images/";
 	
 	private static final long serialVersionUID = 1L;
@@ -49,7 +49,8 @@ public class ShowSaleGUInonReg extends JFrame {
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(604, 370));
+		this.setSize(new Dimension(900, 500));
+		this.setLocationRelativeTo(null);
 		//this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateProductGUI.CreateProduct"));
 
 		fieldTitle.setText(sale.getTitle());
@@ -59,15 +60,15 @@ public class ShowSaleGUInonReg extends JFrame {
 		
 		labelStatus.setText(new SimpleDateFormat("dd-MM-yyyy").format(sale.getPublicationDate()));
 		
-		jLabelTitle.setBounds(new Rectangle(6, 56, 92, 20));
+		jLabelTitle.setBounds(new Rectangle(6, 56, 140, 20));
 		
-		jLabelPrice.setBounds(new Rectangle(6, 166, 101, 20));
+		jLabelPrice.setBounds(new Rectangle(6, 220, 140, 25));
 		fieldPrice.setEditable(false);
-		fieldPrice.setBounds(new Rectangle(137, 166, 60, 20));
+		fieldPrice.setBounds(new Rectangle(150, 220, 100, 30));
 
 		
 		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
-		jButtonClose.setBounds(new Rectangle(16, 268, 114, 30));
+		jButtonClose.setBounds(new Rectangle(150, 380, 140, 40));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);			}
@@ -91,7 +92,7 @@ public class ShowSaleGUInonReg extends JFrame {
 		this.getContentPane().add(fieldPrice, null);
 		
 		jLabelProductStatus.setBounds(new Rectangle(40, 15, 140, 25));
-		jLabelProductStatus.setBounds(6, 187, 140, 25);
+		jLabelProductStatus.setBounds(6, 260, 140, 25);
 		getContentPane().add(jLabelProductStatus);
 		
 		jLabelDescription.setBounds(6, 81, 109, 16);
@@ -99,22 +100,22 @@ public class ShowSaleGUInonReg extends JFrame {
 		fieldTitle.setEditable(false);
 		
 		
-		fieldTitle.setBounds(128, 53, 370, 26);
+		fieldTitle.setBounds(150, 50, 500, 30);
 		getContentPane().add(fieldTitle);
 		fieldTitle.setColumns(10);
 		fieldDescription.setEditable(false);
 		
 		
-		fieldDescription.setBounds(127, 81, 371, 73);
+		fieldDescription.setBounds(150, 95, 680, 100);
 		getContentPane().add(fieldDescription);
 		fieldDescription.setColumns(10);
 		
 		panel_1 = new JPanel();
-		panel_1.setBounds(318, 166, 180, 160);
+		panel_1.setBounds(520, 210, 250, 220);
 		getContentPane().add(panel_1);
 		
 		labelStatus.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		labelStatus.setBounds(37, 231, 289, 16);
+		labelStatus.setBounds(150, 300, 300, 25);
 		getContentPane().add(labelStatus);
 		
 		
@@ -128,7 +129,7 @@ public class ShowSaleGUInonReg extends JFrame {
 		}
 		System.out.println("status: "+sale.getStatus());
 		statusField = new JLabel(Utils.getStatus(sale.getStatus())); 
-		statusField.setBounds(137, 191, 92, 16);
+		statusField.setBounds(150, 260, 150, 25);
 		getContentPane().add(statusField);
 		
 		
