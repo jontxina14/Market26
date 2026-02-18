@@ -49,7 +49,7 @@ public class RegisteredMainGUI extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
-	public RegisteredMainGUI( String mail) {
+	public RegisteredMainGUI(String mail) {
 		super();
 
 		this.sellerMail=mail;

@@ -288,6 +288,11 @@ public class DataAccess  {
 	        return false;
 	    }
 	}
+	
+	
+	public boolean addtToWhishlist(int saleNumber) {
+		return false;
+	}
 
 
 
