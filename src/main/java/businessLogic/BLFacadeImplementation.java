@@ -135,6 +135,14 @@ public class BLFacadeImplementation  implements BLFacade {
         dbManager.close();
         return result;
     }
+    
+	@WebMethod public boolean isInWishList(String mail, int saleNumber) {
+		dbManager.open();
+        boolean result = dbManager.isInWishList(mail, saleNumber);
+        dbManager.close();
+        return result;
+	}
+
 
 
     

@@ -142,16 +142,20 @@ public class ShowSaleGUIReg extends JFrame {
 		getContentPane().add(buyButton);
 
 		JButton addToWishlistButton = new JButton(
-				ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.addToWishListButton"));
+		ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.addToWishListButton"));
+		
+		addToWishlistButton.setEnabled(!facade.isInWishList(currentUserMail, sale.getSaleNumber()));
+		
 		addToWishlistButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				facade.addToWishList(currentUserMail, sale.getSaleNumber());
+				addToWishlistButton.setEnabled(false);
 			}
 		});
 		addToWishlistButton.setBounds(670, 50, 160, 30);
 
 		getContentPane().add(addToWishlistButton);
-		setVisible(true);
+	
 
 	}
 

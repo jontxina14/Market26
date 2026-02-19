@@ -323,13 +323,29 @@ public class DataAccess  {
 	    }
 
 	    seller.addToWishList(sale);
-	    System.out.println("ondo gehituta");
 
 	    db.persist(seller);
 
 	    db.getTransaction().commit();
 
 	    return true;
+	}
+	
+	public boolean isInWishList(String mail, int saleNumber) {
+		db.getTransaction().begin();
+
+	    Seller seller = db.find(Seller.class, mail);
+	    Sale sale = db.find(Sale.class, saleNumber);
+
+	    if (seller == null || sale == null) {
+	        db.getTransaction().commit();
+	        return false;
+	    }
+	    db.getTransaction().commit();
+
+	    return seller.getWishList().contains(sale);
+
+
 	}
 
 
