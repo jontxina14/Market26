@@ -45,6 +45,7 @@ public class ShowSaleGUIReg extends JFrame {
 	private JLabel jLabelError = new JLabel();
 	private JLabel statusField = new JLabel();
 	private JFrame thisFrame;
+	private JToggleButton toggleWishListButton;
 
 	public ShowSaleGUIReg(String currentUserMail, Sale sale) {
 		thisFrame = this;
@@ -141,11 +142,13 @@ public class ShowSaleGUIReg extends JFrame {
 		buyButton.setBounds(320, 380, 140, 40);
 		getContentPane().add(buyButton);
 
+		//Whislist
+		/*
 		JButton addToWishlistButton = new JButton(
 		ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.addToWishListButton"));
-		
+
 		addToWishlistButton.setEnabled(!facade.isInWishList(currentUserMail, sale.getSaleNumber()));
-		
+
 		addToWishlistButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				facade.addToWishList(currentUserMail, sale.getSaleNumber());
@@ -155,7 +158,26 @@ public class ShowSaleGUIReg extends JFrame {
 		addToWishlistButton.setBounds(670, 50, 160, 30);
 
 		getContentPane().add(addToWishlistButton);
-	
+		 */
+		//Wish list
+		ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/images/heart_empty.png"));
+		ImageIcon filledIcon = new ImageIcon(getClass().getResource("/images/heart_filled.png"));
+		boolean dago = facade.isInWishList(currentUserMail, sale.getSaleNumber());
+		
+		//JToggleButton selekzionatuta mantentzen delako
+		toggleWishListButton = new JToggleButton(dago ? filledIcon : emptyIcon);
+		toggleWishListButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				facade.toggleWishList(currentUserMail, sale.getSaleNumber());
+				boolean dago = facade.isInWishList(currentUserMail, sale.getSaleNumber());
+				toggleWishListButton.setIcon(dago ? filledIcon : emptyIcon);
+			}
+		});
+		toggleWishListButton.setBorderPainted(false);
+		toggleWishListButton.setContentAreaFilled(false);
+		toggleWishListButton.setBounds(678, 50, 36, 30);
+		getContentPane().add(toggleWishListButton);
+
 
 	}
 

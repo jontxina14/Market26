@@ -68,6 +68,10 @@ public class Seller implements Serializable {
 	        wishList.add(sale);
 	    }
 	}
+	public void removeFromWishList(Sale sale){
+		wishList.remove(sale);
+	}
+
 
 	public List<Sale> getWishList() {
 	    return wishList;

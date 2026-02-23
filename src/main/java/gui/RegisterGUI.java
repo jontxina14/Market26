@@ -85,8 +85,6 @@ public class RegisterGUI extends JFrame {
         		BLFacade facade = MainGUInonReg.getBusinessLogic();
         		if(password.equals(password2)) {
         			if(facade.isRegistered(textFieldUsername.getText(), password2) == null) {
-        				//TODO new Seller
-
         				facade.register(new Seller(textFieldEmail.getText(),textFieldUsername.getText(),password));
         			}
         			else {

@@ -264,16 +264,16 @@ public class DataAccess  {
 
 	public Seller isRegistered(String email, String pass) {
 
-	    TypedQuery<Seller> query = db.createQuery(
-	        "SELECT s FROM Seller s WHERE s.email = ?1 AND s.pass = ?2",
-	        Seller.class
-	    );
+		TypedQuery<Seller> query = db.createQuery(
+				"SELECT s FROM Seller s WHERE s.email = ?1 AND s.pass = ?2",
+				Seller.class
+				);
 
-	    query.setParameter(1, email);
-	    query.setParameter(2, pass);
+		query.setParameter(1, email);
+		query.setParameter(2, pass);
 
-	  //@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
-	    return query.getResultList().isEmpty()? null: query.getResultList().get(0);
+		//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
+		return query.getResultList().isEmpty()? null: query.getResultList().get(0);
 	}
 
 
@@ -303,47 +303,45 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		db.persist(seller);
 		db.getTransaction().commit();
-		//TODO KENDU
-		System.out.println("DATACCES COMMIT");
 	}
 
 
-	
 
-	public boolean addToWishList(String mail, int saleNumber) {
 
-	    db.getTransaction().begin();
+	public boolean toggleWishList(String mail, int saleNumber) {
+		boolean listanDago = isInWishList(mail, saleNumber);
+		
+		db.getTransaction().begin();
+		Seller seller = db.find(Seller.class, mail);
+		Sale sale = db.find(Sale.class, saleNumber);
 
-	    Seller seller = db.find(Seller.class, mail);
-	    Sale sale = db.find(Sale.class, saleNumber);
+		if (seller == null || sale == null) {
+			db.getTransaction().commit();
+			return false;
+		}
 
-	    if (seller == null || sale == null) {
-	        db.getTransaction().commit();
-	        return false;
-	    }
+		//Ezin daitezke bi trantsakzio aldi berean hasi, beraz hasieran ikusi dagoen edo ez
+		if(!listanDago) seller.addToWishList(sale);
+		else 								seller.removeFromWishList(sale);
+		db.persist(seller);
+		db.getTransaction().commit();
+		return true;
 
-	    seller.addToWishList(sale);
 
-	    db.persist(seller);
 
-	    db.getTransaction().commit();
-
-	    return true;
 	}
-	
+
 	public boolean isInWishList(String mail, int saleNumber) {
 		db.getTransaction().begin();
+		Seller seller = db.find(Seller.class, mail);
+		Sale sale = db.find(Sale.class, saleNumber);
 
-	    Seller seller = db.find(Seller.class, mail);
-	    Sale sale = db.find(Sale.class, saleNumber);
-
-	    if (seller == null || sale == null) {
-	        db.getTransaction().commit();
-	        return false;
-	    }
-	    db.getTransaction().commit();
-
-	    return seller.getWishList().contains(sale);
+		if (seller == null || sale == null) {
+			db.getTransaction().commit();
+			return false;
+		}
+		db.getTransaction().commit();
+		return seller.getWishList().contains(sale);
 
 
 	}

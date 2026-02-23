@@ -129,9 +129,9 @@ public class BLFacadeImplementation  implements BLFacade {
         return b;
     }
     
-    @WebMethod public boolean addToWishList(String mail, int saleNumber) {
+    @WebMethod public boolean toggleWishList(String mail, int saleNumber) {
         dbManager.open();
-        boolean result = dbManager.addToWishList(mail, saleNumber);
+        boolean result = dbManager.toggleWishList(mail, saleNumber);
         dbManager.close();
         return result;
     }
@@ -142,6 +142,7 @@ public class BLFacadeImplementation  implements BLFacade {
         dbManager.close();
         return result;
 	}
+
 
 
 
