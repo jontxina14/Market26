@@ -310,6 +310,9 @@ public class DataAccess  {
 		
 		db.persist(seller);
 		db.getTransaction().commit();
+		
+		cleanWishLists(sale);
+		
 		return true;
 		
 	}
@@ -360,6 +363,24 @@ public class DataAccess  {
 		return seller.getWishList().contains(sale);
 
 
+	}
+	
+	public void cleanWishLists(Sale sale) {
+
+	    db.getTransaction().begin();
+
+	    TypedQuery<Registered> query = db.createQuery("SELECT r FROM Registered r",Registered.class);
+
+	    List<Registered> users = query.getResultList();
+
+	    for (Registered r : users) {
+	        if (r.getWishList().contains(sale)) {
+	            r.removeFromWishList(sale);
+	            db.persist(r);
+	        }
+	    }
+
+	    db.getTransaction().commit();
 	}
 
 
