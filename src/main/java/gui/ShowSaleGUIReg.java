@@ -46,14 +46,16 @@ public class ShowSaleGUIReg extends JFrame {
 	private JLabel statusField = new JLabel();
 	private JFrame thisFrame;
 	private JToggleButton toggleWishListButton;
+	private QuerySalesGUIReg parent;
 
-	public ShowSaleGUIReg(String currentUserMail, Sale sale) {
+	public ShowSaleGUIReg(String currentUserMail, Sale sale, JFrame p) {
 		thisFrame = this;
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(900, 500));
 		this.setLocationRelativeTo(null); // this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("CreateProductGUI.CreateProduct"));
-
+		this.parent = (QuerySalesGUIReg) p;
+		
 		fieldTitle.setText(sale.getTitle());
 		fieldDescription.setText(sale.getDescription());
 
@@ -135,8 +137,12 @@ public class ShowSaleGUIReg extends JFrame {
 				BLFacade facade = MainGUInonReg.getBusinessLogic();
 				boolean b = facade.buySale(currentUserMail, sale.getSaleNumber());
 				if (b) {
+					//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
+					parent.refreshSales();
+					
 					dispose();
 				}
+				
 				
 			}
 		});
