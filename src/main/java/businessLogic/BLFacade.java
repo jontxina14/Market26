@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Sale;
-import domain.Seller;
+import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -65,13 +65,13 @@ public interface BLFacade  {
 		
 	@WebMethod public Image downloadImage(String imageName);
 	
-	@WebMethod public Seller isRegistered(String mail, String pass);
+	@WebMethod public Registered isRegistered(String mail, String pass);
 	
-	@WebMethod public void register(Seller seller);
+	@WebMethod public void register(Registered seller);
 
 	@WebMethod public boolean removeSale(int SaleNumber);
 	
-	@WebMethod public boolean buySale(int SaleNumber);
+	@WebMethod public boolean buySale(String mail, int SaleNumber);
 	
 	@WebMethod public boolean toggleWishList(String mail, int saleNumber);
 

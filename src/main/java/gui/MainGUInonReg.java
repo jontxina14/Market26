@@ -97,6 +97,7 @@ public class MainGUInonReg extends JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				JFrame a = new LoginGUI();
 				a.setVisible(true);
+				dispose();
 			}
 		});
 		
@@ -105,8 +106,8 @@ public class MainGUInonReg extends JFrame {
 		jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				JFrame a = new RegisterGUI();
-
 				a.setVisible(true);
+				dispose();
 			}
 		});
 		jButtonQuerySales = new JButton();

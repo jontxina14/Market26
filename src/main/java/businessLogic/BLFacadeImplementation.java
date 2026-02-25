@@ -8,7 +8,7 @@ import javax.jws.WebService;
 
 import dataAccess.DataAccess;
 import domain.Sale;
-import domain.Seller;
+import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
@@ -108,14 +108,14 @@ public class BLFacadeImplementation  implements BLFacade {
         return null;
     }
     
-    @WebMethod public Seller isRegistered(String mail, String pass) {
+    @WebMethod public Registered isRegistered(String mail, String pass) {
     	dbManager.open();
-    	Seller b = dbManager.isRegistered(mail,pass);
+    	Registered b = dbManager.isRegistered(mail,pass);
     	dbManager.close();
     	return b;
     }
     
-    @WebMethod public void register(Seller seller) {
+    @WebMethod public void register(Registered seller) {
     	//GALDETU: open/close BLFacaden?
     	dbManager.open();
     	dbManager.register(seller);
@@ -129,9 +129,9 @@ public class BLFacadeImplementation  implements BLFacade {
         return b;
     }
     
-    @WebMethod public boolean buySale(int SaleNumber) {
+    @WebMethod public boolean buySale(String mail, int SaleNumber) {
         dbManager.open();
-        boolean b = dbManager.buySale(SaleNumber);
+        boolean b = dbManager.buySale(mail, SaleNumber);
         dbManager.close();
         return b;
     }

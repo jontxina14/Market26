@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
 import configuration.UtilDate;
-import domain.Seller;
+import domain.Registered;
 
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -85,7 +85,7 @@ public class RegisterGUI extends JFrame {
         		BLFacade facade = MainGUInonReg.getBusinessLogic();
         		if(password.equals(password2)) {
         			if(facade.isRegistered(textFieldUsername.getText(), password2) == null) {
-        				facade.register(new Seller(textFieldEmail.getText(),textFieldUsername.getText(),password));
+        				facade.register(new Registered(textFieldEmail.getText(),textFieldUsername.getText(),password));
         			}
         			else {
         				//TODO GUI-ean jarri
@@ -104,6 +104,13 @@ public class RegisterGUI extends JFrame {
         
         
         JButton btnClose = new JButton(bundle.getString("RegisterGUI.CloseButton"));
+        btnClose.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		dispose();
+        		MainGUInonReg a = new MainGUInonReg(null);
+        		a.setVisible(true);
+        	}
+        });
 
         btnRegister.setPreferredSize(new Dimension(140, 28));
         btnClose.setPreferredSize(new Dimension(140, 28));
@@ -113,8 +120,7 @@ public class RegisterGUI extends JFrame {
 
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
         
-        
-        btnClose.addActionListener(e -> dispose());
+       
 
     }
 }

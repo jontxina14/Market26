@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class QuerySalesGUInonReg extends JFrame {
-	
+
 	private static final long serialVersionUID = 1L;
 	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products")); 
 
@@ -36,7 +36,7 @@ public class QuerySalesGUInonReg extends JFrame {
 
 	};
 	private JTextField jTextFieldSearch;
-	
+
 
 	public QuerySalesGUInonReg() {
 		tableProducts.setEnabled(false);
@@ -51,13 +51,11 @@ public class QuerySalesGUInonReg extends JFrame {
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e){
 				thisFrame.setVisible(false);
-
 			}
 		});		
-		
+
 		this.getContentPane().add(jButtonClose, null);
 
 		scrollPanelProducts.setBounds(new Rectangle(52, 137, 459, 150));
@@ -78,15 +76,15 @@ public class QuerySalesGUInonReg extends JFrame {
 		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
 
 		this.getContentPane().add(scrollPanelProducts, null);
-		
+
 		jTextFieldSearch = new JTextField();
 		jTextFieldSearch.setBounds(52, 56, 357, 26);
 		getContentPane().add(jTextFieldSearch);
 		jTextFieldSearch.setColumns(10);
-		
-		 jButtonSearch.addActionListener(new ActionListener() {
-		 	public void actionPerformed(ActionEvent e) {
-		 		try {
+
+		jButtonSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
 					tableModelProducts.setDataVector(null, columnNamesProducts);
 					tableModelProducts.setColumnCount(4); // another column added to allocate product object
 
@@ -114,26 +112,26 @@ public class QuerySalesGUInonReg extends JFrame {
 				tableProducts.getColumnModel().getColumn(1).setPreferredWidth(70);
 
 				tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
-		 		
-		 	}
-		 });
+
+			}
+		});
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
-		
-	    
+
+
 		tableProducts.addMouseListener(new MouseAdapter() {
-		        @Override
-		        public void mousePressed(MouseEvent mouseEvent) {
-		            
-		            if(mouseEvent.getClickCount() == 2)
-		            {
-				        JTable table =(JTable) mouseEvent.getSource();
-		            	Point point = mouseEvent.getPoint();
-				        int row = table.rowAtPoint(point);
-		            	Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-			            new ShowSaleGUInonReg(s);
-		            }
-		        }
-		 });
+			@Override
+			public void mousePressed(MouseEvent mouseEvent) {
+
+				if(mouseEvent.getClickCount() == 2)
+				{
+					JTable table =(JTable) mouseEvent.getSource();
+					Point point = mouseEvent.getPoint();
+					int row = table.rowAtPoint(point);
+					Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
+					new ShowSaleGUInonReg(s);
+				}
+			}
+		});
 	}
 }

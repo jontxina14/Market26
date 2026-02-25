@@ -21,7 +21,7 @@ import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
 import configuration.UtilDate;
-import domain.Seller;
+import domain.Registered;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -80,9 +80,9 @@ public class DataAccess  {
 		try { 
 
 			//Create sellers 
-			Seller seller1=new Seller("seller1@gmail.com","123","123");
-			Seller seller2=new Seller("seller22@gmail.com","Ane Gaztañaga","123");
-			Seller seller3=new Seller("seller3@gmail.com","Test Seller","123");
+			Registered seller1=new Registered("seller1@gmail.com","123","123");
+			Registered seller2=new Registered("seller22@gmail.com","Ane Gaztañaga","123");
+			Registered seller3=new Registered("seller3@gmail.com","Test Seller","123");
 
 
 			//Create products
@@ -144,7 +144,7 @@ public class DataAccess  {
 
 			db.getTransaction().begin();
 
-			Seller seller = db.find(Seller.class, sellerEmail);
+			Registered seller = db.find(Registered.class, sellerEmail);
 			if (seller.doesSaleExist(title)) {
 				db.getTransaction().commit();
 				throw new SaleAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));
@@ -262,11 +262,11 @@ public class DataAccess  {
 	}
 
 
-	public Seller isRegistered(String email, String pass) {
+	public Registered isRegistered(String email, String pass) {
 
-		TypedQuery<Seller> query = db.createQuery(
-				"SELECT s FROM Seller s WHERE s.email = ?1 AND s.pass = ?2",
-				Seller.class
+		TypedQuery<Registered> query = db.createQuery(
+				"SELECT s FROM Registered s WHERE s.email = ?1 AND s.pass = ?2",
+				Registered.class
 				);
 
 		query.setParameter(1, email);
@@ -294,25 +294,28 @@ public class DataAccess  {
 			return false;
 		}
 	}
-	public boolean buySale(int saleNumber) {
+	public boolean buySale(String mail, int saleNumber) {
 		db.getTransaction().begin();
-		Query query = db.createQuery("UPDATE Sale s SET saleStatus = 1 WHERE s.saleNumber = ?1");
-		query.setParameter(1, saleNumber);
-		
-		int updated = query.executeUpdate();
-		db.getTransaction().commit();
 
-		if (updated > 0) {
-			System.out.println("Sale updated correctly");
-			return true;
-		} else {
-			System.out.println("No sale found with that number");
+		Registered seller = db.find(Registered.class, mail);
+		Sale sale = db.find(Sale.class, saleNumber);		
+		
+		if (seller == null || sale == null) {
+			db.getTransaction().commit();
 			return false;
 		}
+		
+		seller.addToBought(sale);
+		sale.setSaleStatus(1);
+		
+		db.persist(seller);
+		db.getTransaction().commit();
+		return true;
+		
 	}
 	
 
-	public void register(Seller seller) {
+	public void register(Registered seller) {
 		db.getTransaction().begin();
 		db.persist(seller);
 		db.getTransaction().commit();
@@ -325,7 +328,7 @@ public class DataAccess  {
 		boolean listanDago = isInWishList(mail, saleNumber);
 		
 		db.getTransaction().begin();
-		Seller seller = db.find(Seller.class, mail);
+		Registered seller = db.find(Registered.class, mail);
 		Sale sale = db.find(Sale.class, saleNumber);
 
 		if (seller == null || sale == null) {
@@ -346,7 +349,7 @@ public class DataAccess  {
 
 	public boolean isInWishList(String mail, int saleNumber) {
 		db.getTransaction().begin();
-		Seller seller = db.find(Seller.class, mail);
+		Registered seller = db.find(Registered.class, mail);
 		Sale sale = db.find(Sale.class, saleNumber);
 
 		if (seller == null || sale == null) {

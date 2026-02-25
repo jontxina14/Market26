@@ -27,7 +27,7 @@ public class Sale implements Serializable {
 	private float price;
 	private Date pubDate;
 	private String fileName;
-	private Seller seller;
+	private Registered seller;
 	
 	// 0 salduGabe, 1 salduta
 	private int saleStatus;
@@ -36,7 +36,7 @@ public class Sale implements Serializable {
 		super();
 	}
 		
-	public Sale(String title, String description, int status, float price, Date pubDate, File file, Seller seller) {
+	public Sale(String title, String description, int status, float price, Date pubDate, File file, Registered seller) {
 		super();
 
 		this.title = title;
@@ -193,7 +193,7 @@ public class Sale implements Serializable {
 	 * 
 	 * @return the associated seller
 	 */
-	public Seller getSeller() {
+	public Registered getSeller() {
 		return seller;
 	}
 
@@ -202,7 +202,7 @@ public class Sale implements Serializable {
 	 * 
 	 * @param seller to assign to the sale
 	 */
-	public void setSeller(Seller seller) {
+	public void setSeller(Registered seller) {
 		this.seller = seller;
 	}
 

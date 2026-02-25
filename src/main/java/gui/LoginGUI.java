@@ -7,7 +7,8 @@
 	import java.util.ResourceBundle;
 	
 	import businessLogic.BLFacade;
-	import domain.Seller;
+	import domain.Registered;
+import java.awt.event.ActionListener;
 	
 	public class LoginGUI extends JFrame {
 	
@@ -55,6 +56,13 @@
 	        btnLogin.setPreferredSize(new Dimension(140, 28));
 	
 	        JButton btnClose = new JButton(bundle.getString("LoginGUI.CloseButton"));
+	        btnClose.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent arg0) {
+	        		dispose();
+	        		MainGUInonReg a = new MainGUInonReg(null);
+	        		a.setVisible(true);
+	        	}
+	        });
 	        btnClose.setPreferredSize(new Dimension(140, 28));
 	
 	        buttonPanel.add(btnLogin);
@@ -65,7 +73,7 @@
 	        btnLogin.addActionListener((ActionEvent e) -> {
 	
 	            BLFacade facade = MainGUInonReg.getBusinessLogic();
-	            Seller b = facade.isRegistered(
+	            Registered b = facade.isRegistered(
 	                    textFieldUsername.getText(),
 	                    new String(textFieldPassword.getPassword())
 	            );
@@ -76,7 +84,9 @@
 	                dispose();
 	            }
 	        });
+	        
+	        
+	        
 	
-	        btnClose.addActionListener(e -> dispose());
 	    }
 	}

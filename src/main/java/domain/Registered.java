@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Seller implements Serializable {
+public class Registered implements Serializable {
 	
 	/**
 	 * 
@@ -36,11 +36,11 @@ public class Seller implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Sale> bought = new ArrayList<>();
 
-	public Seller() {
+	public Registered() {
 		super();
 	}
 
-	public Seller(String email, String name,String pass) {
+	public Registered(String email, String name,String pass) {
 		this.email = email;
 		this.name = name;
 		this.pass = pass;
@@ -104,6 +104,16 @@ public class Seller implements Serializable {
         sales.add(sale);
         return sale;
 	}
+	
+	public void addToBought(Sale sale) {
+		if(!bought.contains(sale)) {
+			bought.add(sale);
+		}
+	}
+	
+	
+	
+	
 	/**
 	 * This method checks if the ride already exists for that driver
 	 * 
@@ -127,7 +137,7 @@ public class Seller implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Seller other = (Seller) obj;
+		Registered other = (Registered) obj;
 		if (email != other.email)
 			return false;
 		return true;

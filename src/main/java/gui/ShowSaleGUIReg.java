@@ -133,7 +133,7 @@ public class ShowSaleGUIReg extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(sale.getSaleNumber());
 				BLFacade facade = MainGUInonReg.getBusinessLogic();
-				boolean b = facade.buySale(sale.getSaleNumber());
+				boolean b = facade.buySale(currentUserMail, sale.getSaleNumber());
 				if (b) {
 					dispose();
 				}
