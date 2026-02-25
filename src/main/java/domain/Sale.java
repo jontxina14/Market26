@@ -27,8 +27,10 @@ public class Sale implements Serializable {
 	private float price;
 	private Date pubDate;
 	private String fileName;
+	private Seller seller;
 	
-	private Seller seller;  
+	// 0 salduGabe, 1 salduta
+	private int saleStatus;
 	
 	public Sale(){
 		super();
@@ -59,7 +61,7 @@ public class Sale implements Serializable {
 		}
 
 		this.seller = seller;
-		
+		this.saleStatus = 0;		
 	}
 	
 	/**
@@ -216,6 +218,14 @@ public class Sale implements Serializable {
 	
 	public String toString(){
 		return saleNumber+";"+title+";"+price;  
+	}
+
+	public int getSaleStatus() {
+		return saleStatus;
+	}
+
+	public void setSaleStatus(int saleStatus) {
+		this.saleStatus = saleStatus;
 	}
 
 

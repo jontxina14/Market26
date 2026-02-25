@@ -133,32 +133,17 @@ public class ShowSaleGUIReg extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(sale.getSaleNumber());
 				BLFacade facade = MainGUInonReg.getBusinessLogic();
-				boolean b = facade.removeSale(sale.getSaleNumber());
+				boolean b = facade.buySale(sale.getSaleNumber());
 				if (b) {
 					dispose();
 				}
+				
 			}
 		});
 		buyButton.setBounds(320, 380, 140, 40);
 		getContentPane().add(buyButton);
 
-		//Whislist
-		/*
-		JButton addToWishlistButton = new JButton(
-		ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.addToWishListButton"));
-
-		addToWishlistButton.setEnabled(!facade.isInWishList(currentUserMail, sale.getSaleNumber()));
-
-		addToWishlistButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				facade.addToWishList(currentUserMail, sale.getSaleNumber());
-				addToWishlistButton.setEnabled(false);
-			}
-		});
-		addToWishlistButton.setBounds(670, 50, 160, 30);
-
-		getContentPane().add(addToWishlistButton);
-		 */
+		
 		//Wish list
 		ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/images/heart_empty.png"));
 		ImageIcon filledIcon = new ImageIcon(getClass().getResource("/images/heart_filled.png"));

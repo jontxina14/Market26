@@ -129,6 +129,13 @@ public class BLFacadeImplementation  implements BLFacade {
         return b;
     }
     
+    @WebMethod public boolean buySale(int SaleNumber) {
+        dbManager.open();
+        boolean b = dbManager.buySale(SaleNumber);
+        dbManager.close();
+        return b;
+    }
+    
     @WebMethod public boolean toggleWishList(String mail, int saleNumber) {
         dbManager.open();
         boolean result = dbManager.toggleWishList(mail, saleNumber);

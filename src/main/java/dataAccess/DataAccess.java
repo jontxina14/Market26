@@ -202,7 +202,7 @@ public class DataAccess  {
 		System.out.println(">> DataAccess: getProducts=> from= "+desc);
 
 		List<Sale> res = new ArrayList<Sale>();	
-		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <=?2",Sale.class);   
+		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <=?2 AND s.saleStatus == 0",Sale.class);   
 		query.setParameter(1, "%"+desc+"%");
 		query.setParameter(2,pubDate);
 
@@ -280,14 +280,10 @@ public class DataAccess  {
 
 	public boolean removeSale(int saleNumber) {
 		db.getTransaction().begin();
-
-		Query query = db.createQuery(
-				"DELETE FROM Sale s WHERE s.saleNumber = :num"
-				);
-		query.setParameter("num", saleNumber);
-
+		Query query = db.createQuery("DELETE FROM Sale s WHERE s.saleNumber = ?1");
+		query.setParameter(1, saleNumber);
+		
 		int deleted = query.executeUpdate();
-
 		db.getTransaction().commit();
 
 		if (deleted > 0) {
@@ -298,6 +294,23 @@ public class DataAccess  {
 			return false;
 		}
 	}
+	public boolean buySale(int saleNumber) {
+		db.getTransaction().begin();
+		Query query = db.createQuery("UPDATE Sale s SET saleStatus = 1 WHERE s.saleNumber = ?1");
+		query.setParameter(1, saleNumber);
+		
+		int updated = query.executeUpdate();
+		db.getTransaction().commit();
+
+		if (updated > 0) {
+			System.out.println("Sale updated correctly");
+			return true;
+		} else {
+			System.out.println("No sale found with that number");
+			return false;
+		}
+	}
+	
 
 	public void register(Seller seller) {
 		db.getTransaction().begin();
@@ -322,7 +335,7 @@ public class DataAccess  {
 
 		//Ezin daitezke bi trantsakzio aldi berean hasi, beraz hasieran ikusi dagoen edo ez
 		if(!listanDago) seller.addToWishList(sale);
-		else 								seller.removeFromWishList(sale);
+		else 			seller.removeFromWishList(sale);
 		db.persist(seller);
 		db.getTransaction().commit();
 		return true;

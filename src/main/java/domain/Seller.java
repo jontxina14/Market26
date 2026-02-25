@@ -32,6 +32,9 @@ public class Seller implements Serializable {
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Sale> wishList = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Sale> bought = new ArrayList<>();
 
 	public Seller() {
 		super();
