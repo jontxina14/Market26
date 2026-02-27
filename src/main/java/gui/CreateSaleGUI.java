@@ -85,7 +85,7 @@ public class CreateSaleGUI extends JFrame {
 
 		jButtonCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jLabelMsg.setText("");
+				jLabelMsg.setText(" ");
 				String error=check_fields_Errors();
 				if (error!=null) 
 					jLabelMsg.setText(error);

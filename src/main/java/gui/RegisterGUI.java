@@ -100,7 +100,7 @@ public class RegisterGUI extends JFrame {
 
 
 		//Error Label
-		errorLabel = new JLabel("");
+		errorLabel = new JLabel(" ");
 		errorLabel.setForeground(Color.red);
 		errorLabel.setAlignmentX(CENTER_ALIGNMENT);
 		contentPane.add(errorLabel, BorderLayout.NORTH);

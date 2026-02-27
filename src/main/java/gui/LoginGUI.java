@@ -25,7 +25,7 @@ public class LoginGUI extends JFrame {
 
 		setTitle(bundle.getString("MainGUI.Login"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(500, 280);
+		setSize(500, 300);
 		setResizable(false);
 
 		contentPane = new JPanel();
@@ -73,10 +73,9 @@ public class LoginGUI extends JFrame {
 
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
-		JLabel errorLabel = new JLabel(""); 
+		JLabel errorLabel = new JLabel(" "); 
 		errorLabel.setForeground(Color.red);
 		errorLabel.setAlignmentX(CENTER_ALIGNMENT);
-		//TODO testua zentratu
 		contentPane.add(errorLabel, BorderLayout.NORTH);
 
 
@@ -90,13 +89,12 @@ public class LoginGUI extends JFrame {
 
 
 			Registered b = facade.isRegistered(email,password);
-			if (b != null) {
+			if(b == null) errorLabel.setText(bundle.getString("LoginGUI.error"));
+			else {
 				String mail = b.getEmail();
 				new MainGUIReg(mail).setVisible(true);
 				dispose();
 			}
-
-
 
 		});
 
