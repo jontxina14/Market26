@@ -164,7 +164,6 @@ public class DataAccess  {
 			return sale;
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			// TODO Auto-generated catch block
 			db.getTransaction().commit();
 			return null;
 		}
@@ -263,18 +262,32 @@ public class DataAccess  {
 
 
 	public Registered isRegistered(String email, String pass) {
+		if(pass == "") {
+			TypedQuery<Registered> query = db.createQuery(
+					"SELECT s FROM Registered s WHERE s.email = ?1",
+					Registered.class
+					);
 
-		TypedQuery<Registered> query = db.createQuery(
-				"SELECT s FROM Registered s WHERE s.email = ?1 AND s.pass = ?2",
-				Registered.class
-				);
+			query.setParameter(1, email);
 
-		query.setParameter(1, email);
-		query.setParameter(2, pass);
+			//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
+			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
+			
+		}else {
+			TypedQuery<Registered> query = db.createQuery(
+					"SELECT s FROM Registered s WHERE s.email = ?1 AND s.pass = ?2",
+					Registered.class
+					);
 
-		//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
-		return query.getResultList().isEmpty()? null: query.getResultList().get(0);
+			query.setParameter(1, email);
+			query.setParameter(2, pass);
+
+			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
+		}
+
+
 	}
+	
 
 
 

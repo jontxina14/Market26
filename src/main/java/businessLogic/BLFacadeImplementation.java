@@ -108,7 +108,7 @@ public class BLFacadeImplementation  implements BLFacade {
         return null;
     }
     
-    @WebMethod public Registered isRegistered(String mail, String pass) {
+    @WebMethod public Registered isRegistered(String mail, String pass){
     	dbManager.open();
     	Registered b = dbManager.isRegistered(mail,pass);
     	dbManager.close();
@@ -116,7 +116,6 @@ public class BLFacadeImplementation  implements BLFacade {
     }
     
     @WebMethod public void register(Registered seller) {
-    	//GALDETU: open/close BLFacaden?
     	dbManager.open();
     	dbManager.register(seller);
     	dbManager.close();

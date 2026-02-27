@@ -1,92 +1,105 @@
-	package gui;
-	
-	import java.awt.*;
-	import java.awt.event.ActionEvent;
-	import javax.swing.*;
-	import javax.swing.border.EmptyBorder;
-	import java.util.ResourceBundle;
-	
-	import businessLogic.BLFacade;
-	import domain.Registered;
+package gui;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.util.ResourceBundle;
+
+import businessLogic.BLFacade;
+import domain.Registered;
+
 import java.awt.event.ActionListener;
-	
-	public class LoginGUI extends JFrame {
-	
-	    private static final long serialVersionUID = 1L;
-	    private JPanel contentPane;
-	    private JTextField textFieldUsername;
-	    private JPasswordField textFieldPassword;
-	
-	    public LoginGUI() {
-	
-	        ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
-	
-	        setTitle(bundle.getString("MainGUI.Login"));
-	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	        setSize(450, 280);
-	        setResizable(false);
-	
-	        contentPane = new JPanel();
-	        contentPane.setBorder(new EmptyBorder(40, 60, 40, 60));
-	        contentPane.setLayout(new BorderLayout(10, 20));
-	        setContentPane(contentPane);
-	
-	        JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 15));
-	
-	        // USERNAME
-	        JLabel lblUsername = new JLabel(bundle.getString("LoginGUI.Email"));
-	        lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
-	        textFieldUsername = new JTextField();
-	
-	        // PASSWORD
-	        JLabel lblPassword = new JLabel(bundle.getString("LoginGUI.Password"));
-	        lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
-	        textFieldPassword = new JPasswordField();
-	
-	        formPanel.add(lblUsername);
-	        formPanel.add(textFieldUsername);
-	        formPanel.add(lblPassword);
-	        formPanel.add(textFieldPassword);
-	
-	        contentPane.add(formPanel, BorderLayout.CENTER);
-	
-	        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
-	
-	        JButton btnLogin = new JButton(bundle.getString("LoginGUI.LoginButton"));
-	        btnLogin.setPreferredSize(new Dimension(140, 28));
-	
-	        JButton btnClose = new JButton(bundle.getString("LoginGUI.CloseButton"));
-	        btnClose.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent arg0) {
-	        		dispose();
-	        		MainGUInonReg a = new MainGUInonReg(null);
-	        		a.setVisible(true);
-	        	}
-	        });
-	        btnClose.setPreferredSize(new Dimension(140, 28));
-	
-	        buttonPanel.add(btnLogin);
-	        buttonPanel.add(btnClose);
-	
-	        contentPane.add(buttonPanel, BorderLayout.SOUTH);
-	
-	        btnLogin.addActionListener((ActionEvent e) -> {
-	
-	            BLFacade facade = MainGUInonReg.getBusinessLogic();
-	            Registered b = facade.isRegistered(
-	                    textFieldUsername.getText(),
-	                    new String(textFieldPassword.getPassword())
-	            );
-	
-	            if (b != null) {
-	            	String mail = b.getEmail();
-	                new MainGUIReg(mail).setVisible(true);
-	                dispose();
-	            }
-	        });
-	        
-	        
-	        
-	
-	    }
+
+public class LoginGUI extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textFieldUsername;
+	private JPasswordField textFieldPassword;
+
+
+	public LoginGUI() {
+
+		ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
+
+		setTitle(bundle.getString("MainGUI.Login"));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setSize(500, 280);
+		setResizable(false);
+
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(40, 60, 40, 60));
+		contentPane.setLayout(new BorderLayout(10, 20));
+		setContentPane(contentPane);
+
+		JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 15));
+
+
+		// USERNAME
+		JLabel lblUsername = new JLabel(bundle.getString("LoginGUI.Email"));
+		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
+		textFieldUsername = new JTextField();
+
+		// PASSWORD
+		JLabel lblPassword = new JLabel(bundle.getString("LoginGUI.Password"));
+		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
+		textFieldPassword = new JPasswordField();
+
+		formPanel.add(lblUsername);
+		formPanel.add(textFieldUsername);
+		formPanel.add(lblPassword);
+		formPanel.add(textFieldPassword);
+
+		contentPane.add(formPanel, BorderLayout.CENTER);
+
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
+
+		JButton btnLogin = new JButton(bundle.getString("LoginGUI.LoginButton"));
+		btnLogin.setPreferredSize(new Dimension(140, 28));
+
+		JButton btnClose = new JButton(bundle.getString("LoginGUI.CloseButton"));
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				MainGUInonReg a = new MainGUInonReg(null);
+				a.setVisible(true);
+			}
+		});
+		btnClose.setPreferredSize(new Dimension(140, 28));
+
+		buttonPanel.add(btnLogin);
+		buttonPanel.add(btnClose);
+
+		contentPane.add(buttonPanel, BorderLayout.SOUTH);
+
+		JLabel errorLabel = new JLabel(""); 
+		errorLabel.setForeground(Color.red);
+		errorLabel.setAlignmentX(CENTER_ALIGNMENT);
+		//TODO testua zentratu
+		contentPane.add(errorLabel, BorderLayout.NORTH);
+
+
+		btnLogin.addActionListener((ActionEvent e) -> {
+
+			BLFacade facade = MainGUInonReg.getBusinessLogic();
+			String email = textFieldUsername.getText();
+			String password = new String(textFieldPassword.getPassword());
+
+
+
+
+			Registered b = facade.isRegistered(email,password);
+			if (b != null) {
+				String mail = b.getEmail();
+				new MainGUIReg(mail).setVisible(true);
+				dispose();
+			}
+
+
+
+		});
+
 	}
+
+}
