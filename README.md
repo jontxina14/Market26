@@ -15,10 +15,9 @@ Internalizazioa: BAI
 
 Izandako arazo nagusienak:
 - Hasieran Sale-ren eraikitzaile batzuk parametroak orden desegokia zituzten. Hau dela eta status aldagaiak, onartzen ez dituen balio batzuk izaten zituen, errore batzuk emanez.
-//TODO
-- AE
-- ShoWSale parent
+- ShowSaleGUI klasetik beste GUI batean eragina izatea automatikoki. Arazoa konpontzeko ShowSaleGUI klaseko eraikitzailean beste parametro bat gehitu, beste GUIaren erreferentzia pasaz.
+- Hasieran produktuak erostean guztiz ezabatu. Hau ez egiteko, atributu bat sortu eta DataAcces klasean hainbat Query atributu honen menpe jarri.
 
-Erabilitako orduak: +-15
+Erabilitako orduak: +-20
 
-Bideoaren link-a:
+Bideoaren link-a: https://www.youtube.com/watch?v=FdphJ6v2Pjs 
