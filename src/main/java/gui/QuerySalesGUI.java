@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
-public class QuerySalesGUIReg extends JFrame {
+public class QuerySalesGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products")); 
@@ -23,8 +23,8 @@ public class QuerySalesGUIReg extends JFrame {
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 
 	private JScrollPane scrollPanelProducts = new JScrollPane();
-	private JTable tableProducts= new JTable();
 
+	private JTable tableProducts= new JTable();
 	private DefaultTableModel tableModelProducts;
 
 	private JFrame thisFrame; 
@@ -35,10 +35,11 @@ public class QuerySalesGUIReg extends JFrame {
 			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.PublicationDate"),
 
 	};
+
 	private JTextField jTextFieldSearch;
 
 
-	public QuerySalesGUIReg(String currentUserMail) {
+	public QuerySalesGUI(String currentUserMail) {
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -51,10 +52,8 @@ public class QuerySalesGUIReg extends JFrame {
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e){
 				thisFrame.setVisible(false);
-
 			}
 		});		
 
@@ -85,7 +84,6 @@ public class QuerySalesGUIReg extends JFrame {
 		jTextFieldSearch.setColumns(10);
 
 		jButtonSearch.addActionListener(e -> refreshSales());
-
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
 
@@ -100,13 +98,14 @@ public class QuerySalesGUIReg extends JFrame {
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
 					Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-					
-					new ShowSaleGUIReg(currentUserMail,s,thisFrame);
+					if(currentUserMail != null) {
+						new ShowSaleGUIReg(currentUserMail,s,thisFrame);
+					}else {
+						new ShowSaleGUInonReg(s);
+					}
 				}
 			}
 		});
-
-	
 	}
 	
 	public void refreshSales() {

@@ -341,6 +341,7 @@ public class DataAccess  {
 
 
 	public boolean toggleWishList(String mail, int saleNumber) {
+		
 		boolean listanDago = isInWishList(mail, saleNumber);
 		
 		db.getTransaction().begin();
