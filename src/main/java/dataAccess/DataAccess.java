@@ -321,7 +321,6 @@ public class DataAccess  {
 		seller.addToBought(sale);
 		sale.setSaleStatus(1);
 		
-		db.persist(seller);
 		db.getTransaction().commit();
 		
 		cleanWishLists(sale);
@@ -356,11 +355,8 @@ public class DataAccess  {
 		//Ezin daitezke bi trantsakzio aldi berean hasi, beraz hasieran ikusi dagoen edo ez
 		if(!listanDago) seller.addToWishList(sale);
 		else 			seller.removeFromWishList(sale);
-		db.persist(seller);
 		db.getTransaction().commit();
 		return true;
-
-
 
 	}
 
@@ -390,7 +386,6 @@ public class DataAccess  {
 	    for (Registered r : users) {
 	        if (r.getWishList().contains(sale)) {
 	            r.removeFromWishList(sale);
-	            db.persist(r);
 	        }
 	    }
 
