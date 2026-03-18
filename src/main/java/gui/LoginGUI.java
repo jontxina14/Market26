@@ -91,8 +91,7 @@ public class LoginGUI extends JFrame {
 			Registered b = facade.isRegistered(email,password);
 			if(b == null) errorLabel.setText(bundle.getString("LoginGUI.error"));
 			else {
-				String mail = b.getEmail();
-				new MainGUIReg(mail).setVisible(true);
+				new MainGUIReg(b).setVisible(true);
 				dispose();
 			}
 

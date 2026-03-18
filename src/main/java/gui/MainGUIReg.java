@@ -8,6 +8,7 @@ package gui;
 import javax.swing.*;
 
 import businessLogic.BLFacade;
+import domain.Registered;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -29,7 +30,8 @@ public class MainGUIReg extends JFrame {
 	private JPanel jContentPane = null;
 	private JButton jButtonCreateQuery = null;
 	private JButton jButtonQueryQueries = null;
-
+	private JButton jButtonShowProfile = null;
+	
     private static BLFacade appFacadeInterface;
 	
 	public static BLFacade getBusinessLogic(){
@@ -49,10 +51,10 @@ public class MainGUIReg extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
-	public MainGUIReg(String mail) {
+	public MainGUIReg(Registered r) {
 		super();
 
-		this.sellerMail=mail;
+		this.sellerMail=r.getEmail();
 		
 		this.setSize(495, 290);
 		jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
@@ -103,15 +105,26 @@ public class MainGUIReg extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new QuerySalesGUI(mail);
+				JFrame a = new QuerySalesGUI(sellerMail);
+
+				a.setVisible(true);
+			}
+		});
+		
+		jButtonShowProfile = new JButton();
+		jButtonShowProfile.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.ShowProfile"));
+		jButtonShowProfile.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				JFrame a = new ShowProfileGUI(r);
 
 				a.setVisible(true);
 			}
 		});
 		
 		jContentPane = new JPanel();
-		jContentPane.setLayout(new GridLayout(4, 1, 0, 0));
+		jContentPane.setLayout(new GridLayout(5, 1, 0, 0));
 		jContentPane.add(jLabelSelectOption);
+		jContentPane.add(jButtonShowProfile);
 		jContentPane.add(jButtonCreateQuery);
 		jContentPane.add(jButtonQueryQueries);
 		jContentPane.add(panel);
