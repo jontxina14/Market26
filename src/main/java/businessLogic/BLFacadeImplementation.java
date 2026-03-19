@@ -151,6 +151,12 @@ public class BLFacadeImplementation  implements BLFacade {
 
 
 
+	@WebMethod public boolean manageMoney(Registered r,double amount, String type) {
+		dbManager.open();
+        boolean result = dbManager.manageMoney(r, amount, type);
+        dbManager.close();
+        return result;
+	}
 
     
 }

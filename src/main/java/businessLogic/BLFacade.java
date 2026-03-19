@@ -76,6 +76,8 @@ public interface BLFacade  {
 	@WebMethod public boolean toggleWishList(String mail, int saleNumber);
 
 	@WebMethod public boolean isInWishList(String mail, int saleNumber);
+	
+	@WebMethod public boolean manageMoney(Registered r, double amount, String type);
 
 	
 }

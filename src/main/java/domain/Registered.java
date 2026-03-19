@@ -26,6 +26,7 @@ public class Registered implements Serializable {
 	private String email;
 	private String name; 
 	private String pass;
+	private double balance;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales = new ArrayList<Sale>();
@@ -44,6 +45,7 @@ public class Registered implements Serializable {
 		this.email = email;
 		this.name = name;
 		this.pass = pass;
+		this.balance = 0;
 	}
 	
 	
@@ -62,10 +64,16 @@ public class Registered implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+		
 	
+	public double getBalance() {
+		return balance;
+	}
 
-	
-	
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
 	public void addToWishList(Sale sale) {
 	    if (!wishList.contains(sale)) {
 	        wishList.add(sale);

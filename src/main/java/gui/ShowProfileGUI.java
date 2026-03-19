@@ -86,6 +86,7 @@ public class ShowProfileGUI extends JFrame {
 
 		JButton qBoughtsButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sBoughts"));
 		qBoughtsButton.setBounds(50, 280, 150, 45);
+		if (r != null) mailTextField.setText(String.valueOf(r.getBalance()));
 		contentPane.add(qBoughtsButton);
 
 		JButton qWishListButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sWishList"));
@@ -97,6 +98,13 @@ public class ShowProfileGUI extends JFrame {
 		contentPane.add(sMovementsButtton);
 
 		JButton mBalanceButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.mBalance"));
+		mBalanceButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame a = new ManageMoneyGUI(r);
+
+				a.setVisible(true);
+			}
+		});
 		mBalanceButton.setBounds(590, 280, 170, 45);
 		contentPane.add(mBalanceButton);
 		
