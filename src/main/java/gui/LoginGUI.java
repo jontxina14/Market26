@@ -27,12 +27,15 @@ public class LoginGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(500, 300);
 		setResizable(false);
-
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(40, 60, 40, 60));
 		contentPane.setLayout(new BorderLayout(10, 20));
 		setContentPane(contentPane);
 
+		
+		
 		JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 15));
 
 
