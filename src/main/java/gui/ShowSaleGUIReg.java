@@ -16,12 +16,12 @@ import domain.Sale;
 public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 
 	 private JToggleButton toggleWishListButton;
-	 private QuerySalesGUI parent;
+	 private QueryGUI parent;
 
 	public ShowSaleGUIReg(String currentUserMail, Sale sale, JFrame p) {
 		super(sale);
 		
-		this.parent = (QuerySalesGUI) p;
+		this.parent = (QueryGUI) p;
 		
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
 		
@@ -33,7 +33,7 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 				boolean b = facade.buySale(currentUserMail, sale.getSaleNumber());
 				if (b) {
 					//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
-					parent.refreshSales();
+					parent.refreshQuery();
 					
 					dispose();
 				}

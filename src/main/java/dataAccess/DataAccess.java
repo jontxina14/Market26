@@ -211,6 +211,12 @@ public class DataAccess  {
 		}
 		return res;
 	}
+	public List<Sale> getOnSales(String email) {
+		System.out.println(">> DataAccess: getOnSales=> from= "+email);
+		TypedQuery<Sale> query = db.createQuery("SELECT sale FROM Registered r JOIN r.sales sale WHERE r.email = ?1",Sale.class);   
+	    query.setParameter(1, email);
+		return new ArrayList<>(query.getResultList());
+	}
 
 	public void open(){
 
@@ -267,7 +273,6 @@ public class DataAccess  {
 					"SELECT s FROM Registered s WHERE s.email = ?1",
 					Registered.class
 					);
-
 			query.setParameter(1, email);
 
 			//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
@@ -284,8 +289,6 @@ public class DataAccess  {
 
 			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
 		}
-
-
 	}
 	
 

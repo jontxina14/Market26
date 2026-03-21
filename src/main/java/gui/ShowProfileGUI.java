@@ -85,28 +85,38 @@ public class ShowProfileGUI extends JFrame {
 		contentPane.add(balanceTextField);
 
 		JButton qBoughtsButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sBoughts"));
-		qBoughtsButton.setBounds(50, 280, 150, 45);
+		qBoughtsButton.setBounds(10, 280, 150, 45);
 		if (r != null) mailTextField.setText(String.valueOf(r.getBalance()));
 		contentPane.add(qBoughtsButton);
-
-		JButton qWishListButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sWishList"));
-		qWishListButton.setBounds(225, 280, 150, 45);
-		contentPane.add(qWishListButton);
-
-		JButton sMovementsButtton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sMovements"));
-		sMovementsButtton.setBounds(395, 280, 175, 45);
-		contentPane.add(sMovementsButtton);
-
-		JButton mBalanceButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.mBalance"));
-		mBalanceButton.addActionListener(new ActionListener() {
+		
+		JButton qonSaleButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.onSale"));
+		qonSaleButton.setBounds(128, 335, 150, 45);
+		contentPane.add(qonSaleButton);
+		qonSaleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame a = new ManageMoneyGUI(r);
-
+				JFrame a = new QueryGUI(r.getEmail(), QueryType.ON_SALES);
 				a.setVisible(true);
 			}
 		});
-		mBalanceButton.setBounds(590, 280, 170, 45);
+
+		JButton qWishListButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sWishList"));
+		qWishListButton.setBounds(266, 280, 150, 45);
+		contentPane.add(qWishListButton);
+
+		JButton sMovementsButtton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sMovements"));
+		sMovementsButtton.setBounds(421, 280, 175, 45);
+		contentPane.add(sMovementsButtton);
+
+		JButton mBalanceButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.mBalance"));
+		mBalanceButton.setBounds(608, 280, 170, 45);
 		contentPane.add(mBalanceButton);
+		mBalanceButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame a = new ManageMoneyGUI(r);
+				a.setVisible(true);
+			}
+		});
+
 		
 		JButton closeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.close"));
 		closeButton.addActionListener(new ActionListener() {
@@ -116,5 +126,7 @@ public class ShowProfileGUI extends JFrame {
 		});
 		closeButton.setBounds(350, 345, 100, 45);
 		contentPane.add(closeButton);
+		
+
 	}
 }

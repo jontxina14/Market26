@@ -14,7 +14,10 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
-public class QuerySalesGUI extends JFrame {
+public class QueryGUI extends JFrame {
+	
+	private String currentMail;
+	private QueryType queryType;
 
 	private static final long serialVersionUID = 1L;
 	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products")); 
@@ -39,7 +42,10 @@ public class QuerySalesGUI extends JFrame {
 	private JTextField jTextFieldSearch;
 
 
-	public QuerySalesGUI(String currentUserMail) {
+	public QueryGUI(String currentUserMail, QueryType queryType) {
+		this.queryType = queryType;
+		this.currentMail = currentUserMail;
+		System.out.println("QueryGUI: " + queryType);
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -83,7 +89,7 @@ public class QuerySalesGUI extends JFrame {
 		getContentPane().add(jTextFieldSearch);
 		jTextFieldSearch.setColumns(10);
 
-		jButtonSearch.addActionListener(e -> refreshSales());
+		jButtonSearch.addActionListener(e -> refreshQuery());
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
 
@@ -108,15 +114,16 @@ public class QuerySalesGUI extends JFrame {
 		});
 	}
 	
-	public void refreshSales() {
+	public void refreshQuery() {
 		try {
 			tableModelProducts.setDataVector(null, columnNamesProducts);
 			tableModelProducts.setColumnCount(4); // another column added to allocate product object
 
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 			Date today = UtilDate.trim(new Date());
-
-			List<domain.Sale> sales=facade.getPublishedSales(jTextFieldSearch.getText(),today);
+			
+			//Query deia
+			List<Sale> sales=facade.getPublishedSales(jTextFieldSearch.getText(),today,queryType,currentMail);
 
 			if (sales.isEmpty() ) jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts"));
 			else jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products"));

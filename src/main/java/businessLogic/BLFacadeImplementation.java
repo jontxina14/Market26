@@ -1,5 +1,6 @@
 package businessLogic;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
+import gui.QueryType;
 
 import java.awt.image.BufferedImage;
 import java.awt.Image;
@@ -66,9 +68,34 @@ public class BLFacadeImplementation  implements BLFacade {
 	    * {@inheritDoc}
 	    */
 		@WebMethod 
-		public List<Sale> getPublishedSales(String desc, Date pubDate) {
+		public List<Sale> getPublishedSales(String desc, Date pubDate, QueryType query, String email) {
+			System.out.println(query);
 			dbManager.open();
-			List<Sale>  rides=dbManager.getPublishedSales(desc,pubDate);
+			System.out.println(query);
+			
+		
+			List<Sale> rides= new ArrayList<Sale>();
+			//if (query==null) System.out.println("Query==null");
+			//else
+			switch (query) {
+			case ON_SALES:
+				rides = dbManager.getOnSales(email);
+				break;
+			case PUBLISHED_SALES:
+				rides = dbManager.getPublishedSales(desc,pubDate);
+				break;
+			case PURCHASED:
+				  rides = new ArrayList<>();
+				  System.out.println("MAL");
+
+				break;
+			case WISHLIST:
+				  rides = new ArrayList<>();
+				  System.out.println("MAL");
+				break;
+			}
+
+					
 			dbManager.close();
 			return rides;
 		}

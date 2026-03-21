@@ -53,7 +53,7 @@ public interface BLFacade  {
 	 * @param pubDate the date  of the publication date
 	 * @return collection of sales that contain desc and published before pubDate
 	 */
-	@WebMethod public List<Sale> getPublishedSales(String desc, Date pubDate);
+	@WebMethod public List<Sale> getPublishedSales(String desc, Date pubDate, QueryType query, String email);
 
 	
 	/**
