@@ -64,6 +64,5 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		toggleWishListButton.setBounds(678, 50, 36, 30);
 		getContentPane().add(toggleWishListButton);
 
-
 	}
 }

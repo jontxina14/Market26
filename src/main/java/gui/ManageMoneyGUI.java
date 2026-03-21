@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
+import domain.MovementType;
 import domain.Registered;
 
 import javax.swing.JRadioButton;
@@ -89,7 +90,10 @@ public class ManageMoneyGUI extends JFrame {
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUInonReg.getBusinessLogic();
-				facade.manageMoney(r, Double.parseDouble(textFieldAmount.getText()),buttonGroup.getSelection().toString());
+				//TODO GUIean mezua
+				if(!rdbtnDeposit.isSelected() && !rdbtnWithdraw.isSelected()) System.out.println("Sartu aukera bat");
+				else
+				facade.manageMoney(r, Double.parseDouble(textFieldAmount.getText()), rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
 			}
 		});
 		btnConfirm.setBounds(70, 230, 110, 30);

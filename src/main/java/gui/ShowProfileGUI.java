@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -43,7 +44,8 @@ public class ShowProfileGUI extends JFrame {
 		thisFrame = this;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 450); 
+		setBounds(100, 100, 800, 450);
+		
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,25 +70,28 @@ public class ShowProfileGUI extends JFrame {
 		contentPane.add(balanceLbl);
 
 		nameTextField = new JTextField();
+		nameTextField.setDisabledTextColor(Color.BLACK);
 		nameTextField.setBounds(280, 100, 300, 25);
 		nameTextField.setEnabled(false);
-		if (r != null) nameTextField.setText(r.getName());
+		nameTextField.setText((r != null) ? r.getName() : "");
 		contentPane.add(nameTextField);
 
 		mailTextField = new JTextField();
+		mailTextField.setDisabledTextColor(Color.BLACK);
 		mailTextField.setBounds(280, 140, 300, 25);
 		mailTextField.setEnabled(false);
-		if (r != null) mailTextField.setText(r.getEmail());
+		mailTextField.setText((r != null)? r.getEmail() : "");
 		contentPane.add(mailTextField);
 
 		balanceTextField = new JTextField();
+		balanceTextField.setDisabledTextColor(Color.BLACK);
 		balanceTextField.setBounds(280, 180, 150, 25);
 		balanceTextField.setEnabled(false);
+		balanceTextField.setText((r != null) ? String.valueOf(r.getBalance()) : "");
 		contentPane.add(balanceTextField);
 
 		JButton qBoughtsButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sBoughts"));
 		qBoughtsButton.setBounds(10, 280, 150, 45);
-		if (r != null) mailTextField.setText(String.valueOf(r.getBalance()));
 		contentPane.add(qBoughtsButton);
 		
 		JButton qonSaleButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.onSale"));

@@ -36,6 +36,9 @@ public class Registered implements Serializable {
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Sale> bought = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.EAGER)//, cascade=CascadeType.PERSIST)
+	private List<Movement> movements = new ArrayList<>();
 
 	public Registered() {
 		super();
@@ -116,6 +119,12 @@ public class Registered implements Serializable {
 	public void addToBought(Sale sale) {
 		if(!bought.contains(sale)) {
 			bought.add(sale);
+		}
+	}
+	
+	public void addToMovements(Movement move) {
+		if(!movements.contains(move)) {
+			movements.add(move);
 		}
 	}
 	

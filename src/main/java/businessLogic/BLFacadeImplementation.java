@@ -9,6 +9,7 @@ import javax.jws.WebService;
 
 import dataAccess.DataAccess;
 import domain.Sale;
+import domain.MovementType;
 import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -178,7 +179,7 @@ public class BLFacadeImplementation  implements BLFacade {
 
 
 
-	@WebMethod public boolean manageMoney(Registered r,double amount, String type) {
+	@WebMethod public boolean manageMoney(Registered r,double amount, MovementType type) {
 		dbManager.open();
         boolean result = dbManager.manageMoney(r, amount, type);
         dbManager.close();

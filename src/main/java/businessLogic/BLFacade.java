@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Sale;
+import domain.Movement;
+import domain.MovementType;
 import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -77,7 +79,7 @@ public interface BLFacade  {
 
 	@WebMethod public boolean isInWishList(String mail, int saleNumber);
 	
-	@WebMethod public boolean manageMoney(Registered r, double amount, String type);
+	@WebMethod public boolean manageMoney(Registered r, double amount, MovementType type);
 
 	
 }

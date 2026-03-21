@@ -27,6 +27,8 @@ import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
 
+import domain.*;
+
 /**
  * It implements the data access to the objectDb database
  */
@@ -395,14 +397,17 @@ public class DataAccess  {
 	    db.getTransaction().commit();
 	}
 	
-	public boolean manageMoney(Registered r,double amount, String type) {
+	public boolean manageMoney(Registered r, double amount, MovementType type) {
 	    db.getTransaction().begin();
-	    double balance = r.getBalance();
-	    if(type == "rdbtnWithdraw") {
-	    	r.setBalance(balance - amount);
-	    }else if(type == "rdbtnDeposit") {
-	    	r.setBalance(balance + amount);
+	    Registered reg = db.find(Registered.class, r.getEmail());
+	    double balance = reg.getBalance();
+	    if(type == MovementType.WITHDRAW) {
+	    	reg.setBalance(balance - amount);
+	    }else if(type == MovementType.DEPOSIT ) {
+	    	reg.setBalance(balance + amount);
+
 	    }
+    	//reg.addToMovements(new Movement(type, amount, null, reg)); 
 	    db.getTransaction().commit();
 	    return true;
 	}
