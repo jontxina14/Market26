@@ -28,16 +28,16 @@ public class Registered implements Serializable {
 	private String pass;
 	private double balance;
 	@XmlIDREF
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Sale> sales = new ArrayList<Sale>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Sale> wishList = new ArrayList<>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Sale> bought = new ArrayList<>();
 	
-	@OneToMany(fetch = FetchType.EAGER)//, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.LAZY)//, cascade=CascadeType.PERSIST)
 	private List<Movement> movements = new ArrayList<>();
 
 	public Registered() {
@@ -67,6 +67,9 @@ public class Registered implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getPass() {
+		return pass;
+	}
 		
 	
 	public double getBalance() {
@@ -90,6 +93,13 @@ public class Registered implements Serializable {
 	public List<Sale> getWishList() {
 	    return wishList;
 	}
+	public List<Sale> getSales() {
+		return sales;
+	}
+	public List<Sale> getBought() {
+		return bought;
+	} 
+
 
 	public String toString(){
 		return email+";"+name+sales;

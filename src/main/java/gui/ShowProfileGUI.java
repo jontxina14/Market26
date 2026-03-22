@@ -23,8 +23,8 @@ public class ShowProfileGUI extends JFrame {
 	private JTextField nameTextField;
 	private JTextField mailTextField;
 	private JTextField balanceTextField;
-
 	private JFrame thisFrame; 
+	private Registered user;
 
 
 	public static void main(String[] args) {
@@ -41,9 +41,10 @@ public class ShowProfileGUI extends JFrame {
 	}
 
 	public ShowProfileGUI(Registered r) {
+		user = r;
 		thisFrame = this;
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 450);
 		
 
@@ -73,40 +74,38 @@ public class ShowProfileGUI extends JFrame {
 		nameTextField.setDisabledTextColor(Color.BLACK);
 		nameTextField.setBounds(280, 100, 300, 25);
 		nameTextField.setEnabled(false);
-		nameTextField.setText((r != null) ? r.getName() : "");
+		nameTextField.setText((user != null) ? user.getName() : "");
 		contentPane.add(nameTextField);
 
 		mailTextField = new JTextField();
 		mailTextField.setDisabledTextColor(Color.BLACK);
 		mailTextField.setBounds(280, 140, 300, 25);
 		mailTextField.setEnabled(false);
-		mailTextField.setText((r != null)? r.getEmail() : "");
+		mailTextField.setText((user != null)? user.getEmail() : "");
 		contentPane.add(mailTextField);
 
 		balanceTextField = new JTextField();
 		balanceTextField.setDisabledTextColor(Color.BLACK);
 		balanceTextField.setBounds(280, 180, 150, 25);
 		balanceTextField.setEnabled(false);
-		balanceTextField.setText((r != null) ? String.valueOf(r.getBalance()) : "");
+		balanceTextField.setText((user != null) ? String.valueOf(user.getBalance()) : "");
 		contentPane.add(balanceTextField);
 
-		JButton qBoughtsButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sBoughts"));
-		qBoughtsButton.setBounds(10, 280, 150, 45);
-		contentPane.add(qBoughtsButton);
+		JButton qPurchasedButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sBoughts"));
+		qPurchasedButton.setBounds(10, 280, 150, 45);
+		contentPane.add(qPurchasedButton);
+		qPurchasedButton.addActionListener(e -> query(QueryType.PURCHASED));
 		
-		JButton qonSaleButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.onSale"));
-		qonSaleButton.setBounds(128, 335, 150, 45);
-		contentPane.add(qonSaleButton);
-		qonSaleButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFrame a = new QueryGUI(r.getEmail(), QueryType.ON_SALES);
-				a.setVisible(true);
-			}
-		});
+		JButton qOnSaleButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.onSale"));
+		qOnSaleButton.setBounds(128, 335, 150, 45);
+		contentPane.add(qOnSaleButton);
+		qOnSaleButton.addActionListener(e -> query(QueryType.ON_SALES));
 
 		JButton qWishListButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sWishList"));
 		qWishListButton.setBounds(266, 280, 150, 45);
 		contentPane.add(qWishListButton);
+		qWishListButton.addActionListener(e -> query(QueryType.WISHLIST));
+
 
 		JButton sMovementsButtton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sMovements"));
 		sMovementsButtton.setBounds(421, 280, 175, 45);
@@ -117,7 +116,7 @@ public class ShowProfileGUI extends JFrame {
 		contentPane.add(mBalanceButton);
 		mBalanceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame a = new ManageMoneyGUI(r);
+				JFrame a = new ManageMoneyGUI(user);
 				a.setVisible(true);
 			}
 		});
@@ -133,5 +132,14 @@ public class ShowProfileGUI extends JFrame {
 		contentPane.add(closeButton);
 		
 
+	}
+	
+	public void query(QueryType type) {
+		JFrame a = new QueryGUI(user.getEmail(), type);
+		a.setVisible(true);
+	}
+	
+	public void refreshBalance() {
+		balanceTextField.setText((user != null) ? String.valueOf(user.getBalance()) : "");
 	}
 }

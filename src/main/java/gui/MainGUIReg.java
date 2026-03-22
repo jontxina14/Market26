@@ -106,7 +106,6 @@ public class MainGUIReg extends JFrame {
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				JFrame a = new QueryGUI(sellerMail, QueryType.PUBLISHED_SALES);
-
 				a.setVisible(true);
 			}
 		});

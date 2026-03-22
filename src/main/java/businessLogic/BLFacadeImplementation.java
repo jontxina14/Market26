@@ -13,6 +13,7 @@ import domain.MovementType;
 import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
+import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
 import gui.QueryType;
 
@@ -86,13 +87,10 @@ public class BLFacadeImplementation  implements BLFacade {
 				rides = dbManager.getPublishedSales(desc,pubDate);
 				break;
 			case PURCHASED:
-				  rides = new ArrayList<>();
-				  System.out.println("MAL");
-
+				rides = dbManager.getPurchased(email);
 				break;
 			case WISHLIST:
-				  rides = new ArrayList<>();
-				  System.out.println("MAL");
+				rides = dbManager.getWhisList(email);
 				break;
 			}
 
@@ -156,7 +154,8 @@ public class BLFacadeImplementation  implements BLFacade {
         return b;
     }
     
-    @WebMethod public boolean buySale(String mail, int SaleNumber) {
+    @WebMethod public boolean buySale(String mail, int SaleNumber){
+    	//TODO
         dbManager.open();
         boolean b = dbManager.buySale(mail, SaleNumber);
         dbManager.close();
@@ -179,7 +178,7 @@ public class BLFacadeImplementation  implements BLFacade {
 
 
 
-	@WebMethod public boolean manageMoney(Registered r,double amount, MovementType type) {
+	@WebMethod public boolean manageMoney(Registered r,double amount, MovementType type) throws NotEnoughMoneyException {
 		dbManager.open();
         boolean result = dbManager.manageMoney(r, amount, type);
         dbManager.close();

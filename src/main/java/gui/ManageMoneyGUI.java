@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.util.ResourceBundle;
 
@@ -11,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import businessLogic.BLFacade;
 import domain.MovementType;
 import domain.Registered;
+import exceptions.NotEnoughMoneyException;
 
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
@@ -27,6 +29,7 @@ public class ManageMoneyGUI extends JFrame {
 	private JTextField textFieldAmount;
 	private JTextField textFieldPass;
 	private JFrame thisFrame; 
+	private JLabel lblMessage;
 
 
 	public static void main(String[] args) {
@@ -43,6 +46,7 @@ public class ManageMoneyGUI extends JFrame {
 	}
 
 	public ManageMoneyGUI(Registered r) {
+		ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
 		
 		thisFrame = this;
 
@@ -90,10 +94,31 @@ public class ManageMoneyGUI extends JFrame {
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUInonReg.getBusinessLogic();
-				//TODO GUIean mezua
-				if(!rdbtnDeposit.isSelected() && !rdbtnWithdraw.isSelected()) System.out.println("Sartu aukera bat");
-				else
-				facade.manageMoney(r, Double.parseDouble(textFieldAmount.getText()), rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
+				if(!rdbtnDeposit.isSelected() && !rdbtnWithdraw.isSelected()) 
+					lblMessage.setText(bundle.getString("ManageMoneyGUI.NotSelected"));
+				else {
+					double amount = 0;
+					try{
+						amount = Double.parseDouble(textFieldAmount.getText());
+						if(!r.getPass().equals(textFieldPass.getText()))
+							//TODO pasahitza ez da zuzena
+							//lblMessage.setText(bundle.getString("ManageMoneyGUI."));
+							System.out.println("Pasahitza ez da zuzena");
+						facade.manageMoney(r, amount, rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
+						//TODO konifrmatu zenbat atera sartu den
+
+
+							
+					}catch(NumberFormatException e1) {
+						//TODO zenbaki bat sartu
+						//lblMessage.setText(bundle.getString("ManageMoneyGUI."));
+						System.out.println("zenbaki bat sartu");
+					}catch(NotEnoughMoneyException e2) {
+						//TODO mezua 
+					}
+					
+					
+				}
 			}
 		});
 		btnConfirm.setBounds(70, 230, 110, 30);
@@ -107,5 +132,11 @@ public class ManageMoneyGUI extends JFrame {
 		});
 		btnClose.setBounds(210, 230, 110, 30); 
 		contentPane.add(btnClose);
+		
+		lblMessage = new JLabel(" ");
+		lblMessage.setBounds(80, 43, 240, 25);
+		lblMessage.setForeground(Color.red);
+		lblMessage.setAlignmentX(CENTER_ALIGNMENT);
+		contentPane.add(lblMessage);
 	}
 }

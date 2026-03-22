@@ -25,6 +25,7 @@ import domain.Registered;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
+import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
 
 import domain.*;
@@ -201,24 +202,38 @@ public class DataAccess  {
 	 */
 	public List<Sale> getPublishedSales(String desc, Date pubDate) {
 		System.out.println(">> DataAccess: getProducts=> from= "+desc);
-
-		List<Sale> res = new ArrayList<Sale>();	
+		
 		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <=?2 AND s.saleStatus == 0",Sale.class);   
 		query.setParameter(1, "%"+desc+"%");
 		query.setParameter(2,pubDate);
 
 		List<Sale> sales = query.getResultList();
-		for (Sale sale:sales){
-			res.add(sale);
-		}
-		return res;
+		return new ArrayList<Sale>(sales);
 	}
-	public List<Sale> getOnSales(String email) {
+	/*public List<Sale> getOnSales(String email) {
 		System.out.println(">> DataAccess: getOnSales=> from= "+email);
 		TypedQuery<Sale> query = db.createQuery("SELECT sale FROM Registered r JOIN r.sales sale WHERE r.email = ?1",Sale.class);   
 	    query.setParameter(1, email);
 		return new ArrayList<>(query.getResultList());
+	}*/
+	
+	public List<Sale> getOnSales(String email) {
+		System.out.println(">> DataAccess: getOnSales=> from= " + email);
+		List<Sale> res = db.find(Registered.class, email).getSales();
+		return new ArrayList<Sale>(res);
 	}
+	public List<Sale> getWhisList(String email) {
+		System.out.println(">> DataAccess: getWhisList=> from= "+email);
+		List<Sale> res = db.find(Registered.class, email).getWishList();
+		return new ArrayList<Sale>(res);
+	}
+	public List<Sale> getPurchased(String email) {
+		System.out.println(">> DataAccess: getBought => from= "+email);
+		List<Sale> res = db.find(Registered.class, email).getBought();
+		return new ArrayList<Sale>(res);
+	}
+	
+
 
 	public void open(){
 
@@ -312,9 +327,8 @@ public class DataAccess  {
 			return false;
 		}
 	}
-	public boolean buySale(String mail, int saleNumber) {
+	public boolean buySale(String mail, int saleNumber) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
-
 		Registered seller = db.find(Registered.class, mail);
 		Sale sale = db.find(Sale.class, saleNumber);		
 		
@@ -322,7 +336,7 @@ public class DataAccess  {
 			db.getTransaction().commit();
 			return false;
 		}
-		
+		if (sale.getPrice() < seller.getBalance()) throw new NotEnoughMoneyException();
 		seller.addToBought(sale);
 		sale.setSaleStatus(1);
 		
@@ -397,11 +411,12 @@ public class DataAccess  {
 	    db.getTransaction().commit();
 	}
 	
-	public boolean manageMoney(Registered r, double amount, MovementType type) {
+	public boolean manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException{
 	    db.getTransaction().begin();
 	    Registered reg = db.find(Registered.class, r.getEmail());
 	    double balance = reg.getBalance();
 	    if(type == MovementType.WITHDRAW) {
+	    	if(balance - amount < 0 ) throw new NotEnoughMoneyException();
 	    	reg.setBalance(balance - amount);
 	    }else if(type == MovementType.DEPOSIT ) {
 	    	reg.setBalance(balance + amount);

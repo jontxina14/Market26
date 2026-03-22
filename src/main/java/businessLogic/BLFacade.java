@@ -10,6 +10,7 @@ import domain.MovementType;
 import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
+import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
 
 import javax.jws.WebMethod;
@@ -79,7 +80,7 @@ public interface BLFacade  {
 
 	@WebMethod public boolean isInWishList(String mail, int saleNumber);
 	
-	@WebMethod public boolean manageMoney(Registered r, double amount, MovementType type);
+	@WebMethod public boolean manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException;
 
 	
 }

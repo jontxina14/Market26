@@ -125,7 +125,22 @@ public class QueryGUI extends JFrame {
 			//Query deia
 			List<Sale> sales=facade.getPublishedSales(jTextFieldSearch.getText(),today,queryType,currentMail);
 
-			if (sales.isEmpty() ) jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts"));
+			if (sales.isEmpty() ) {
+				switch (queryType) {
+				case ON_SALES:
+					jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale"));
+					break;
+				case PUBLISHED_SALES:
+					jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts"));
+					break;
+				case PURCHASED:
+					jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoPurchased"));
+					break;
+				case WISHLIST:
+					jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoWhishList"));
+					break;
+				}
+			}
 			else jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products"));
 			for (domain.Sale sale:sales){
 				Vector<Object> row = new Vector<Object>();
