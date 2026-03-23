@@ -47,7 +47,7 @@ public class ManageMoneyGUI extends JFrame {
 
 	public ManageMoneyGUI(Registered r) {
 		ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
-		
+
 		thisFrame = this;
 
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ManageMoneyGUI.title"));
@@ -100,15 +100,16 @@ public class ManageMoneyGUI extends JFrame {
 					double amount = 0;
 					try{
 						amount = Double.parseDouble(textFieldAmount.getText());
-						if(!r.getPass().equals(textFieldPass.getText()))
+						if(!r.getPass().equals(textFieldPass.getText())) {
 							//TODO pasahitza ez da zuzena
 							//lblMessage.setText(bundle.getString("ManageMoneyGUI."));
 							System.out.println("Pasahitza ez da zuzena");
-						facade.manageMoney(r, amount, rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
-						//TODO konifrmatu zenbat atera sartu den
+							//TODO konifrmatu zenbat atera sartu den
+						}else {
+							facade.manageMoney(r, amount, rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
+						}
 
 
-							
 					}catch(NumberFormatException e1) {
 						//TODO zenbaki bat sartu
 						//lblMessage.setText(bundle.getString("ManageMoneyGUI."));
@@ -116,8 +117,8 @@ public class ManageMoneyGUI extends JFrame {
 					}catch(NotEnoughMoneyException e2) {
 						//TODO mezua 
 					}
-					
-					
+
+
 				}
 			}
 		});
@@ -132,7 +133,7 @@ public class ManageMoneyGUI extends JFrame {
 		});
 		btnClose.setBounds(210, 230, 110, 30); 
 		contentPane.add(btnClose);
-		
+
 		lblMessage = new JLabel(" ");
 		lblMessage.setBounds(80, 43, 240, 25);
 		lblMessage.setForeground(Color.red);

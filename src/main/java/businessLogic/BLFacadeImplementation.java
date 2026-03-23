@@ -154,7 +154,7 @@ public class BLFacadeImplementation  implements BLFacade {
         return b;
     }
     
-    @WebMethod public boolean buySale(String mail, int SaleNumber){
+    @WebMethod public boolean buySale(String mail, int SaleNumber) throws NotEnoughMoneyException{
     	//TODO
         dbManager.open();
         boolean b = dbManager.buySale(mail, SaleNumber);

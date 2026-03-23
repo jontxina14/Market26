@@ -418,11 +418,11 @@ public class DataAccess  {
 	    if(type == MovementType.WITHDRAW) {
 	    	if(balance - amount < 0 ) throw new NotEnoughMoneyException();
 	    	reg.setBalance(balance - amount);
+	    	reg.addToMovements(new Movement(type, amount ,balance-amount ,null, reg)); 
 	    }else if(type == MovementType.DEPOSIT ) {
 	    	reg.setBalance(balance + amount);
-
+	    	reg.addToMovements(new Movement(type, amount ,balance+amount ,null, reg)); 
 	    }
-    	//reg.addToMovements(new Movement(type, amount, null, reg)); 
 	    db.getTransaction().commit();
 	    return true;
 	}

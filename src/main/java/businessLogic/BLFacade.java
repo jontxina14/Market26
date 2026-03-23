@@ -74,7 +74,7 @@ public interface BLFacade  {
 
 	@WebMethod public boolean removeSale(int SaleNumber);
 	
-	@WebMethod public boolean buySale(String mail, int SaleNumber);
+	@WebMethod public boolean buySale(String mail, int SaleNumber) throws NotEnoughMoneyException;
 	
 	@WebMethod public boolean toggleWishList(String mail, int saleNumber);
 

@@ -45,7 +45,7 @@ public class ShowProfileGUI extends JFrame {
 		thisFrame = this;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 800, 450);
+		setBounds(100, 100, 1100, 500);
 		
 
 		contentPane = new JPanel();
@@ -55,64 +55,64 @@ public class ShowProfileGUI extends JFrame {
 
 		JLabel titleLbl = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.title"));
 		titleLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
-		titleLbl.setBounds(300, 20, 250, 40);
+		titleLbl.setBounds(425, 30, 250, 40);
 		contentPane.add(titleLbl);
 
 		JLabel nameLbl = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.name"));
-		nameLbl.setBounds(150, 100, 100, 20);
+		nameLbl.setBounds(330, 120, 100, 20);
 		contentPane.add(nameLbl);
 
 		JLabel mailLbl = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.mail"));
-		mailLbl.setBounds(150, 140, 100, 20);
+		mailLbl.setBounds(330, 160, 100, 20);
 		contentPane.add(mailLbl);
 
 		JLabel balanceLbl = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.balance"));
-		balanceLbl.setBounds(150, 180, 100, 20);
+		balanceLbl.setBounds(330, 200, 100, 20);
 		contentPane.add(balanceLbl);
 
 		nameTextField = new JTextField();
 		nameTextField.setDisabledTextColor(Color.BLACK);
-		nameTextField.setBounds(280, 100, 300, 25);
+		nameTextField.setBounds(450, 120, 260, 25);
 		nameTextField.setEnabled(false);
 		nameTextField.setText((user != null) ? user.getName() : "");
 		contentPane.add(nameTextField);
 
 		mailTextField = new JTextField();
 		mailTextField.setDisabledTextColor(Color.BLACK);
-		mailTextField.setBounds(280, 140, 300, 25);
+		mailTextField.setBounds(450, 160, 260, 25);
 		mailTextField.setEnabled(false);
 		mailTextField.setText((user != null)? user.getEmail() : "");
 		contentPane.add(mailTextField);
 
 		balanceTextField = new JTextField();
 		balanceTextField.setDisabledTextColor(Color.BLACK);
-		balanceTextField.setBounds(280, 180, 150, 25);
+		balanceTextField.setBounds(450, 200, 150, 25);
 		balanceTextField.setEnabled(false);
 		balanceTextField.setText((user != null) ? String.valueOf(user.getBalance()) : "");
 		contentPane.add(balanceTextField);
 
 		JButton qPurchasedButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sBoughts"));
-		qPurchasedButton.setBounds(10, 280, 150, 45);
+		qPurchasedButton.setBounds(30, 300, 200, 45);
 		contentPane.add(qPurchasedButton);
 		qPurchasedButton.addActionListener(e -> query(QueryType.PURCHASED));
 		
 		JButton qOnSaleButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.onSale"));
-		qOnSaleButton.setBounds(128, 335, 150, 45);
+		qOnSaleButton.setBounds(240, 300, 200, 45);
 		contentPane.add(qOnSaleButton);
 		qOnSaleButton.addActionListener(e -> query(QueryType.ON_SALES));
 
 		JButton qWishListButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sWishList"));
-		qWishListButton.setBounds(266, 280, 150, 45);
+		qWishListButton.setBounds(450, 300, 200, 45);
 		contentPane.add(qWishListButton);
 		qWishListButton.addActionListener(e -> query(QueryType.WISHLIST));
 
 
 		JButton sMovementsButtton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sMovements"));
-		sMovementsButtton.setBounds(421, 280, 175, 45);
+		sMovementsButtton.setBounds(660, 300, 200, 45);
 		contentPane.add(sMovementsButtton);
 
 		JButton mBalanceButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.mBalance"));
-		mBalanceButton.setBounds(608, 280, 170, 45);
+		mBalanceButton.setBounds(870, 300, 200, 45);
 		contentPane.add(mBalanceButton);
 		mBalanceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,7 +128,7 @@ public class ShowProfileGUI extends JFrame {
 				thisFrame.setVisible(false);
 			}
 		});
-		closeButton.setBounds(350, 345, 100, 45);
+		closeButton.setBounds(500, 380, 100, 45);
 		contentPane.add(closeButton);
 		
 
