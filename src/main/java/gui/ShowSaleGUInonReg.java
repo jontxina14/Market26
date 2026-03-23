@@ -44,7 +44,7 @@ public class ShowSaleGUInonReg extends JFrame {
 	private JLabel jLabelError = new JLabel();
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
-	
+	//lldkjfd
 	public ShowSaleGUInonReg(Sale sale) { 
 		thisFrame=this; 
 		this.setVisible(true);
