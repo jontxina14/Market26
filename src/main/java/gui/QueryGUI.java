@@ -104,10 +104,11 @@ public class QueryGUI extends JFrame {
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
 					Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-					if(currentUserMail != null) {
-						new ShowSaleGUIReg(currentUserMail,s,thisFrame);
-					}else {
+					if(currentUserMail == null || queryType == QueryType.ON_SALES) {
 						new ShowSaleGUInonReg(s);
+					}else {
+						new ShowSaleGUIReg(currentUserMail,s,thisFrame);
+
 					}
 				}
 			}

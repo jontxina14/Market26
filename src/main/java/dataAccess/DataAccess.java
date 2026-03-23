@@ -329,20 +329,36 @@ public class DataAccess  {
 	}
 	public boolean buySale(String mail, int saleNumber) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
-		Registered seller = db.find(Registered.class, mail);
-		Sale sale = db.find(Sale.class, saleNumber);		
+		Registered buyer = db.find(Registered.class, mail);
+		Sale sale = db.find(Sale.class, saleNumber);	
 		
-		if (seller == null || sale == null) {
+		if (buyer == null || sale == null) {
 			db.getTransaction().commit();
 			return false;
 		}
-		if (sale.getPrice() < seller.getBalance()) throw new NotEnoughMoneyException();
-		seller.addToBought(sale);
+		Registered seller = sale.getSeller();
+
+		
+		if (sale.getPrice() > buyer.getBalance()) {
+			db.getTransaction().rollback();
+			throw new NotEnoughMoneyException();
+		}
+		
 		sale.setSaleStatus(1);
+		
+		double newBuyerBalance = buyer.getBalance()-sale.getPrice();
+		buyer.addToBought(sale);
+		buyer.setBalance(newBuyerBalance);
+		buyer.addToMovements(new Movement(MovementType.BUY,sale.getPrice(),newBuyerBalance,sale,buyer));
+		
+		double newSellerBalance = seller.getBalance()+sale.getPrice();
+		seller.setBalance(newSellerBalance);
+		seller.addToMovements(new Movement(MovementType.SELL,sale.getPrice(),newSellerBalance,sale,seller));
+
+		cleanWishLists(sale);
 		
 		db.getTransaction().commit();
 		
-		cleanWishLists(sale);
 		
 		return true;
 		
@@ -396,8 +412,6 @@ public class DataAccess  {
 	
 	public void cleanWishLists(Sale sale) {
 
-	    db.getTransaction().begin();
-
 	    TypedQuery<Registered> query = db.createQuery("SELECT r FROM Registered r",Registered.class);
 
 	    List<Registered> users = query.getResultList();
@@ -408,7 +422,6 @@ public class DataAccess  {
 	        }
 	    }
 
-	    db.getTransaction().commit();
 	}
 	
 	public Registered manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException{
