@@ -80,7 +80,7 @@ public interface BLFacade  {
 
 	@WebMethod public boolean isInWishList(String mail, int saleNumber);
 	
-	@WebMethod public boolean manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException;
+	@WebMethod public Registered manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException;
 
 	
 }

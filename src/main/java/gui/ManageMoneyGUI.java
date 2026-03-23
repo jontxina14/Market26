@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
@@ -72,7 +73,7 @@ public class ManageMoneyGUI extends JFrame {
 		textFieldAmount.setBounds(180, 80, 140, 25);
 		contentPane.add(textFieldAmount);
 
-		textFieldPass = new JTextField();
+		textFieldPass = new JPasswordField();
 		textFieldPass.setBounds(180, 120, 140, 25);
 		contentPane.add(textFieldPass);
 
@@ -106,7 +107,10 @@ public class ManageMoneyGUI extends JFrame {
 							System.out.println("Pasahitza ez da zuzena");
 							//TODO konifrmatu zenbat atera sartu den
 						}else {
-							facade.manageMoney(r, amount, rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
+							Registered reg = facade.manageMoney(r, amount, rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
+							dispose();
+							JFrame a = new ShowProfileGUI(reg);
+							a.setVisible(true);
 						}
 
 
@@ -129,6 +133,8 @@ public class ManageMoneyGUI extends JFrame {
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);
+				JFrame a = new ShowProfileGUI(r);
+				a.setVisible(true);
 			}
 		});
 		btnClose.setBounds(210, 230, 110, 30); 

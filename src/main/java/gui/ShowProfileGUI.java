@@ -118,6 +118,7 @@ public class ShowProfileGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFrame a = new ManageMoneyGUI(user);
 				a.setVisible(true);
+				dispose();
 			}
 		});
 

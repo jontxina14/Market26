@@ -178,9 +178,9 @@ public class BLFacadeImplementation  implements BLFacade {
 
 
 
-	@WebMethod public boolean manageMoney(Registered r,double amount, MovementType type) throws NotEnoughMoneyException {
+	@WebMethod public Registered manageMoney(Registered r,double amount, MovementType type) throws NotEnoughMoneyException {
 		dbManager.open();
-        boolean result = dbManager.manageMoney(r, amount, type);
+        Registered result = dbManager.manageMoney(r, amount, type);
         dbManager.close();
         return result;
 	}

@@ -411,7 +411,7 @@ public class DataAccess  {
 	    db.getTransaction().commit();
 	}
 	
-	public boolean manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException{
+	public Registered manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException{
 	    db.getTransaction().begin();
 	    Registered reg = db.find(Registered.class, r.getEmail());
 	    double balance = reg.getBalance();
@@ -424,7 +424,7 @@ public class DataAccess  {
 	    	reg.addToMovements(new Movement(type, amount ,balance+amount ,null, reg)); 
 	    }
 	    db.getTransaction().commit();
-	    return true;
+	    return reg;
 	}
 
 
