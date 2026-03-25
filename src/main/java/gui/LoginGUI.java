@@ -88,9 +88,6 @@ public class LoginGUI extends JFrame {
 			String email = textFieldUsername.getText();
 			String password = new String(textFieldPassword.getPassword());
 
-
-
-
 			Registered b = facade.isRegistered(email,password);
 			if(b == null) errorLabel.setText(bundle.getString("LoginGUI.error"));
 			else {

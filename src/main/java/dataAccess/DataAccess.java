@@ -202,7 +202,7 @@ public class DataAccess  {
 	 */
 	public List<Sale> getPublishedSales(String desc, Date pubDate) {
 		System.out.println(">> DataAccess: getProducts=> from= "+desc);
-		
+
 		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <=?2 AND s.saleStatus == 0",Sale.class);   
 		query.setParameter(1, "%"+desc+"%");
 		query.setParameter(2,pubDate);
@@ -216,7 +216,7 @@ public class DataAccess  {
 	    query.setParameter(1, email);
 		return new ArrayList<>(query.getResultList());
 	}*/
-	
+
 	public List<Sale> getOnSales(String email) {
 		System.out.println(">> DataAccess: getOnSales=> from= " + email);
 		List<Sale> res = db.find(Registered.class, email).getSales();
@@ -232,7 +232,7 @@ public class DataAccess  {
 		List<Sale> res = db.find(Registered.class, email).getBought();
 		return new ArrayList<Sale>(res);
 	}
-	
+
 
 
 	public void open(){
@@ -294,7 +294,7 @@ public class DataAccess  {
 
 			//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
 			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
-			
+
 		}else {
 			TypedQuery<Registered> query = db.createQuery(
 					"SELECT s FROM Registered s WHERE s.email = ?1 AND s.pass = ?2",
@@ -307,7 +307,7 @@ public class DataAccess  {
 			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
 		}
 	}
-	
+
 
 
 
@@ -315,7 +315,7 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		Query query = db.createQuery("DELETE FROM Sale s WHERE s.saleNumber = ?1");
 		query.setParameter(1, saleNumber);
-		
+
 		int deleted = query.executeUpdate();
 		db.getTransaction().commit();
 
@@ -331,39 +331,39 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		Registered buyer = db.find(Registered.class, mail);
 		Sale sale = db.find(Sale.class, saleNumber);	
-		
+
 		if (buyer == null || sale == null) {
 			db.getTransaction().commit();
 			return false;
 		}
 		Registered seller = sale.getSeller();
 
-		
+
 		if (sale.getPrice() > buyer.getBalance()) {
 			db.getTransaction().rollback();
 			throw new NotEnoughMoneyException();
 		}
-		
+
 		sale.setSaleStatus(1);
-		
+
 		double newBuyerBalance = buyer.getBalance()-sale.getPrice();
 		buyer.addToBought(sale);
 		buyer.setBalance(newBuyerBalance);
 		buyer.addToMovements(new Movement(MovementType.BUY,sale.getPrice(),newBuyerBalance,sale,buyer));
-		
+
 		double newSellerBalance = seller.getBalance()+sale.getPrice();
 		seller.setBalance(newSellerBalance);
 		seller.addToMovements(new Movement(MovementType.SELL,sale.getPrice(),newSellerBalance,sale,seller));
 
 		cleanWishLists(sale);
-		
+
 		db.getTransaction().commit();
-		
-		
+
+
 		return true;
-		
+
 	}
-	
+
 
 	public void register(Registered seller) {
 		db.getTransaction().begin();
@@ -375,9 +375,9 @@ public class DataAccess  {
 
 
 	public boolean toggleWishList(String mail, int saleNumber) {
-		
+
 		boolean listanDago = isInWishList(mail, saleNumber);
-		
+
 		db.getTransaction().begin();
 		Registered seller = db.find(Registered.class, mail);
 		Sale sale = db.find(Sale.class, saleNumber);
@@ -409,35 +409,35 @@ public class DataAccess  {
 
 
 	}
-	
+
 	public void cleanWishLists(Sale sale) {
 
-	    TypedQuery<Registered> query = db.createQuery("SELECT r FROM Registered r",Registered.class);
+		TypedQuery<Registered> query = db.createQuery("SELECT r FROM Registered r",Registered.class);
 
-	    List<Registered> users = query.getResultList();
+		List<Registered> users = query.getResultList();
 
-	    for (Registered r : users) {
-	        if (r.getWishList().contains(sale)) {
-	            r.removeFromWishList(sale);
-	        }
-	    }
+		for (Registered r : users) {
+			if (r.getWishList().contains(sale)) {
+				r.removeFromWishList(sale);
+			}
+		}
 
 	}
-	
+
 	public Registered manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException{
-	    db.getTransaction().begin();
-	    Registered reg = db.find(Registered.class, r.getEmail());
-	    double balance = reg.getBalance();
-	    if(type == MovementType.WITHDRAW) {
-	    	if(balance - amount < 0 ) throw new NotEnoughMoneyException();
-	    	reg.setBalance(balance - amount);
-	    	reg.addToMovements(new Movement(type, amount ,balance-amount ,null, reg)); 
-	    }else if(type == MovementType.DEPOSIT ) {
-	    	reg.setBalance(balance + amount);
-	    	reg.addToMovements(new Movement(type, amount ,balance+amount ,null, reg)); 
-	    }
-	    db.getTransaction().commit();
-	    return reg;
+		db.getTransaction().begin();
+		Registered reg = db.find(Registered.class, r.getEmail());
+		double balance = reg.getBalance();
+		if(type == MovementType.WITHDRAW) {
+			if(balance - amount < 0 ) throw new NotEnoughMoneyException();
+			reg.setBalance(balance - amount);
+			reg.addToMovements(new Movement(type, amount ,balance-amount ,null, reg)); 
+		}else if(type == MovementType.DEPOSIT ) {
+			reg.setBalance(balance + amount);
+			reg.addToMovements(new Movement(type, amount ,balance+amount ,null, reg)); 
+		}
+		db.getTransaction().commit();
+		return reg;
 	}
 
 

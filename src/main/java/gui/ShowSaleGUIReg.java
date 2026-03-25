@@ -12,10 +12,12 @@ import java.awt.image.BufferedImage;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import exceptions.NotEnoughMoneyException;
 
 public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 
 	private JToggleButton toggleWishListButton;
+	private JLabel jLabelError = new JLabel();
 	private QueryGUI parent;
 
 	public ShowSaleGUIReg(String currentUserMail, Sale sale, JFrame p) {
@@ -24,12 +26,18 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		this.parent = (QueryGUI) p;
 
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
+		
+		jLabelError.setBounds(new Rectangle(6, 350, 320, 20));
+		jLabelError.setForeground(Color.red);
+		
+		this.getContentPane().add(jLabelError, null);
+
+		
 
 		JButton buyButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.buyButton")); //$NON-NLS-1$ //$NON-NLS-2$
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(sale.getSaleNumber());
-				BLFacade facade = MainGUInonReg.getBusinessLogic();
 				try {
 					boolean b = facade.buySale(currentUserMail, sale.getSaleNumber());
 					if (b) {
@@ -38,11 +46,11 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 
 						dispose();
 					}
-				}catch(Exception e) {
-					e.printStackTrace();
+				}catch(NotEnoughMoneyException e) {
+					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
 				}
 				
-
+				
 
 			}
 		});

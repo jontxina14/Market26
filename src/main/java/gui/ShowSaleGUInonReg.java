@@ -41,7 +41,6 @@ public class ShowSaleGUInonReg extends JFrame {
 	DefaultComboBoxModel<String> statusOptions = new DefaultComboBoxModel<String>();
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 	private JLabel jLabelMsg = new JLabel();
-	private JLabel jLabelError = new JLabel();
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
@@ -77,12 +76,9 @@ public class ShowSaleGUInonReg extends JFrame {
 		jLabelMsg.setBounds(new Rectangle(275, 214, 305, 20));
 		jLabelMsg.setForeground(Color.red);
 
-		jLabelError.setBounds(new Rectangle(6, 231, 320, 20));
-		jLabelError.setForeground(Color.red);
-		//pppp
+		
 
 		this.getContentPane().add(jLabelMsg, null);
-		this.getContentPane().add(jLabelError, null);
 
 		this.getContentPane().add(jButtonClose, null);
 		this.getContentPane().add(jLabelTitle, null);

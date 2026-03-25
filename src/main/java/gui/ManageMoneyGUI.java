@@ -95,17 +95,14 @@ public class ManageMoneyGUI extends JFrame {
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUInonReg.getBusinessLogic();
-				if(!rdbtnDeposit.isSelected() && !rdbtnWithdraw.isSelected()) 
+				if(!rdbtnDeposit.isSelected() && !rdbtnWithdraw.isSelected()) { 
 					lblMessage.setText(bundle.getString("ManageMoneyGUI.NotSelected"));
-				else {
+				}else{
 					double amount = 0;
 					try{
 						amount = Double.parseDouble(textFieldAmount.getText());
 						if(!r.getPass().equals(textFieldPass.getText())) {
-							//TODO pasahitza ez da zuzena
-							//lblMessage.setText(bundle.getString("ManageMoneyGUI."));
-							System.out.println("Pasahitza ez da zuzena");
-							//TODO konifrmatu zenbat atera sartu den
+							lblMessage.setText(bundle.getString("ManageMoneyGUI.IncorrectPassword"));
 						}else {
 							Registered reg = facade.manageMoney(r, amount, rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
 							dispose();
@@ -115,11 +112,9 @@ public class ManageMoneyGUI extends JFrame {
 
 
 					}catch(NumberFormatException e1) {
-						//TODO zenbaki bat sartu
-						//lblMessage.setText(bundle.getString("ManageMoneyGUI."));
-						System.out.println("zenbaki bat sartu");
+						lblMessage.setText(bundle.getString("ManageMoneyGUI.AmountError"));
 					}catch(NotEnoughMoneyException e2) {
-						//TODO mezua 
+						lblMessage.setText(bundle.getString("ManageMoneyGUI.NotEnoughMoney"));
 					}
 
 
