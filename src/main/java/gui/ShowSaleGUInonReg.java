@@ -79,7 +79,7 @@ public class ShowSaleGUInonReg extends JFrame {
 
 		jLabelError.setBounds(new Rectangle(6, 231, 320, 20));
 		jLabelError.setForeground(Color.red);
-		
+		//pppp
 
 		this.getContentPane().add(jLabelMsg, null);
 		this.getContentPane().add(jLabelError, null);
