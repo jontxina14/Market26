@@ -104,11 +104,25 @@ public class QueryGUI extends JFrame {
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
 					Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-					if(currentUserMail == null || queryType == QueryType.ON_SALES) {
+					System.out.println(currentUserMail);
+					if(currentUserMail == "") {
 						new ShowSaleGUInonReg(s);
 					}else {
-						new ShowSaleGUIReg(currentUserMail,s,thisFrame);
-
+						switch(queryType){
+						case ON_SALES:
+							new ShowSaleGUInonReg(s);
+							break;
+						case PUBLISHED_SALES:
+							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
+							break;
+						case PURCHASED:
+							new ShowSaleGUIBought(currentUserMail,s,thisFrame);
+							break;
+						case WISHLIST:
+							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
+							break;
+							
+						}
 					}
 				}
 			}
@@ -124,6 +138,9 @@ public class QueryGUI extends JFrame {
 			Date today = UtilDate.trim(new Date());
 			
 			//Query deia
+			//TODO Zure produktuak ez ikusi query nagusian eta zureak bakarrik ikusi queryType ON_SALES bada.
+			
+			
 			List<Sale> sales=facade.getPublishedSales(jTextFieldSearch.getText(),today,queryType,currentMail);
 
 			if (sales.isEmpty() ) {
@@ -143,6 +160,7 @@ public class QueryGUI extends JFrame {
 				}
 			}
 			else jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products"));
+
 			for (domain.Sale sale:sales){
 				Vector<Object> row = new Vector<Object>();
 				row.add(sale.getTitle());

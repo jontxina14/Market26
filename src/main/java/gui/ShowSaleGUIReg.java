@@ -76,6 +76,16 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		toggleWishListButton.setContentAreaFilled(false);
 		toggleWishListButton.setBounds(678, 50, 36, 30);
 		getContentPane().add(toggleWishListButton);
+		
+		JButton reportButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.reportButton"));
+		reportButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Reported");
+			}
+		});
+
+		reportButton.setBounds(738, 50, 100, 30);
+		getContentPane().add(reportButton);
 
 	}
 }
