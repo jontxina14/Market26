@@ -58,6 +58,7 @@ public class BLFacadeImplementation  implements BLFacade {
    /**
     * {@inheritDoc}
     */
+   /*
 	@WebMethod 
 	public List<Sale> getSales(String desc){
 		dbManager.open();
@@ -65,7 +66,7 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return rides;
 	}
-	
+	*/
 	/**
 	    * {@inheritDoc}
 	    */
@@ -84,7 +85,7 @@ public class BLFacadeImplementation  implements BLFacade {
 				rides = dbManager.getOnSales(email);
 				break;
 			case PUBLISHED_SALES:
-				rides = dbManager.getPublishedSales(desc,pubDate);
+				rides = dbManager.getPublishedSales(desc,pubDate,email);
 				break;
 			case PURCHASED:
 				rides = dbManager.getPurchased(email);

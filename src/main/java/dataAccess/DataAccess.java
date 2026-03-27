@@ -180,7 +180,7 @@ public class DataAccess  {
 	 * @param desc the text to search
 	 * @return collection of products that contain desc in a title
 	 */
-	public List<Sale> getSales(String desc) {
+	/*public List<Sale> getSales(String desc) {
 		System.out.println(">> DataAccess: getProducts=> from= "+desc);
 
 		List<Sale> res = new ArrayList<Sale>();	
@@ -192,7 +192,7 @@ public class DataAccess  {
 			res.add(sale);
 		}
 		return res;
-	}
+	} */
 
 	/**
 	 * This method retrieves the products that contain a desc text in a title and the publicationDate today or before
@@ -200,15 +200,21 @@ public class DataAccess  {
 	 * @param desc the text to search
 	 * @return collection of products that contain desc in a title
 	 */
-	public List<Sale> getPublishedSales(String desc, Date pubDate) {
+	public List<Sale> getPublishedSales(String desc, Date pubDate, String email) {
 		System.out.println(">> DataAccess: getProducts=> from= "+desc);
 
 		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <=?2 AND s.saleStatus == 0",Sale.class);   
 		query.setParameter(1, "%"+desc+"%");
-		query.setParameter(2,pubDate);
-
+		query.setParameter(2,pubDate);		
+		
 		List<Sale> sales = query.getResultList();
-		return new ArrayList<Sale>(sales);
+		ArrayList<Sale> ema = new ArrayList<Sale>();
+		for(Sale s : sales) {
+			if(!s.getSeller().getEmail().equals(email)) {
+				ema.add(s);
+			}
+		}
+		return ema;
 	}
 	/*public List<Sale> getOnSales(String email) {
 		System.out.println(">> DataAccess: getOnSales=> from= "+email);
