@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlID;
 
+import configuration.UtilDate;
+
 @Entity
 public class Report {
 	
@@ -18,6 +20,7 @@ public class Report {
 	private String cause;
 	
 	public Report(String casue) {
+    	this.date =  UtilDate.trim(new Date());
 		this.cause=cause;
 	}
 

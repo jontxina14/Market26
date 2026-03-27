@@ -31,7 +31,7 @@ public class Movement {
     private String description;
     
     public Movement(MovementType type, double amount, double balanceAfter, Sale sale, Registered user) {
-    	date =  UtilDate.trim(new Date());
+    	this.date =  UtilDate.trim(new Date());
     	this.amount = amount;
     	this.balanceAfter = balanceAfter;
     	this.type = type;

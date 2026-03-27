@@ -2,7 +2,9 @@ package domain;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.persistence.*;
@@ -31,6 +33,9 @@ public class Sale implements Serializable {
 	
 	// 0 salduGabe, 1 salduta
 	private int saleStatus;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	private List<Sale> complaints = new ArrayList<>();
 	
 	public Sale(){
 		super();

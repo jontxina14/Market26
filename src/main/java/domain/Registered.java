@@ -39,6 +39,9 @@ public class Registered implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Movement> movements = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	private List<Sale> complaints = new ArrayList<>();
 
 	public Registered() {
 		super();
