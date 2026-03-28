@@ -25,7 +25,8 @@ public class Movement {
     private MovementType type;
 
     @OneToOne
-    private Registered user;  
+    private Registered user;
+    private String email;
 
     private Sale sale;         
 
@@ -37,7 +38,24 @@ public class Movement {
     	this.balanceAfter = balanceAfter;
     	this.type = type;
     	this.user=user;
+    	email=this.user.getEmail();
     	this.sale=sale;
     	//TODO description
+    }
+    
+    public Date getDate() {
+    	return date;
+    }
+    
+    public double getAmount() {
+    	return amount;
+    }
+    
+    public double getBalanceAfter() {
+    	return balanceAfter;
+    }
+    
+    public MovementType getType() {
+    	return type;
     }
 }

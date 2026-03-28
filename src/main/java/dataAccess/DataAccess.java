@@ -91,10 +91,10 @@ public class DataAccess  {
 
 			//Create products
 			Date today = UtilDate.trim(new Date());
-			
+
 			//Create admin
 			Admin admin1=new Admin("admin1@admin.com", "123");
-			
+
 
 
 
@@ -114,7 +114,7 @@ public class DataAccess  {
 			db.persist(seller1);
 			db.persist(seller2);
 			db.persist(seller3);
-			
+
 			db.persist(admin1);
 
 
@@ -213,7 +213,7 @@ public class DataAccess  {
 		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <= ?2 AND s.saleStatus == 0",Sale.class);   
 		query.setParameter(1, "%"+desc+"%");
 		query.setParameter(2,pubDate);		
-		
+
 		List<Sale> sales = query.getResultList();
 		ArrayList<Sale> ema = new ArrayList<Sale>();
 		for(Sale s : sales) {
@@ -223,12 +223,6 @@ public class DataAccess  {
 		}
 		return ema;
 	}
-	/*public List<Sale> getOnSales(String email) {
-		System.out.println(">> DataAccess: getOnSales=> from= "+email);
-		TypedQuery<Sale> query = db.createQuery("SELECT sale FROM Registered r JOIN r.sales sale WHERE r.email = ?1",Sale.class);   
-	    query.setParameter(1, email);
-		return new ArrayList<>(query.getResultList());
-	}*/
 
 	public List<Sale> getOnSales(String email, String filter) {
 		System.out.println(">> DataAccess: getOnSales=> from= " + email);
@@ -245,8 +239,7 @@ public class DataAccess  {
 		List<Sale> res = db.find(Registered.class, email).getBought();
 		return getFiltered(res, filter);
 	}
-	
-	
+
 	private ArrayList<Sale> getFiltered(List<Sale> list, String filter){
 		ArrayList<Sale> res = new ArrayList<Sale>();
 		for (Sale s : list) {
@@ -255,10 +248,24 @@ public class DataAccess  {
 		return res;
 	}
 
+	public ArrayList<Movement> getMovements(String email, MovementType type){
+		TypedQuery<Movement> query = null;
+		if(!type.equals(MovementType.ALL)) {
+			query = db.createQuery("SELECT m FROM Movement m WHERE m.user.email = ?1 AND m.type = ?2",Movement.class);   
+			query.setParameter(1, email);
+			query.setParameter(2,type);	
+		}else {
+			query = db.createQuery("SELECT m FROM Movement m WHERE m.user.email = ?1",Movement.class);   
+			query.setParameter(1, email);
+		}
+		List<Movement> sales = query.getResultList();
+		ArrayList<Movement> ema = new ArrayList<Movement>(sales);
+		return ema;
+	}
+
 
 
 	public void open(){
-
 		String fileName=c.getDbFilename();
 		if (c.isDatabaseLocal()) {
 			emf = Persistence.createEntityManagerFactory("objectdb:"+fileName);
@@ -329,7 +336,7 @@ public class DataAccess  {
 			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
 		}
 	}
-	
+
 	public Admin isAdmin(String email, String pass) {
 		TypedQuery<Admin> query = db.createQuery(
 				"SELECT s FROM Admin s WHERE s.email = ?1 AND s.password = ?2",
@@ -340,7 +347,7 @@ public class DataAccess  {
 		query.setParameter(2, pass);
 
 		return query.getResultList().isEmpty()? null: query.getResultList().get(0);
-		
+
 	}
 
 

@@ -1,6 +1,7 @@
 package enums;
 
 public enum MovementType {
+	ALL,
     BUY,
     SELL,
     DEPOSIT,

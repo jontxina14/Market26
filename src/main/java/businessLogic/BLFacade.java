@@ -59,6 +59,8 @@ public interface BLFacade  {
 	 * @return collection of sales that contain desc and published before pubDate
 	 */
 	@WebMethod public List<Sale> getQuery(String desc, Date pubDate, QueryType query, String email);
+	
+	@WebMethod public List<Movement> getMovements(String email, MovementType type);
 
 	
 	/**

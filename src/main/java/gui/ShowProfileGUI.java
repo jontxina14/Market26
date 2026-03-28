@@ -109,6 +109,13 @@ public class ShowProfileGUI extends JFrame {
 
 
 		JButton sMovementsButtton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sMovements"));
+		sMovementsButtton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a = new ShowMovementsGUI(user.getEmail());
+				a.setVisible(true);
+			
+			}
+		});
 		sMovementsButtton.setBounds(660, 300, 200, 45);
 		contentPane.add(sMovementsButtton);
 
@@ -136,7 +143,7 @@ public class ShowProfileGUI extends JFrame {
 
 	}
 	
-	public void query(QueryType type) {
+	private void query(QueryType type) {
 		JFrame a = new QueryGUI(user.getEmail(), type);
 		a.setVisible(true);
 	}
