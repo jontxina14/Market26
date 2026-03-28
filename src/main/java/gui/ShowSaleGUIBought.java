@@ -42,6 +42,7 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 		JButton complaintButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintButton")); //$NON-NLS-1$ //$NON-NLS-2$
 		complaintButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//TODO if facade.hasAcomplain(email, sale)
 				JFrame a = new MakeComplaintGUI(currentUserMail, sale);
 				a.setVisible(true);
 			}

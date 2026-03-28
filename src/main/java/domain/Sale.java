@@ -31,7 +31,7 @@ public class Sale implements Serializable {
 	private String fileName;
 	private Registered seller;
 	
-	// 0 salduGabe, 1 salduta
+	// 0 salduGabe, 1 salduta TODO saleStatusType era aldatu
 	private int saleStatus;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)

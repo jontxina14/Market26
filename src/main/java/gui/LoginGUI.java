@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.util.ResourceBundle;
 
 import businessLogic.BLFacade;
+import domain.Admin;
 import domain.Registered;
 
 import java.awt.event.ActionListener;
@@ -27,15 +28,15 @@ public class LoginGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(500, 300);
 		setResizable(false);
-		
-		
+
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(40, 60, 40, 60));
 		contentPane.setLayout(new BorderLayout(10, 20));
 		setContentPane(contentPane);
 
-		
-		
+
+
 		JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 15));
 
 
@@ -88,12 +89,26 @@ public class LoginGUI extends JFrame {
 			String email = textFieldUsername.getText();
 			String password = new String(textFieldPassword.getPassword());
 
-			Registered b = facade.isRegistered(email,password);
-			if(b == null) errorLabel.setText(bundle.getString("LoginGUI.error"));
-			else {
-				new MainGUIReg(b).setVisible(true);
-				dispose();
+			Admin admin = facade.isAdmin(email, password);
+			if(admin != null){
+				System.out.println("ADmin naiz");
+				//TODO new AdminGUI(admin);
+				//dispose();
+				
+				
+			}else {
+
+
+				Registered b = facade.isRegistered(email,password);
+
+				if(b == null) errorLabel.setText(bundle.getString("LoginGUI.error"));
+				else {
+					new MainGUIReg(b).setVisible(true);
+					dispose();
+				}
+
 			}
+
 
 		});
 

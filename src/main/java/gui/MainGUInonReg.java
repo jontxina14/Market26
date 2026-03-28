@@ -8,6 +8,7 @@ package gui;
 import javax.swing.*;
 
 import businessLogic.BLFacade;
+import enums.QueryType;
 
 import java.awt.Color;
 import java.awt.Font;

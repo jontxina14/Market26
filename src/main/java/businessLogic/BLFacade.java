@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Sale;
+import enums.MovementType;
+import enums.QueryType;
+import domain.Admin;
 import domain.Movement;
-import domain.MovementType;
 import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -56,7 +58,7 @@ public interface BLFacade  {
 	 * @param pubDate the date  of the publication date
 	 * @return collection of sales that contain desc and published before pubDate
 	 */
-	@WebMethod public List<Sale> getPublishedSales(String desc, Date pubDate, QueryType query, String email);
+	@WebMethod public List<Sale> getQuery(String desc, Date pubDate, QueryType query, String email);
 
 	
 	/**
@@ -69,6 +71,8 @@ public interface BLFacade  {
 	@WebMethod public Image downloadImage(String imageName);
 	
 	@WebMethod public Registered isRegistered(String mail, String pass);
+	
+	@WebMethod public Admin isAdmin(String mail, String pass);
 	
 	@WebMethod public void register(Registered seller);
 

@@ -23,6 +23,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Registered;
 import domain.Sale;
+import enums.MovementType;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -90,6 +91,10 @@ public class DataAccess  {
 
 			//Create products
 			Date today = UtilDate.trim(new Date());
+			
+			//Create admin
+			Admin admin1=new Admin("admin1@admin.com", "123");
+			
 
 
 
@@ -109,6 +114,8 @@ public class DataAccess  {
 			db.persist(seller1);
 			db.persist(seller2);
 			db.persist(seller3);
+			
+			db.persist(admin1);
 
 
 			db.getTransaction().commit();
@@ -203,7 +210,7 @@ public class DataAccess  {
 	public List<Sale> getPublishedSales(String desc, Date pubDate, String email) {
 		System.out.println(">> DataAccess: getProducts=> from= "+desc);
 
-		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <=?2 AND s.saleStatus == 0",Sale.class);   
+		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <= ?2 AND s.saleStatus == 0",Sale.class);   
 		query.setParameter(1, "%"+desc+"%");
 		query.setParameter(2,pubDate);		
 		
@@ -223,20 +230,29 @@ public class DataAccess  {
 		return new ArrayList<>(query.getResultList());
 	}*/
 
-	public List<Sale> getOnSales(String email) {
+	public List<Sale> getOnSales(String email, String filter) {
 		System.out.println(">> DataAccess: getOnSales=> from= " + email);
 		List<Sale> res = db.find(Registered.class, email).getSales();
-		return new ArrayList<Sale>(res);
+		return getFiltered(res, filter);
 	}
-	public List<Sale> getWhisList(String email) {
+	public List<Sale> getWhisList(String email, String filter) {
 		System.out.println(">> DataAccess: getWhisList=> from= "+email);
 		List<Sale> res = db.find(Registered.class, email).getWishList();
-		return new ArrayList<Sale>(res);
+		return getFiltered(res, filter);
 	}
-	public List<Sale> getPurchased(String email) {
+	public List<Sale> getPurchased(String email, String filter) {
 		System.out.println(">> DataAccess: getBought => from= "+email);
 		List<Sale> res = db.find(Registered.class, email).getBought();
-		return new ArrayList<Sale>(res);
+		return getFiltered(res, filter);
+	}
+	
+	
+	private ArrayList<Sale> getFiltered(List<Sale> list, String filter){
+		ArrayList<Sale> res = new ArrayList<Sale>();
+		for (Sale s : list) {
+			if(s.getTitle().contains(filter)) res.add(s);
+		}
+		return res;
 	}
 
 
@@ -312,6 +328,19 @@ public class DataAccess  {
 
 			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
 		}
+	}
+	
+	public Admin isAdmin(String email, String pass) {
+		TypedQuery<Admin> query = db.createQuery(
+				"SELECT s FROM Admin s WHERE s.email = ?1 AND s.password = ?2",
+				Admin.class
+				);
+
+		query.setParameter(1, email);
+		query.setParameter(2, pass);
+
+		return query.getResultList().isEmpty()? null: query.getResultList().get(0);
+		
 	}
 
 

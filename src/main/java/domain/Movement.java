@@ -9,6 +9,7 @@ import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlID;
 
 import configuration.UtilDate;
+import enums.MovementType;
 
 @Entity
 public class Movement {

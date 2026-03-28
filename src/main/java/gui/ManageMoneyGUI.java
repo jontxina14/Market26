@@ -11,8 +11,8 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
-import domain.MovementType;
 import domain.Registered;
+import enums.MovementType;
 import exceptions.NotEnoughMoneyException;
 
 import javax.swing.JRadioButton;

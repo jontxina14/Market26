@@ -1,4 +1,4 @@
-package gui;
+package enums;
 
 public enum QueryType {
 	//Aplikazioan dauden erosteko produktuak

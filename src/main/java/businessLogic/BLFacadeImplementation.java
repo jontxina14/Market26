@@ -9,13 +9,14 @@ import javax.jws.WebService;
 
 import dataAccess.DataAccess;
 import domain.Sale;
-import domain.MovementType;
+import enums.MovementType;
+import enums.QueryType;
+import domain.Admin;
 import domain.Registered;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
-import gui.QueryType;
 
 import java.awt.image.BufferedImage;
 import java.awt.Image;
@@ -71,7 +72,7 @@ public class BLFacadeImplementation  implements BLFacade {
 	    * {@inheritDoc}
 	    */
 		@WebMethod 
-		public List<Sale> getPublishedSales(String desc, Date pubDate, QueryType query, String email) {
+		public List<Sale> getQuery(String desc, Date pubDate, QueryType query, String email) {
 			System.out.println(query);
 			dbManager.open();
 			System.out.println(query);
@@ -82,16 +83,16 @@ public class BLFacadeImplementation  implements BLFacade {
 			//else
 			switch (query) {
 			case ON_SALES:
-				rides = dbManager.getOnSales(email);
+				rides = dbManager.getOnSales(email, desc);
 				break;
 			case PUBLISHED_SALES:
 				rides = dbManager.getPublishedSales(desc,pubDate,email);
 				break;
 			case PURCHASED:
-				rides = dbManager.getPurchased(email);
+				rides = dbManager.getPurchased(email, desc);
 				break;
 			case WISHLIST:
-				rides = dbManager.getWhisList(email);
+				rides = dbManager.getWhisList(email, desc);
 				break;
 			}
 
@@ -142,6 +143,12 @@ public class BLFacadeImplementation  implements BLFacade {
     	return b;
     }
     
+    @WebMethod public Admin isAdmin(String mail, String pass){
+    	dbManager.open();
+    	Admin a = dbManager.isAdmin(mail,pass);
+    	dbManager.close();
+    	return a;
+    }
     @WebMethod public void register(Registered seller) {
     	dbManager.open();
     	dbManager.register(seller);

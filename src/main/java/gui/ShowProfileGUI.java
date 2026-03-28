@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import domain.Registered;
+import enums.QueryType;
 
 import java.util.ResourceBundle;
 import javax.swing.JLabel;

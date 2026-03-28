@@ -3,6 +3,7 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Sale;
+import enums.QueryType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,12 +41,37 @@ public class QueryGUI extends JFrame {
 	};
 
 	private JTextField jTextFieldSearch;
+	
+	private String QueryMessagge = "";
+	private String emptyQueryMessagge = "";
 
 
-	public QueryGUI(String currentUserMail, QueryType queryType) {
+	public QueryGUI(String currentUserMail, QueryType queryType) {	
 		this.queryType = queryType;
 		this.currentMail = currentUserMail;
-		System.out.println("QueryGUI: " + queryType);
+		
+		switch (queryType) {
+		case ON_SALES:
+			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
+			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale");
+			break;
+		case PUBLISHED_SALES:
+			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products");
+			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts");
+
+			break;
+		case PURCHASED:
+			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Purchased");
+			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoPurchased");
+
+			break;
+		case WISHLIST:
+			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.WhishList");
+			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoWhishList");
+
+			break;
+		}
+		
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -141,25 +167,10 @@ public class QueryGUI extends JFrame {
 			//TODO Zure produktuak ez ikusi query nagusian eta zureak bakarrik ikusi queryType ON_SALES bada.
 			
 			
-			List<Sale> sales=facade.getPublishedSales(jTextFieldSearch.getText(),today,queryType,currentMail);
+			List<Sale> sales=facade.getQuery(jTextFieldSearch.getText(),today,queryType,currentMail);
 
-			if (sales.isEmpty() ) {
-				switch (queryType) {
-				case ON_SALES:
-					jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale"));
-					break;
-				case PUBLISHED_SALES:
-					jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts"));
-					break;
-				case PURCHASED:
-					jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoPurchased"));
-					break;
-				case WISHLIST:
-					jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoWhishList"));
-					break;
-				}
-			}
-			else jLabelProducts.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products"));
+			if (sales.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
+			else 					jLabelProducts.setText(QueryMessagge);
 
 			for (domain.Sale sale:sales){
 				Vector<Object> row = new Vector<Object>();

@@ -156,7 +156,7 @@ public class RegisterGUI extends JFrame {
 
 
 	private  boolean isValidEmail(String email) throws EmailNotValidException {
-		if (email == null || email.length()== 0 || !email.matches(EMAIL_AE)){
+		if (email == null || email.length()== 0 || !email.matches(EMAIL_AE) || email.contains("@admin")){
 			throw new EmailNotValidException();
 		}
 		return true;
