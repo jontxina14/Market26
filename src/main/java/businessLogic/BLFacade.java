@@ -6,7 +6,7 @@ import java.util.List;
 
 import domain.Sale;
 import enums.MovementType;
-import enums.QueryType;
+import enums.SaleType;
 import domain.Admin;
 import domain.Movement;
 import domain.Registered;
@@ -58,10 +58,14 @@ public interface BLFacade  {
 	 * @param pubDate the date  of the publication date
 	 * @return collection of sales that contain desc and published before pubDate
 	 */
-	@WebMethod public List<Sale> getQuery(String desc, Date pubDate, QueryType query, String email);
+	@WebMethod public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email);
 	
 	@WebMethod public List<Movement> getMovements(String email, MovementType type);
 
+	@WebMethod public List<Sale> getComplaints(String titleFilter);
+
+	//@WebMethod public List<Sale> getReports(String titleFilter);
+	
 	
 	/**
 	 * This method calls the data access to initialize the database with some sellers and products.
@@ -69,7 +73,6 @@ public interface BLFacade  {
 	 */	
 	@WebMethod public void initializeBD();
 	
-		
 	@WebMethod public Image downloadImage(String imageName);
 	
 	@WebMethod public Registered isRegistered(String mail, String pass);

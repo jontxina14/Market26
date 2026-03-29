@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import enums.QueryFilterType;
 import exceptions.NotEnoughMoneyException;
 
 public class ShowSaleGUIReg extends ShowSaleGUInonReg{
@@ -41,9 +42,9 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 				try {
 					boolean b = facade.buySale(currentUserMail, sale.getSaleNumber());
 					if (b) {
+						
 						//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
-						parent.refreshQuery();
-
+						parent.refreshQuery(QueryFilterType.SALE);
 						dispose();
 					}
 				}catch(NotEnoughMoneyException e) {

@@ -1,6 +1,6 @@
 package enums;
 
-public enum QueryType {
+public enum SaleType {
 	//Aplikazioan dauden erosteko produktuak
 	PUBLISHED_SALES,
 	

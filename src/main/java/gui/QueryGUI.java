@@ -3,7 +3,9 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Sale;
-import enums.QueryType;
+import enums.MovementType;
+import enums.QueryFilterType;
+import enums.SaleType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +18,12 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class QueryGUI extends JFrame {
-	
+
 	private String currentMail;
-	private QueryType queryType;
+	private SaleType saleType;
 
 	private static final long serialVersionUID = 1L;
-	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products")); 
+	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.initialize")); 
 
 	private JButton jButtonSearch = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Search")); 
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
@@ -41,37 +43,14 @@ public class QueryGUI extends JFrame {
 	};
 
 	private JTextField jTextFieldSearch;
-	
+
 	private String QueryMessagge = "";
 	private String emptyQueryMessagge = "";
 
 
-	public QueryGUI(String currentUserMail, QueryType queryType) {	
-		this.queryType = queryType;
+	public QueryGUI(String currentUserMail) {	
 		this.currentMail = currentUserMail;
-		
-		switch (queryType) {
-		case ON_SALES:
-			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
-			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale");
-			break;
-		case PUBLISHED_SALES:
-			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products");
-			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts");
 
-			break;
-		case PURCHASED:
-			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Purchased");
-			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoPurchased");
-
-			break;
-		case WISHLIST:
-			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.WhishList");
-			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoWhishList");
-
-			break;
-		}
-		
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -115,15 +94,46 @@ public class QueryGUI extends JFrame {
 		getContentPane().add(jTextFieldSearch);
 		jTextFieldSearch.setColumns(10);
 
-		jButtonSearch.addActionListener(e -> refreshQuery());
+
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
+
+
+
+	}
+
+	public QueryGUI(String currentUserMail, SaleType saleType) {
+		this(currentUserMail);
+		this.saleType = saleType;
+
+		switch (saleType) {
+		case ON_SALES:
+			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
+			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale");
+			break;
+		case PUBLISHED_SALES:
+			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products");
+			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoProducts");
+
+			break;
+		case PURCHASED:
+			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Purchased");
+			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoPurchased");
+
+			break;
+		case WISHLIST:
+			QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.WhishList");
+			emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoWhishList");
+
+			break;
+		}
+
+		jButtonSearch.addActionListener(e -> refreshQuery(QueryFilterType.SALE));
 
 
 		tableProducts.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent mouseEvent) {
-
 				if(mouseEvent.getClickCount() == 2)
 				{
 					JTable table =(JTable) mouseEvent.getSource();
@@ -134,7 +144,7 @@ public class QueryGUI extends JFrame {
 					if(currentUserMail == "") {
 						new ShowSaleGUInonReg(s);
 					}else {
-						switch(queryType){
+						switch(saleType){
 						case ON_SALES:
 							new ShowSaleGUInonReg(s);
 							break;
@@ -147,32 +157,93 @@ public class QueryGUI extends JFrame {
 						case WISHLIST:
 							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
 							break;
-							
+
 						}
 					}
 				}
 			}
 		});
+
+
+
 	}
-	
-	public void refreshQuery() {
+
+	public QueryGUI(String currentUserMail,  QueryFilterType query) {
+		this(currentUserMail);
+
+		//TODO ALDATU MEZUAK
+		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
+		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale");
+
+
+		jButtonSearch.addActionListener(e -> refreshQuery(query));
+
+
+		tableProducts.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent mouseEvent) {
+				if(mouseEvent.getClickCount() == 2)
+				{
+					JTable table =(JTable) mouseEvent.getSource();
+					Point point = mouseEvent.getPoint();
+					int row = table.rowAtPoint(point);
+					Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
+					System.out.println(currentUserMail);
+					if(currentUserMail == "") {
+						new ShowSaleGUInonReg(s);
+					}else {
+						switch(saleType){
+						case ON_SALES:
+							new ShowSaleGUInonReg(s);
+							break;
+						case PUBLISHED_SALES:
+							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
+							break;
+						case PURCHASED:
+							new ShowSaleGUIBought(currentUserMail,s,thisFrame);
+							break;
+						case WISHLIST:
+							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
+							break;
+
+						}
+					}
+				}
+			}
+		});
+
+
+
+
+
+	}
+
+	public void refreshQuery(QueryFilterType query) {
 		try {
 			tableModelProducts.setDataVector(null, columnNamesProducts);
 			tableModelProducts.setColumnCount(4); // another column added to allocate product object
 
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 			Date today = UtilDate.trim(new Date());
-			
+
 			//Query deia
-			//TODO Zure produktuak ez ikusi query nagusian eta zureak bakarrik ikusi queryType ON_SALES bada.
-			
-			
-			List<Sale> sales=facade.getQuery(jTextFieldSearch.getText(),today,queryType,currentMail);
+			List<Sale> sales = null;
+			switch(query){
+			case COMPLAINT:
+				//sales = facade.getComplaints(jTextFieldSearch.getText());
+			case REPORT:
+				//sales = facade.getReports(jTextFieldSearch.getText());
+
+			case SALE:
+				sales = facade.getQuery(jTextFieldSearch.getText(),today,saleType,currentMail);
+
+
+			}
 
 			if (sales.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);
 
-			for (domain.Sale sale:sales){
+			for (Sale sale : sales){
 				Vector<Object> row = new Vector<Object>();
 				row.add(sale.getTitle());
 				row.add(sale.getPrice());

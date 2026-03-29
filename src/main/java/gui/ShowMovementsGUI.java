@@ -137,12 +137,7 @@ public class ShowMovementsGUI extends JFrame {
 				tableModelProducts.addRow(row);		
 			}
 		} catch (Exception e1) {
-
 			e1.printStackTrace();
 		}
-		//tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
-		//tableProducts.getColumnModel().getColumn(1).setPreferredWidth(10);
-		//tableProducts.getColumnModel().getColumn(1).setPreferredWidth(70);
-		//tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
 	}
 }

@@ -9,7 +9,7 @@ import javax.swing.*;
 
 import businessLogic.BLFacade;
 import domain.Registered;
-import enums.QueryType;
+import enums.SaleType;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -106,7 +106,7 @@ public class MainGUIReg extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new QueryGUI(sellerMail, QueryType.PUBLISHED_SALES);
+				JFrame a = new QueryGUI(sellerMail, SaleType.PUBLISHED_SALES);
 				a.setVisible(true);
 			}
 		});

@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import domain.Registered;
-import enums.QueryType;
+import enums.SaleType;
 
 import java.util.ResourceBundle;
 import javax.swing.JLabel;
@@ -95,17 +95,17 @@ public class ShowProfileGUI extends JFrame {
 		JButton qPurchasedButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sBoughts"));
 		qPurchasedButton.setBounds(30, 300, 200, 45);
 		contentPane.add(qPurchasedButton);
-		qPurchasedButton.addActionListener(e -> query(QueryType.PURCHASED));
+		qPurchasedButton.addActionListener(e -> query(SaleType.PURCHASED));
 		
 		JButton qOnSaleButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.onSale"));
 		qOnSaleButton.setBounds(240, 300, 200, 45);
 		contentPane.add(qOnSaleButton);
-		qOnSaleButton.addActionListener(e -> query(QueryType.ON_SALES));
+		qOnSaleButton.addActionListener(e -> query(SaleType.ON_SALES));
 
 		JButton qWishListButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sWishList"));
 		qWishListButton.setBounds(450, 300, 200, 45);
 		contentPane.add(qWishListButton);
-		qWishListButton.addActionListener(e -> query(QueryType.WISHLIST));
+		qWishListButton.addActionListener(e -> query(SaleType.WISHLIST));
 
 
 		JButton sMovementsButtton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.sMovements"));
@@ -143,7 +143,7 @@ public class ShowProfileGUI extends JFrame {
 
 	}
 	
-	private void query(QueryType type) {
+	private void query(SaleType type) {
 		JFrame a = new QueryGUI(user.getEmail(), type);
 		a.setVisible(true);
 	}

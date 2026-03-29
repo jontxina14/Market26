@@ -10,8 +10,9 @@ import javax.jws.WebService;
 import dataAccess.DataAccess;
 import domain.Sale;
 import enums.MovementType;
-import enums.QueryType;
+import enums.SaleType;
 import domain.Admin;
+import domain.Complaint;
 import domain.Movement;
 import domain.Registered;
 import exceptions.FileNotUploadedException;
@@ -73,15 +74,13 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * {@inheritDoc}
 	 */
 	@WebMethod 
-	public List<Sale> getQuery(String desc, Date pubDate, QueryType query, String email) {
+	public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email) {
 		System.out.println(query);
 		dbManager.open();
 		System.out.println(query);
 
 
 		List<Sale> rides= new ArrayList<Sale>();
-		//if (query==null) System.out.println("Query==null");
-		//else
 		switch (query) {
 		case ON_SALES:
 			rides = dbManager.getOnSales(email, desc);
@@ -108,6 +107,14 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.open();
 		List<Movement> rides= new ArrayList<Movement>();
 		rides = dbManager.getMovements(email, type);
+		dbManager.close();
+		return rides;
+	}
+	
+	public List<Complaint> getComplaints(String titleFilter) {
+		dbManager.open();
+		List<Complaint> rides= new ArrayList<Complaint>();
+		rides = dbManager.getComplaints(titleFilter);
 		dbManager.close();
 		return rides;
 	}

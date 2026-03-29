@@ -21,8 +21,6 @@ import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
 import configuration.UtilDate;
-import domain.Registered;
-import domain.Sale;
 import enums.MovementType;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -248,7 +246,7 @@ public class DataAccess  {
 		return res;
 	}
 
-	public ArrayList<Movement> getMovements(String email, MovementType type){
+	public List<Movement> getMovements(String email, MovementType type){
 		TypedQuery<Movement> query = null;
 		if(!type.equals(MovementType.ALL)) {
 			query = db.createQuery("SELECT m FROM Movement m WHERE m.user.email = ?1 AND m.type = ?2",Movement.class);   
@@ -259,9 +257,23 @@ public class DataAccess  {
 			query.setParameter(1, email);
 		}
 		List<Movement> sales = query.getResultList();
-		ArrayList<Movement> ema = new ArrayList<Movement>(sales);
-		return ema;
+		return new ArrayList<Movement>(sales);
+
 	}
+
+	public List<Complaint> getComplaints(String titleFilter){
+		TypedQuery<Complaint> query = db.createQuery("SELECT c FROM Complaint c WHERE c.title LIKE ?1 ",Complaint.class);   
+		query.setParameter(1, "%"+titleFilter+"%");
+		List<Complaint> list = query.getResultList();
+		return new ArrayList<Complaint>(list);
+	}
+	/* TODO
+	public List<Report> getReports(String titleFilter){
+		TypedQuery<Report> query = db.createQuery("SELECT c FROM Complaint c WHERE c.title LIKE ?1 ",Complaint.class);   
+		query.setParameter(1, "%"+titleFilter+"%");
+		List<Report> list = query.getResultList();
+		return new ArrayList<Report>(list);
+	}*/
 
 
 

@@ -27,12 +27,14 @@ public class Complaint {
     private Registered user;  
 
 	@OneToOne
-    private Sale sale;     
+    private Sale sale;
+	private String saleTitle;
 	
 	public Complaint(String description){
     	this.date =  UtilDate.trim(new Date());
 		this.description=description;
 		this.status=0;
+		saleTitle=this.sale.getTitle();
 	}
 	
 	

@@ -8,7 +8,7 @@ package gui;
 import javax.swing.*;
 
 import businessLogic.BLFacade;
-import enums.QueryType;
+import enums.SaleType;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -115,7 +115,7 @@ public class MainGUInonReg extends JFrame {
 		jButtonQuerySales.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQuerySales.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new QueryGUI("", QueryType.PUBLISHED_SALES);
+				JFrame a = new QueryGUI("", SaleType.PUBLISHED_SALES);
 				a.setVisible(true);
 			}
 		});
