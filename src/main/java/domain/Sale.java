@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import enums.SaleStatusType;
+
 
 @SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -32,10 +34,10 @@ public class Sale implements Serializable {
 	private Registered seller;
 	
 	// 0 salduGabe, 1 salduta TODO saleStatusType era aldatu
-	private int saleStatus;
+	private SaleStatusType saleStatus;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
-	private List<Sale> complaints = new ArrayList<>();
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Complaint> complaints = new ArrayList<>();
 	
 	public Sale(){
 		super();
@@ -66,7 +68,7 @@ public class Sale implements Serializable {
 		}
 
 		this.seller = seller;
-		this.saleStatus = 0;		
+		this.saleStatus = SaleStatusType.ON_SALE;		
 	}
 	
 	/**
@@ -225,12 +227,22 @@ public class Sale implements Serializable {
 		return saleNumber+";"+title+";"+price;  
 	}
 
-	public int getSaleStatus() {
+	public SaleStatusType getSaleStatus() {
 		return saleStatus;
 	}
 
-	public void setSaleStatus(int saleStatus) {
+	public void setSaleStatus(SaleStatusType saleStatus) {
 		this.saleStatus = saleStatus;
+	}
+	
+	public void addComplaint(Complaint c) {
+		if(!complaints.contains(c)) {
+			complaints.add(c);
+		}
+	}
+	
+	public boolean hasAnyComplaint() {
+		return !complaints.isEmpty();
 	}
 
 

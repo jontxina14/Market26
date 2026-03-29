@@ -41,7 +41,7 @@ public class Registered implements Serializable {
 	private List<Movement> movements = new ArrayList<>();
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
-	private List<Sale> complaints = new ArrayList<>();
+	private List<Complaint> complaints = new ArrayList<>();
 
 	public Registered() {
 		super();
@@ -140,7 +140,13 @@ public class Registered implements Serializable {
 			movements.add(move);
 		}
 	}
-	
+
+	public void addComplaint(Complaint c) {
+		if(!complaints.contains(c)) {
+			complaints.add(c);
+		}
+	}
+
 	
 	
 	
@@ -158,6 +164,7 @@ public class Registered implements Serializable {
 			 return true;
 		return false;
 	}
+	
 		
 	@Override
 	public boolean equals(Object obj) {

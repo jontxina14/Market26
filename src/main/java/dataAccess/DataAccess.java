@@ -22,6 +22,7 @@ import javax.persistence.TypedQuery;
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import enums.MovementType;
+import enums.SaleStatusType;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -208,9 +209,10 @@ public class DataAccess  {
 	public List<Sale> getPublishedSales(String desc, Date pubDate, String email) {
 		System.out.println(">> DataAccess: getProducts=> from= "+desc);
 
-		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <= ?2 AND s.saleStatus == 0",Sale.class);   
+		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <= ?2 AND s.saleStatus = ?3",Sale.class);
 		query.setParameter(1, "%"+desc+"%");
-		query.setParameter(2,pubDate);		
+		query.setParameter(2,pubDate);
+		query.setParameter(3, SaleStatusType.ON_SALE);
 
 		List<Sale> sales = query.getResultList();
 		ArrayList<Sale> ema = new ArrayList<Sale>();
@@ -326,7 +328,7 @@ public class DataAccess  {
 
 
 	public Registered isRegistered(String email, String pass) {
-		if(pass == "") {
+		if(pass.isEmpty()) {
 			TypedQuery<Registered> query = db.createQuery(
 					"SELECT s FROM Registered s WHERE s.email = ?1",
 					Registered.class
@@ -398,7 +400,7 @@ public class DataAccess  {
 			throw new NotEnoughMoneyException();
 		}
 
-		sale.setSaleStatus(1);
+		sale.setSaleStatus(SaleStatusType.BOUGHT);
 
 		double newBuyerBalance = buyer.getBalance()-sale.getPrice();
 		buyer.addToBought(sale);
@@ -425,8 +427,10 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
-
-
+	
+	public Sale getSale(int saleNumber) {
+	    return db.find(Sale.class, saleNumber);
+	}
 
 	public boolean toggleWishList(String mail, int saleNumber) {
 
@@ -493,6 +497,19 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		return reg;
 	}
+	
+	
+	public void makeComplaint(String currentUsermail, Sale sale, String complaint) {
+		db.getTransaction().begin();
+		Registered reg = db.find(Registered.class, currentUsermail);
+		Sale s = db.find(Sale.class, sale.getSaleNumber());
+		Complaint c = new Complaint(complaint,s,reg);
+		s.addComplaint(c);
+		reg.addComplaint(c);
+		db.persist(c);
+		db.getTransaction().commit();
+	}
+
 
 
 

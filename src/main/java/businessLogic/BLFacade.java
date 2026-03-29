@@ -8,6 +8,7 @@ import domain.Sale;
 import enums.MovementType;
 import enums.SaleType;
 import domain.Admin;
+import domain.Complaint;
 import domain.Movement;
 import domain.Registered;
 import exceptions.FileNotUploadedException;
@@ -62,7 +63,7 @@ public interface BLFacade  {
 	
 	@WebMethod public List<Movement> getMovements(String email, MovementType type);
 
-	@WebMethod public List<Sale> getComplaints(String titleFilter);
+	@WebMethod public List<Complaint> getComplaints(String titleFilter);
 
 	//@WebMethod public List<Sale> getReports(String titleFilter);
 	
@@ -80,6 +81,8 @@ public interface BLFacade  {
 	@WebMethod public Admin isAdmin(String mail, String pass);
 	
 	@WebMethod public void register(Registered seller);
+	
+	@WebMethod public Sale getSale(int saleNumber);
 
 	@WebMethod public boolean removeSale(int SaleNumber);
 	
@@ -90,6 +93,7 @@ public interface BLFacade  {
 	@WebMethod public boolean isInWishList(String mail, int saleNumber);
 	
 	@WebMethod public Registered manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException;
-
+	
+	@WebMethod public void makeComplaint(String currentUsermail, Sale sale, String complaint);
 	
 }

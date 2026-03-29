@@ -28,13 +28,16 @@ public class Complaint {
 
 	@OneToOne
     private Sale sale;
+	
 	private String saleTitle;
 	
-	public Complaint(String description){
+	public Complaint(String description, Sale sale, Registered reg){
     	this.date =  UtilDate.trim(new Date());
 		this.description=description;
 		this.status=0;
-		saleTitle=this.sale.getTitle();
+		this.sale=sale;
+		this.user=reg;
+		saleTitle=sale.getTitle();
 	}
 	
 	

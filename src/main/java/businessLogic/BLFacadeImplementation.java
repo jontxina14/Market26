@@ -174,6 +174,14 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.register(seller);
 		dbManager.close();
 	}
+	
+	
+	@WebMethod public Sale getSale(int saleNumber) {
+	    dbManager.open();
+	    Sale s = dbManager.getSale(saleNumber);
+	    dbManager.close();
+	    return s;
+	}
 
 	@WebMethod public boolean removeSale(int SaleNumber) {
 		dbManager.open();
@@ -210,6 +218,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		Registered result = dbManager.manageMoney(r, amount, type);
 		dbManager.close();
 		return result;
+	}
+	
+	@WebMethod public void makeComplaint(String currentUsermail, Sale sale, String complaint) {
+		dbManager.open();
+		dbManager.makeComplaint(currentUsermail,sale,complaint);
+		dbManager.close();
 	}
 
 

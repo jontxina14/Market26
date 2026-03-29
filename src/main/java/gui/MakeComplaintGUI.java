@@ -54,7 +54,13 @@ public class MakeComplaintGUI extends JFrame {
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUInonReg.getBusinessLogic();
-
+				String text = textField.getText();
+				if(!text.isEmpty()) {
+					facade.makeComplaint(currentUsermail, s, text);
+					dispose();
+				}else {
+					lblMessage.setText(bundle.getString("MakeComplaintGUI.Empty"));
+				}
 			}
 		});
 		btnConfirm.setBounds(70, 230, 110, 30);

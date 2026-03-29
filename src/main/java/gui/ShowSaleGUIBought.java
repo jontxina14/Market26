@@ -31,23 +31,28 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 		this.parent = (QueryGUI) p;
 
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
-		
+
 		jLabelError.setBounds(new Rectangle(6, 350, 320, 20));
 		jLabelError.setForeground(Color.red);
-		
+
 		this.getContentPane().add(jLabelError, null);
 
-		
+
 
 		JButton complaintButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintButton")); //$NON-NLS-1$ //$NON-NLS-2$
 		complaintButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO if facade.hasAcomplain(email, sale);
-				JFrame a = new MakeComplaintGUI(currentUserMail, sale);
-				a.setVisible(true);
+				Sale freshSale = facade.getSale(sale.getSaleNumber());
+				if(freshSale.hasAnyComplaint()) {
+					complaintButton.setEnabled(false);
+					complaintButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintPending"));
+				}else {
+					JFrame a = new MakeComplaintGUI(currentUserMail, sale);
+					a.setVisible(true);
+				}
 			}
 		});
-		complaintButton.setBounds(320, 380, 200	, 40);
+		complaintButton.setBounds(300, 380, 250, 40);
 		getContentPane().add(complaintButton);
 
 
