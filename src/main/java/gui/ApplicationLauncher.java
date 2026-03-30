@@ -22,6 +22,7 @@ public class ApplicationLauncher {
 		ConfigXML c=ConfigXML.getInstance();		
 		Locale.setDefault(new Locale(c.getLocale()));
 		
+		//ShowComplaintGUI a=new ShowComplaintGUI();
 		MainGUInonReg a=new MainGUInonReg("seller3@gmail.com");
 		a.setVisible(true);
 
@@ -55,8 +56,8 @@ public class ApplicationLauncher {
 			//g.setVisible(true);
 			
 		}catch (Exception e) {
-			a.jLabelSelectOption.setText("Error: "+e.toString());
-			a.jLabelSelectOption.setForeground(Color.RED);	
+		//	a.jLabelSelectOption.setText("Error: "+e.toString());
+		//	a.jLabelSelectOption.setForeground(Color.RED);	
 			
 			System.out.println("Error in ApplicationLauncher: "+e.toString());
 		}

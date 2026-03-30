@@ -3,6 +3,7 @@ package gui;
 import javax.swing.*;
 import businessLogic.BLFacade;
 import domain.Admin;
+import domain.Complaint;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -76,7 +77,7 @@ public class MainGUIAdmin extends JFrame {
         jButtonComplaints.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUIAdmin.ShowComplaints"));
         jButtonComplaints.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+            	//ShowComplaintGUI a = new ShowComplaintGUI(complaint);
             }
         });
 
