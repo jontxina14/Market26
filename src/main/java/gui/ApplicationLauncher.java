@@ -22,7 +22,7 @@ public class ApplicationLauncher {
 		ConfigXML c=ConfigXML.getInstance();		
 		Locale.setDefault(new Locale(c.getLocale()));
 		
-		//ShowComplaintGUI a=new ShowComplaintGUI();
+		
 		MainGUInonReg a=new MainGUInonReg("seller3@gmail.com");
 		a.setVisible(true);
 
