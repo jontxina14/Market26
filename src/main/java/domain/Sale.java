@@ -39,6 +39,9 @@ public class Sale implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Complaint> complaints = new ArrayList<>();
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	private List<Report> reports = new ArrayList<>();
+	
 	public Sale(){
 		super();
 	}
@@ -245,4 +248,9 @@ public class Sale implements Serializable {
 		return !complaints.isEmpty();
 	}
 	
+	public void addReport(Report r) {
+		if(!reports.contains(r)) {
+			reports.add(r);
+		}
+	}
 }

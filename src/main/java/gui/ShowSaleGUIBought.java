@@ -52,10 +52,9 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 		//BIDEO (Eager complaint)
 		complaintButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				JFrame a = new MakeComplaintGUI(currentUserMail, sale);
 				a.setVisible(true);
-
+				dispose();
 			}
 		});
 		complaintButton.setBounds(300, 380, 250, 40);

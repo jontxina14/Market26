@@ -75,6 +75,8 @@ public class ShowComplaintGUI extends JFrame {
 				thisFrame.setVisible(false);			
 			}
 		});
+		
+		
 
 		jLabelMsg.setBounds(new Rectangle(275, 214, 305, 20));
 		jLabelMsg.setForeground(Color.red);

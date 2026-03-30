@@ -27,13 +27,13 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		this.parent = (QueryGUI) p;
 
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
-		
+
 		jLabelError.setBounds(new Rectangle(6, 350, 320, 20));
 		jLabelError.setForeground(Color.red);
-		
+
 		this.getContentPane().add(jLabelError, null);
 
-		
+
 
 		JButton buyButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.buyButton")); //$NON-NLS-1$ //$NON-NLS-2$
 		buyButton.addActionListener(new ActionListener() {
@@ -42,7 +42,7 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 				try {
 					boolean b = facade.buySale(currentUserMail, sale.getSaleNumber());
 					if (b) {
-						
+
 						//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
 						parent.refreshQuery(QueryFilterType.SALE);
 						dispose();
@@ -50,8 +50,8 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 				}catch(NotEnoughMoneyException e) {
 					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
 				}
-				
-				
+
+
 
 			}
 		});
@@ -77,11 +77,17 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		toggleWishListButton.setContentAreaFilled(false);
 		toggleWishListButton.setBounds(678, 50, 36, 30);
 		getContentPane().add(toggleWishListButton);
-		
+
 		JButton reportButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.reportButton"));
+		if(facade.hasReported(currentUserMail,sale)) {
+			reportButton.setEnabled(false);
+			reportButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AlredyReported"));
+		}
+		
 		reportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Reported");
+				new MakeReportGUI(currentUserMail, sale).setVisible(true);
+				dispose();
 			}
 		});
 

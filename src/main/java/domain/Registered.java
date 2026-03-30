@@ -42,6 +42,9 @@ public class Registered implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Complaint> complaints = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	private List<Report> reports = new ArrayList<>();
 
 	public Registered() {
 		super();
@@ -96,6 +99,7 @@ public class Registered implements Serializable {
 	public List<Sale> getWishList() {
 	    return wishList;
 	}
+	
 	public List<Sale> getSales() {
 		return sales;
 	}
@@ -103,6 +107,9 @@ public class Registered implements Serializable {
 		return bought;
 	} 
 
+	public List<Report> getReports() {
+	    return reports;
+	}
 
 	public String toString(){
 		return email+";"+name+sales;
@@ -147,6 +154,11 @@ public class Registered implements Serializable {
 		}
 	}
 
+	public void addReport(Report r) {
+		if(!reports.contains(r)) {
+			reports.add(r);
+		}
+	}
 	
 	
 	

@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlID;
 
 import configuration.UtilDate;
-import enums.ReportType;
+import enums.ReportReason;
 
 @Entity
 public class Report {
@@ -19,7 +19,7 @@ public class Report {
 	@GeneratedValue
 	private int id;
 	private Date date;
-	private ReportType cause;
+	private ReportReason cause;
 	
 	@OneToOne
 	private Registered user;
@@ -27,17 +27,36 @@ public class Report {
 	@OneToOne
 	private Sale sale;
 	
-	public Report(ReportType casue) {
+	public Report(ReportReason cause, Sale sale, Registered user) {
     	this.date =  UtilDate.trim(new Date());
 		this.cause=cause;
+		this.sale=sale;
+		this.user=user;
 	}
 
-	public ReportType getCause() {
+	public ReportReason getCause() {
 		return cause;
 	}
 
-	public void setCause(ReportType cause) {
+	public void setCause(ReportReason cause) {
 		this.cause = cause;
 	}
+
+	public Registered getUser() {
+		return user;
+	}
+
+	public void setUser(Registered user) {
+		this.user = user;
+	}
+
+	public Sale getSale() {
+		return sale;
+	}
+
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
+	
 	
 }

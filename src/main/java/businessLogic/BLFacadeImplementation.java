@@ -10,6 +10,7 @@ import javax.jws.WebService;
 import dataAccess.DataAccess;
 import domain.Sale;
 import enums.MovementType;
+import enums.ReportReason;
 import enums.SaleType;
 import domain.Admin;
 import domain.Complaint;
@@ -93,7 +94,7 @@ public class BLFacadeImplementation  implements BLFacade {
 			break;
 		case WISHLIST:
 			rides = dbManager.getWhisList(email, desc);
-			break;
+			break;			
 		}
 		dbManager.close();
 		return rides;
@@ -110,7 +111,7 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return rides;
 	}
-	
+
 	public List<Complaint> getComplaints(String titleFilter) {
 		dbManager.open();
 		List<Complaint> rides= new ArrayList<Complaint>();
@@ -174,13 +175,13 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.register(seller);
 		dbManager.close();
 	}
-	
-	
+
+
 	@WebMethod public Sale getSale(int saleNumber) {
-	    dbManager.open();
-	    Sale s = dbManager.getSale(saleNumber);
-	    dbManager.close();
-	    return s;
+		dbManager.open();
+		Sale s = dbManager.getSale(saleNumber);
+		dbManager.close();
+		return s;
 	}
 
 	@WebMethod public boolean removeSale(int SaleNumber) {
@@ -219,13 +220,26 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return result;
 	}
-	
+
 	@WebMethod public void makeComplaint(String currentUsermail, Sale sale, String complaint) {
 		dbManager.open();
 		dbManager.makeComplaint(currentUsermail,sale,complaint);
 		dbManager.close();
 	}
 
+	public boolean hasReported(String currentUsermail, Sale sale) {
+		dbManager.open();
+		Boolean result = dbManager.hasReported(currentUsermail, sale);
+		dbManager.close();
+		return result;	
+	}
+
+
+	public void makeReport(String currentUsermail, Sale sale, ReportReason reason) {
+		dbManager.open();
+		dbManager.makeReport(currentUsermail,sale,reason);
+		dbManager.close();
+	}
 
 }
 

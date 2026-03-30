@@ -6,6 +6,7 @@ import java.util.List;
 
 import domain.Sale;
 import enums.MovementType;
+import enums.ReportReason;
 import enums.SaleType;
 import domain.Admin;
 import domain.Complaint;
@@ -95,5 +96,10 @@ public interface BLFacade  {
 	@WebMethod public Registered manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException;
 	
 	@WebMethod public void makeComplaint(String currentUsermail, Sale sale, String complaint);
+	
+	@WebMethod public boolean hasReported(String currentUsermail, Sale sale);
+	
+	@WebMethod public void makeReport(String currentUsermail, Sale sale, ReportReason reason);
+
 	
 }

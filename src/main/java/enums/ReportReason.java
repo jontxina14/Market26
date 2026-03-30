@@ -1,6 +1,6 @@
 package enums;
 
-public enum ReportType {
+public enum ReportReason {
 	FAKE_PRODUCT,
 	EXPLICIT_CONTENT,
 	RESALE,
