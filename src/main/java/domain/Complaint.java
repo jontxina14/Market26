@@ -39,6 +39,15 @@ public class Complaint {
 		this.user=reg;
 		saleTitle=sale.getTitle();
 	}
+
+	public String getSaleTitle() {
+		return saleTitle;
+	}
+
+	public void setSaleTitle(String saleTitle) {
+		this.saleTitle = saleTitle;
+	}
+	
 	
 	
 

@@ -5,9 +5,11 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlID;
 
 import configuration.UtilDate;
+import enums.ReportType;
 
 @Entity
 public class Report {
@@ -17,11 +19,25 @@ public class Report {
 	@GeneratedValue
 	private int id;
 	private Date date;
-	private String cause;
+	private ReportType cause;
 	
-	public Report(String casue) {
+	@OneToOne
+	private Registered user;
+	
+	@OneToOne
+	private Sale sale;
+	
+	public Report(ReportType casue) {
     	this.date =  UtilDate.trim(new Date());
 		this.cause=cause;
 	}
 
+	public ReportType getCause() {
+		return cause;
+	}
+
+	public void setCause(ReportType cause) {
+		this.cause = cause;
+	}
+	
 }

@@ -91,7 +91,6 @@ public class LoginGUI extends JFrame {
 
 			Admin admin = facade.isAdmin(email, password);
 			if(admin != null){
-				System.out.println("ADmin naiz");
 				new MainGUIAdmin(admin).setVisible(true);
 				dispose();
 				

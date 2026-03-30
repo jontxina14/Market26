@@ -244,9 +244,5 @@ public class Sale implements Serializable {
 	public boolean hasAnyComplaint() {
 		return !complaints.isEmpty();
 	}
-
-
-
-
 	
 }

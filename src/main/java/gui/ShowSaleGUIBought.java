@@ -24,6 +24,7 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 	private JToggleButton toggleWishListButton;
 	private JLabel jLabelError = new JLabel();
 	private QueryGUI parent;
+	JButton complaintButton;
 
 	public ShowSaleGUIBought(String currentUserMail, Sale sale, JFrame p) {
 		super(sale);
@@ -38,18 +39,23 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 		this.getContentPane().add(jLabelError, null);
 
 
+		complaintButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintButton")); //$NON-NLS-1$ //$NON-NLS-2$
 
-		JButton complaintButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintButton")); //$NON-NLS-1$ //$NON-NLS-2$
+
+		Sale freshSale = facade.getSale(sale.getSaleNumber());
+		if(freshSale.hasAnyComplaint()) {
+			complaintButton.setEnabled(false);
+			complaintButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintPending"));
+		}
+
+
+		//BIDEO (Eager complaint)
 		complaintButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Sale freshSale = facade.getSale(sale.getSaleNumber());
-				if(freshSale.hasAnyComplaint()) {
-					complaintButton.setEnabled(false);
-					complaintButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintPending"));
-				}else {
-					JFrame a = new MakeComplaintGUI(currentUserMail, sale);
-					a.setVisible(true);
-				}
+
+				JFrame a = new MakeComplaintGUI(currentUserMail, sale);
+				a.setVisible(true);
+
 			}
 		});
 		complaintButton.setBounds(300, 380, 250, 40);
