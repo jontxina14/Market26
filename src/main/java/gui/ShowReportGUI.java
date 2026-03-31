@@ -73,14 +73,13 @@ public class ShowReportGUI extends JFrame {
 				thisFrame.setVisible(false);			
 			}
 		});
-	/*	
+		
 		jButtonShowSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame a = new ShowSaleGUInonReg(report.getSale());
 				
 			}
-		});
-	*/	
+		});	
 		
 
 		jLabelMsg.setBounds(new Rectangle(220, 210, 300, 20));
