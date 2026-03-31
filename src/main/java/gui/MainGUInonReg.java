@@ -51,7 +51,7 @@ public class MainGUInonReg extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
-	public MainGUInonReg( String mail) {
+	public MainGUInonReg(String mail) {
 		super();
 
 		this.sellerMail=mail;
@@ -99,6 +99,7 @@ public class MainGUInonReg extends JFrame {
 				JFrame a = new LoginGUI();
 				a.setVisible(true);
 				dispose();
+				
 			}
 		});
 		

@@ -77,7 +77,7 @@ public class MainGUIAdmin extends JFrame {
         jButtonComplaints.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUIAdmin.ShowComplaints"));
         jButtonComplaints.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	//ShowComplaintGUI a = new ShowComplaintGUI(complaint);
+            	//JFrame a = new ShowComplaintGUI(complaint);
             }
         });
 
@@ -85,6 +85,7 @@ public class MainGUIAdmin extends JFrame {
         jButtonReports.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUIAdmin.ShowReports"));
         jButtonReports.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	//JFrame a = new ShowReportGUI(report);
 
             }
         });

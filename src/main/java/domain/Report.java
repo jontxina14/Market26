@@ -57,6 +57,16 @@ public class Report {
 	public void setSale(Sale sale) {
 		this.sale = sale;
 	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	
 	
 	
 }

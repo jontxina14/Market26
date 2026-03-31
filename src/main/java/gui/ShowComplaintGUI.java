@@ -35,11 +35,11 @@ public class ShowComplaintGUI extends JFrame {
 
 	public ShowComplaintGUI(Complaint complaint) {
 		thisFrame=this; 
-		this.setVisible(true);
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(900, 500));
 		this.setLocationRelativeTo(null);
 
+		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowComplaintGUI.Name"));
 		fieldTitle.setText(complaint.getSaleTitle());
 		fieldPrice.setText(Float.toString(complaint.getSale().getPrice()));
 		fieldUser.setText(complaint.getUser().getEmail());
@@ -101,6 +101,8 @@ public class ShowComplaintGUI extends JFrame {
 		getContentPane().add(fieldUser);
 		getContentPane().add(jLabelDate);
 		getContentPane().add(fieldDate);
+		this.setVisible(true);
+
 
 
 	}	 
