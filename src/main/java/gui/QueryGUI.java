@@ -48,41 +48,36 @@ public class QueryGUI extends JFrame {
 	private String emptyQueryMessagge = "";
 
 
-	public QueryGUI(String currentUserMail) {	
+	
+	public QueryGUI(String currentUserMail, SaleType saleType) {
 		this.currentMail = currentUserMail;
+		this.saleType = saleType;
 
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 500));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.FindProducts"));
+		
 		jLabelProducts.setBounds(52, 108, 427, 16);
 		this.getContentPane().add(jLabelProducts);
 
 		jButtonClose.setBounds(new Rectangle(220, 379, 130, 30));
-
-		jButtonClose.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e){
-				thisFrame.setVisible(false);
-			}
-		});		
-
+		jButtonClose.addActionListener(e -> thisFrame.setVisible(false));
 		this.getContentPane().add(jButtonClose, null);
 
 		scrollPanelProducts.setBounds(new Rectangle(52, 137, 459, 150));
-
 		scrollPanelProducts.setViewportView(tableProducts);
+		
 		tableModelProducts = new DefaultTableModel(null, columnNamesProducts);
-
 		tableProducts.setModel(tableModelProducts);
 
 		tableModelProducts.setDataVector(null, columnNamesProducts);
 		tableModelProducts.setColumnCount(4); // another column added to allocate ride objects
 
 		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
-		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(10);
-		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(70);
+		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
+		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(70);
 
 
 		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
@@ -99,12 +94,6 @@ public class QueryGUI extends JFrame {
 		getContentPane().add(jButtonSearch);
 
 
-
-	}
-
-	public QueryGUI(String currentUserMail, SaleType saleType) {
-		this(currentUserMail);
-		this.saleType = saleType;
 
 		switch (saleType) {
 		case ON_SALES:
@@ -128,7 +117,7 @@ public class QueryGUI extends JFrame {
 			break;
 		}
 
-		jButtonSearch.addActionListener(e -> refreshQuery(QueryFilterType.SALE));
+		jButtonSearch.addActionListener(e -> refreshQuery());
 
 
 		tableProducts.addMouseListener(new MouseAdapter() {
@@ -168,57 +157,8 @@ public class QueryGUI extends JFrame {
 
 	}
 
-	public QueryGUI(String currentUserMail,  QueryFilterType query) {
-		this(currentUserMail);
 
-		//TODO ALDATU MEZUAK
-		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
-		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale");
-
-
-		jButtonSearch.addActionListener(e -> refreshQuery(query));
-
-
-		tableProducts.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent mouseEvent) {
-				if(mouseEvent.getClickCount() == 2)
-				{
-					JTable table =(JTable) mouseEvent.getSource();
-					Point point = mouseEvent.getPoint();
-					int row = table.rowAtPoint(point);
-					Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-					System.out.println(currentUserMail);
-					if(currentUserMail == "") {
-						new ShowSaleGUInonReg(s);
-					}else {
-						switch(saleType){
-						case ON_SALES:
-							new ShowSaleGUInonReg(s);
-							break;
-						case PUBLISHED_SALES:
-							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
-							break;
-						case PURCHASED:
-							new ShowSaleGUIBought(currentUserMail,s,thisFrame);
-							break;
-						case WISHLIST:
-							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
-							break;
-
-						}
-					}
-				}
-			}
-		});
-
-
-
-
-
-	}
-
-	public void refreshQuery(QueryFilterType query) {
+	public void refreshQuery() {
 		try {
 			tableModelProducts.setDataVector(null, columnNamesProducts);
 			tableModelProducts.setColumnCount(4); // another column added to allocate product object
@@ -227,18 +167,7 @@ public class QueryGUI extends JFrame {
 			Date today = UtilDate.trim(new Date());
 
 			//Query deia
-			List<Sale> sales = null;
-			switch(query){
-			case COMPLAINT:
-				//sales = facade.getComplaints(jTextFieldSearch.getText());
-			case REPORT:
-				//sales = facade.getReports(jTextFieldSearch.getText());
-
-			case SALE:
-				sales = facade.getQuery(jTextFieldSearch.getText(),today,saleType,currentMail);
-
-
-			}
+			List<Sale> sales = facade.getQuery(jTextFieldSearch.getText(),today,saleType,currentMail);
 
 			if (sales.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);
@@ -256,8 +185,8 @@ public class QueryGUI extends JFrame {
 			e1.printStackTrace();
 		}
 		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
-		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(10);
-		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(70);
+		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
+		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(70);
 		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
 	}
 }

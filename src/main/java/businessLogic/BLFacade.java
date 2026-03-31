@@ -12,6 +12,7 @@ import domain.Admin;
 import domain.Complaint;
 import domain.Movement;
 import domain.Registered;
+import domain.Report;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -64,7 +65,9 @@ public interface BLFacade  {
 	
 	@WebMethod public List<Movement> getMovements(String email, MovementType type);
 
-	@WebMethod public List<Complaint> getComplaints(String titleFilter);
+	@WebMethod public List<Complaint> getComplaints();
+	
+	@WebMethod public List<Report> getReports();
 
 	//@WebMethod public List<Sale> getReports(String titleFilter);
 	

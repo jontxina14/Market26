@@ -66,6 +66,10 @@ public class Report {
 		this.date = date;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	
 	
 	

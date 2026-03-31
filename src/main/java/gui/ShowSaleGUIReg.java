@@ -44,7 +44,7 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 					if (b) {
 
 						//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
-						parent.refreshQuery(QueryFilterType.SALE);
+						parent.refreshQuery();
 						dispose();
 					}
 				}catch(NotEnoughMoneyException e) {

@@ -16,6 +16,7 @@ import domain.Admin;
 import domain.Complaint;
 import domain.Movement;
 import domain.Registered;
+import domain.Report;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -112,10 +113,18 @@ public class BLFacadeImplementation  implements BLFacade {
 		return rides;
 	}
 
-	public List<Complaint> getComplaints(String titleFilter) {
+	public List<Complaint> getComplaints() {
 		dbManager.open();
 		List<Complaint> rides= new ArrayList<Complaint>();
-		rides = dbManager.getComplaints(titleFilter);
+		rides = dbManager.getComplaints();
+		dbManager.close();
+		return rides;
+	}
+	
+	public List<Report> getReports() {
+		dbManager.open();
+		List<Report> rides= new ArrayList<Report>();
+		rides = dbManager.getReports();
 		dbManager.close();
 		return rides;
 	}

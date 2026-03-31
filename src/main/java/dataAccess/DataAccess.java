@@ -267,19 +267,16 @@ public class DataAccess  {
 
 	}
 
-	public List<Complaint> getComplaints(String titleFilter){
-		TypedQuery<Complaint> query = db.createQuery("SELECT c FROM Complaint c WHERE c.title LIKE ?1 ",Complaint.class);   
-		query.setParameter(1, "%"+titleFilter+"%");
+	public List<Complaint> getComplaints(){
+		TypedQuery<Complaint> query = db.createQuery("SELECT c FROM Complaint c",Complaint.class);   
 		List<Complaint> list = query.getResultList();
 		return new ArrayList<Complaint>(list);
 	}
-	/* TODO
-	public List<Report> getReports(String titleFilter){
-		TypedQuery<Report> query = db.createQuery("SELECT c FROM Complaint c WHERE c.title LIKE ?1 ",Complaint.class);   
-		query.setParameter(1, "%"+titleFilter+"%");
-		List<Report> list = query.getResultList();
-		return new ArrayList<Report>(list);
-	}*/
+	
+	public List<Report> getReports(){
+		TypedQuery<Report> query = db.createQuery("SELECT r FROM Report r", Report.class);   
+		return new ArrayList<Report>(query.getResultList());
+	}
 
 
 
