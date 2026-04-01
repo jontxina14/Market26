@@ -235,12 +235,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.makeComplaint(currentUsermail,sale,complaint);
 		dbManager.close();
 	}
-
-	public boolean hasReported(String currentUsermail, Sale sale) {
-		dbManager.open();
-		Boolean result = dbManager.hasReported(currentUsermail, sale);
-		dbManager.close();
-		return result;	
+	
+	@WebMethod public boolean hasReported(String currentUsermail, Sale sale) {
+	    dbManager.open();
+	    boolean result = dbManager.hasReported(currentUsermail, sale);
+	    dbManager.close();
+	    return result;
 	}
 
 

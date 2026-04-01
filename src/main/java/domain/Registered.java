@@ -106,6 +106,11 @@ public class Registered implements Serializable {
 	public List<Sale> getBought() {
 		return bought;
 	} 
+	
+
+	public List<Complaint> getComplaints() {
+	    return complaints;
+	}
 
 	public List<Report> getReports() {
 	    return reports;

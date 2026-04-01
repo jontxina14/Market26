@@ -119,7 +119,7 @@ public class ShowMovementsGUI extends JFrame {
 			List<Movement> movements=facade.getMovements(currentMail,type);
 
 			if (movements.isEmpty() ) {
-				jLabelMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Errorea"));
+				jLabelMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Error"));
 			}else {
 				jLabelMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Movements"));
 			}

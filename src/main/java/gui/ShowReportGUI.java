@@ -31,10 +31,16 @@ public class ShowReportGUI extends JFrame {
 
 	private JLabel jLabelMsg = new JLabel();
 	private JFrame thisFrame;
+	
+	private QueryReportGUI parent;
 
 
-	public ShowReportGUI(Report report) {
+	public ShowReportGUI(Report report, JFrame p) {
 		thisFrame=this; 
+		
+		this.parent = (QueryReportGUI) p;
+
+		
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 360));
 		this.setLocationRelativeTo(null);
@@ -64,6 +70,7 @@ public class ShowReportGUI extends JFrame {
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				facade.declineReport(report);
+				parent.refreshQuery();
 				dispose();
 			}
 		});
@@ -73,9 +80,12 @@ public class ShowReportGUI extends JFrame {
 		jButtonBan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				facade.adminReport(report);
+				parent.refreshQuery();
 				dispose();
 			}
 		});
+		
+		
 		jButtonBan.setBounds(360, 250, 140, 40);
 		jButtonShowSale.setBounds(520, 250, 140, 40);
 

@@ -32,10 +32,16 @@ public class ShowComplaintGUI extends JFrame {
 
 	private JLabel jLabelMsg = new JLabel();
 	private JFrame thisFrame;
+	
+	private QueryComplaintGUI parent;
 
 
-	public ShowComplaintGUI(Complaint complaint) {
+	public ShowComplaintGUI(Complaint complaint, JFrame p) {
 		thisFrame=this; 
+
+		this.parent = (QueryComplaintGUI) p;
+
+		
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(900, 500));
 		this.setLocationRelativeTo(null);
@@ -67,10 +73,21 @@ public class ShowComplaintGUI extends JFrame {
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				facade.declineComplaint(complaint);
+				parent.refreshQuery();
 				dispose();
 			}
 		});
+		
+
+		
 		jButtonDecline.setBounds(350, 395, 180, 45);
+		jButtonAccept.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				facade.acceptComplaint(complaint);
+				parent.refreshQuery();
+				dispose();
+			}
+		});
 		jButtonAccept.setBounds(570, 395, 180, 45);
 
 		fieldTitle.setEditable(false);

@@ -503,6 +503,14 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class, currentUsermail);
 		Sale s = db.find(Sale.class, sale.getSaleNumber());
+
+		for (Complaint c : reg.getComplaints()) {
+			if (c.getSale().equals(s)) {
+				db.getTransaction().rollback();
+				return;
+			}
+		}
+
 		Complaint c = new Complaint(complaint,s,reg);
 		s.addComplaint(c);
 		reg.addComplaint(c);
@@ -511,13 +519,10 @@ public class DataAccess  {
 	}
 
 	public boolean hasReported(String currentUsermail, Sale sale) {
-		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class, currentUsermail);
 		Sale s = db.find(Sale.class, sale.getSaleNumber());
-		for (Report r: reg.getReports()) {
-			if(r.getSale().equals(s)) {
-				return true;
-			}
+		for (Report r : reg.getReports()) {
+			if (r.getSale().equals(s)) return true;
 		}
 		return false;
 	}
@@ -526,7 +531,16 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class, currentUsermail);
 		Sale s = db.find(Sale.class, sale.getSaleNumber());
+
+		for (Report r : reg.getReports()) {
+			if (r.getSale().equals(s)) {
+				db.getTransaction().rollback();
+				return;
+			}
+		}
+
 		Report r = new Report(reason,s,reg);
+
 		reg.addReport(r);
 		s.addReport(r);
 		s.setSaleStatus(SaleStatusType.USER_REPORTED);
@@ -544,11 +558,19 @@ public class DataAccess  {
 		reg.getReports().remove(r);
 		sale.getReports().remove(r);
 
-		if (sale.getReports().isEmpty()) {
+		db.remove(r);
+
+		boolean reportsPending = false;
+		for (Report rep : sale.getReports()) {
+			if (!rep.isTreated()) {
+				reportsPending = true;
+				break;
+			}
+		}
+		if (!reportsPending) {
 			sale.setSaleStatus(SaleStatusType.ON_SALE);
 		}
 
-		db.remove(r);
 		db.getTransaction().commit();
 	}
 
@@ -575,14 +597,17 @@ public class DataAccess  {
 		Sale sale = c.getSale();
 		Registered buyer = c.getUser();
 		Registered seller = sale.getSeller();
-		
+
 		buyer.getBought().remove(sale);
-		//devolver dinero comprador
-		//quitar dinero al vendedor
-		//Crear Movements de devolver y quitar
-		//Hacer algo con Sale(Borrar o algun estado mas)
-		
-		
+
+		double newBuyerBalance = buyer.getBalance()+sale.getPrice();
+		buyer.setBalance(newBuyerBalance);
+		buyer.addToMovements(new Movement(MovementType.REFUND_BUYER,sale.getPrice(),newBuyerBalance,sale,buyer));
+
+		double newSellerBalance = seller.getBalance()-sale.getPrice();
+		seller.setBalance(newSellerBalance);
+		seller.addToMovements(new Movement(MovementType.REFUND_SELLER,sale.getPrice(),newSellerBalance,sale,seller));
+
 		db.getTransaction().commit();
 	}
 

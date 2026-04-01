@@ -67,7 +67,7 @@ public class QueryComplaintGUI extends JFrame {
                 if (mouseEvent.getClickCount() == 2) {
                     int row = table.rowAtPoint(mouseEvent.getPoint());
                     Complaint c = complaints.get(row);
-                    JFrame a = new ShowComplaintGUI(c);
+                    JFrame a = new ShowComplaintGUI(c,thisFrame);
                     a.setVisible(true);
                 }
             }

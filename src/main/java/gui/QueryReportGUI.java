@@ -76,7 +76,7 @@ public class QueryReportGUI extends JFrame {
                 if(mouseEvent.getClickCount() == 2) {
                 	int row = table.rowAtPoint(mouseEvent.getPoint());
                 	Report c = reports.get(row);
-                	JFrame a = new ShowReportGUI(c);
+                	JFrame a = new ShowReportGUI(c,thisFrame);
     				a.setVisible(true);
 
                 }
