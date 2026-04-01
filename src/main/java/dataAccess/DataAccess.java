@@ -431,6 +431,10 @@ public class DataAccess  {
 	public Sale getSale(int saleNumber) {
 		return db.find(Sale.class, saleNumber);
 	}
+	
+	public Registered getRegistered(String email) {
+		return db.find(Registered.class,email);
+	}
 
 	public boolean toggleWishList(String mail, int saleNumber) {
 

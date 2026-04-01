@@ -57,6 +57,8 @@ public class MainGUIReg extends JFrame {
 
 		this.sellerMail=r.getEmail();
 		
+		BLFacade facade = MainGUInonReg.getBusinessLogic();
+		
 		this.setSize(495, 290);
 		jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
 		jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -115,7 +117,9 @@ public class MainGUIReg extends JFrame {
 		jButtonShowProfile.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.ShowProfile"));
 		jButtonShowProfile.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new ShowProfileGUI(r);
+				
+				Registered freshReg = facade.getRegistered(sellerMail);
+				JFrame a = new ShowProfileGUI(freshReg);
 
 				a.setVisible(true);
 			}

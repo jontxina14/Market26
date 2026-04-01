@@ -87,6 +87,8 @@ public interface BLFacade  {
 	@WebMethod public void register(Registered seller);
 	
 	@WebMethod public Sale getSale(int saleNumber);
+	
+	@WebMethod public Registered getRegistered(String email);
 
 	@WebMethod public boolean removeSale(int SaleNumber);
 	
