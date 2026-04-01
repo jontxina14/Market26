@@ -20,8 +20,8 @@ public class ShowMovementsGUI extends JFrame {
 	private MovementType type;
 
 	private static final long serialVersionUID = 1L;
-	private final JLabel jLabelChoose = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products")); 
-	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
+	private final JLabel jLabelChoose = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Search")); 
+	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Close"));
 
 	private JScrollPane scrollPanelProducts = new JScrollPane();
 
@@ -50,7 +50,7 @@ public class ShowMovementsGUI extends JFrame {
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 500));
-		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Tilte"));
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Title"));
 		jLabelChoose.setBounds(52, 40, 427, 16);
 		this.getContentPane().add(jLabelChoose);
 
