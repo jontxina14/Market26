@@ -20,6 +20,7 @@ public class Report {
 	private int id;
 	private Date date;
 	private ReportReason cause;
+	boolean treated;
 	
 	@OneToOne
 	private Registered user;
@@ -32,6 +33,7 @@ public class Report {
 		this.cause=cause;
 		this.sale=sale;
 		this.user=user;
+		this.treated=false;
 	}
 
 	public ReportReason getCause() {
@@ -69,6 +71,16 @@ public class Report {
 	public int getId() {
 		return id;
 	}
+
+	public boolean isTreated() {
+		return treated;
+	}
+
+	public void setTreated(boolean treated) {
+		this.treated = treated;
+	}
+	
+	
 	
 	
 	

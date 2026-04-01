@@ -116,7 +116,7 @@ public class MainGUInonReg extends JFrame {
 		jButtonQuerySales.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQuerySales.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new QueryGUI("", SaleType.PUBLISHED_SALES);
+				JFrame a = new QuerySaleGUI("", SaleType.PUBLISHED_SALES);
 				a.setVisible(true);
 			}
 		});

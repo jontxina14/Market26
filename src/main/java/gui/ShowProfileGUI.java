@@ -144,7 +144,7 @@ public class ShowProfileGUI extends JFrame {
 	}
 	
 	private void query(SaleType type) {
-		JFrame a = new QueryGUI(user.getEmail(), type);
+		JFrame a = new QuerySaleGUI(user.getEmail(), type);
 		a.setVisible(true);
 	}
 	

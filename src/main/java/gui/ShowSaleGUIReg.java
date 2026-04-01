@@ -19,12 +19,12 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 
 	private JToggleButton toggleWishListButton;
 	private JLabel jLabelError = new JLabel();
-	private QueryGUI parent;
+	private QuerySaleGUI parent;
 
 	public ShowSaleGUIReg(String currentUserMail, Sale sale, JFrame p) {
 		super(sale);
 
-		this.parent = (QueryGUI) p;
+		this.parent = (QuerySaleGUI) p;
 
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
 

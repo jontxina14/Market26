@@ -13,44 +13,39 @@ import javax.swing.table.DefaultTableModel;
 
 public class QueryComplaintGUI extends JFrame {
 
-
     private static final long serialVersionUID = 1L;
-    private final JLabel jLabelReports = new JLabel("Reports");
+    private final JLabel jLabelComplaints = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QueryComplaintGUI.Title"));
 
-    private JButton jButtonSearch = new JButton("Search");
-    private JButton jButtonClose = new JButton("Close");
+    private JButton jButtonSearch = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Search"));
+    private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 
     private JScrollPane scrollPanel = new JScrollPane();
-
     private JTable table = new JTable();
     private DefaultTableModel tableModel;
-
     private JFrame thisFrame;
-
-    private String[] columnNames = new String[] {
-    		//TODO internalizazioa
-            "IDComplaint",
-            "Title",
-            "User",
-            "Date"
-    };
-    
+    private String[] columnNames;
     private List<Complaint> complaints;
 
     public QueryComplaintGUI() {
-        
+
+        ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
+
+        columnNames = new String[] {
+            bundle.getString("QueryComplaintGUI.IDComplaint"),
+            bundle.getString("QueryComplaintGUI.ComplaintTitle"),
+            bundle.getString("QueryComplaintGUI.User"),
+            bundle.getString("QueryComplaintGUI.Date")
+        };
 
         table.setEnabled(false);
         thisFrame = this;
         this.getContentPane().setLayout(null);
         this.setSize(new Dimension(643, 470));
-       
-        //TODO INTERNALIZAZIOA
-        this.setTitle("Reports");
-        jLabelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-        jLabelReports.setBounds(52, 55, 427, 16);
-        this.getContentPane().add(jLabelReports);
+        this.setTitle(bundle.getString("QueryComplaintGUI.Title"));
+        jLabelComplaints.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        jLabelComplaints.setBounds(52, 55, 427, 16);
+        this.getContentPane().add(jLabelComplaints);
 
         jButtonClose.setBounds(new Rectangle(52, 355, 141, 30));
         jButtonClose.addActionListener(e -> thisFrame.setVisible(false));
@@ -58,45 +53,42 @@ public class QueryComplaintGUI extends JFrame {
 
         scrollPanel.setBounds(new Rectangle(52, 104, 497, 211));
         scrollPanel.setViewportView(table);
-
         tableModel = new DefaultTableModel(null, columnNames);
         table.setModel(tableModel);
-
         this.getContentPane().add(scrollPanel);
 
         jButtonSearch.setBounds(408, 49, 141, 29);
         getContentPane().add(jButtonSearch);
-
         jButtonSearch.addActionListener(e -> refreshQuery());
 
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent mouseEvent) {
-                if(mouseEvent.getClickCount() == 2) {
-                	int row = table.rowAtPoint(mouseEvent.getPoint());
-                	Complaint c = complaints.get(row);
-                	JFrame a = new ShowComplaintGUI(c);
-    				a.setVisible(true);
-
+                if (mouseEvent.getClickCount() == 2) {
+                    int row = table.rowAtPoint(mouseEvent.getPoint());
+                    Complaint c = complaints.get(row);
+                    JFrame a = new ShowComplaintGUI(c);
+                    a.setVisible(true);
                 }
             }
         });
     }
 
     public void refreshQuery() {
+
+        ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
+
         try {
             tableModel.setDataVector(null, columnNames);
-
             BLFacade facade = MainGUInonReg.getBusinessLogic();
-
             complaints = facade.getComplaints();
 
-            if (!complaints.isEmpty()) 
-                jLabelReports.setText("Complaints");
-            else 
-                jLabelReports.setText("No Complaints");
+            if (!complaints.isEmpty())
+                jLabelComplaints.setText(bundle.getString("QueryComplaintGUI.Complaints"));
+            else
+                jLabelComplaints.setText(bundle.getString("QueryComplaintGUI.NoComplaints"));
 
-            for (Complaint complaint : complaints){
+            for (Complaint complaint : complaints) {
                 Vector<Object> row = new Vector<Object>();
                 row.add(complaint.getId());
                 row.add(complaint.getSale().getTitle());
@@ -107,10 +99,5 @@ public class QueryComplaintGUI extends JFrame {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-
-        //table.getColumnModel().getColumn(0).setPreferredWidth(80);
-        //table.getColumnModel().getColumn(1).setPreferredWidth(200);
-        //table.getColumnModel().getColumn(2).setPreferredWidth(150);
-        //table.getColumnModel().getColumn(3).setPreferredWidth(100);
     }
 }

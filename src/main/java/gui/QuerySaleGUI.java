@@ -17,7 +17,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
-public class QueryGUI extends JFrame {
+public class QuerySaleGUI extends JFrame {
 
 	private String currentMail;
 	private SaleType saleType;
@@ -49,7 +49,7 @@ public class QueryGUI extends JFrame {
 
 
 	
-	public QueryGUI(String currentUserMail, SaleType saleType) {
+	public QuerySaleGUI(String currentUserMail, SaleType saleType) {
 		this.currentMail = currentUserMail;
 		this.saleType = saleType;
 

@@ -15,10 +15,10 @@ public class QueryReportGUI extends JFrame {
 
 
     private static final long serialVersionUID = 1L;
-    private final JLabel jLabelReports = new JLabel("Reports");
+    private final JLabel jLabelReports = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QueryReportGUI.Title"));
 
-    private JButton jButtonSearch = new JButton("Search");
-    private JButton jButtonClose = new JButton("Close");
+    private JButton jButtonSearch = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Search"));
+    private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowReportGUI.Close"));
 
     private JScrollPane scrollPanel = new JScrollPane();
 
@@ -27,26 +27,27 @@ public class QueryReportGUI extends JFrame {
 
     private JFrame thisFrame;
 
-    private String[] columnNames = new String[] {
-    		//TODO internalizazioa
-            "IDReport",
-            "Title",
-            "User",
-            "Date"
-    };
+    private String[] columnNames;
     
     private List<Report> reports;
 
     public QueryReportGUI() {
         
+        ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
 
+        columnNames = new String[] {
+                bundle.getString("QueryReportGUI.IDReport"),
+                bundle.getString("QueryReportGUI.ReportTitle"),
+                bundle.getString("QueryReportGUI.User"),
+                bundle.getString("QueryReportGUI.Date")
+            };
+        
         table.setEnabled(false);
         thisFrame = this;
         this.getContentPane().setLayout(null);
         this.setSize(new Dimension(643, 470));
        
-        //TODO INTERNALIZAZIOA
-        this.setTitle("Reports");
+        this.setTitle(bundle.getString("QueryReportGUI.Title"));
         jLabelReports.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
         jLabelReports.setBounds(52, 55, 427, 16);
@@ -84,6 +85,9 @@ public class QueryReportGUI extends JFrame {
     }
 
     public void refreshQuery() {
+    	
+        ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
+
         try {
             tableModel.setDataVector(null, columnNames);
 
@@ -92,9 +96,9 @@ public class QueryReportGUI extends JFrame {
             reports = facade.getReports();
 
             if (!reports.isEmpty()) 
-                jLabelReports.setText("Reports");
+                jLabelReports.setText(bundle.getString("QueryReportGUI.Reports"));
             else 
-                jLabelReports.setText("No Reports");
+                jLabelReports.setText(bundle.getString("QueryReportGUI.NoReports"));
 
             for (Report report : reports){
                 Vector<Object> row = new Vector<Object>();

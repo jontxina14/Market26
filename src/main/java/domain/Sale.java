@@ -248,6 +248,10 @@ public class Sale implements Serializable {
 		return !complaints.isEmpty();
 	}
 	
+	public List<Report> getReports() {
+	    return reports;
+	}
+	
 	public void addReport(Report r) {
 		if(!reports.contains(r)) {
 			reports.add(r);

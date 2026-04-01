@@ -31,13 +31,10 @@ public class ShowMovementsGUI extends JFrame {
 	private JFrame thisFrame; 
 
 	private String[] columnNamesProducts = new String[] {
-			/*
-			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Title"), 
-			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Price"),
-			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.PublicationDate"),
-			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.PublicationDate"),
-			 */
-			"Mota", "Eguna", "Zenbat","Mugimendua eta gero"
+			ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Type"), 
+			ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Date"),
+			ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Amount"),
+			ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.AmountAfter"),
 
 	};
 	
@@ -53,7 +50,7 @@ public class ShowMovementsGUI extends JFrame {
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 500));
-		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.FindProducts"));
+		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Tilte"));
 		jLabelChoose.setBounds(52, 40, 427, 16);
 		this.getContentPane().add(jLabelChoose);
 
@@ -90,7 +87,7 @@ public class ShowMovementsGUI extends JFrame {
 
 		this.getContentPane().add(scrollPanelProducts, null);
 
-		jLabelMessage = new JLabel("PROBA1"); 
+		jLabelMessage = new JLabel(""); 
 		jLabelMessage.setBounds(52, 122, 427, 16);
 		getContentPane().add(jLabelMessage);
 
@@ -98,9 +95,8 @@ public class ShowMovementsGUI extends JFrame {
 		comboBox.setBounds(52, 66, 427, 30);
 		getContentPane().add(comboBox);
 		
-		
-		//TODO internalizazioa
-		JButton btnNewButton = new JButton("BILATU"); //$NON-NLS-1$ //$NON-NLS-2$
+
+		JButton btnNewButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Search"));
 		btnNewButton.addActionListener(e -> refreshQuery());
 		btnNewButton.setBounds(503, 71, 84, 20);
 		getContentPane().add(btnNewButton);
@@ -123,10 +119,10 @@ public class ShowMovementsGUI extends JFrame {
 			List<Movement> movements=facade.getMovements(currentMail,type);
 
 			if (movements.isEmpty() ) {
-				//TODO 
-				System.out.println("Ez daude mugimendurik");
+				jLabelMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Errorea"));
+			}else {
+				jLabelMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Movements"));
 			}
-			else jLabelMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.Products"));
 			
 			for (domain.Movement movement:movements){
 				Vector<Object> row = new Vector<Object>();

@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.swing.*;
 
+import businessLogic.BLFacade;
 import domain.Report;
 
 import java.awt.*;
@@ -38,6 +39,9 @@ public class ShowReportGUI extends JFrame {
 		this.setSize(new Dimension(700, 360));
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
+		
+		BLFacade facade = MainGUInonReg.getBusinessLogic();
+		
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowReportGUI.Name"));
 
 		fieldTitle.setText(report.getSale().getTitle());
@@ -57,7 +61,21 @@ public class ShowReportGUI extends JFrame {
 		fieldCause.setBounds(220, 165, 200, 30);
 
 		jButtonClose.setBounds(40, 250, 140, 40);
+		jButtonDecline.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				facade.declineReport(report);
+				dispose();
+			}
+		});
+		
+		
 		jButtonDecline.setBounds(200, 250, 140, 40);
+		jButtonBan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				facade.adminReport(report);
+				dispose();
+			}
+		});
 		jButtonBan.setBounds(360, 250, 140, 40);
 		jButtonShowSale.setBounds(520, 250, 140, 40);
 
@@ -74,10 +92,12 @@ public class ShowReportGUI extends JFrame {
 			}
 		});
 		
+		
+		
+		
 		jButtonShowSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame a = new ShowSaleGUInonReg(report.getSale());
-				
 			}
 		});	
 		

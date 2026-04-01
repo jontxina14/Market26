@@ -249,6 +249,32 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.makeReport(currentUsermail,sale,reason);
 		dbManager.close();
 	}
+	
+	public void declineReport(Report report) {
+		dbManager.open();
+		dbManager.declineReport(report);
+		dbManager.close();
+	}
+	
+	public void adminReport(Report report) {
+		dbManager.open();
+		dbManager.adminReport(report);
+		dbManager.close();
+	}
+	
+	public void declineComplaint(Complaint complaint) {
+		dbManager.open();
+		dbManager.declineComplaint(complaint);
+		dbManager.close();
+	}
+	
+
+	public void acceptComplaint(Complaint complaint) {
+		dbManager.open();
+		dbManager.acceptComplaint(complaint);
+		dbManager.close();
+	}
+	
 
 }
 

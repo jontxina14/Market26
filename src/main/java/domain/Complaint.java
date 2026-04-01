@@ -20,8 +20,7 @@ public class Complaint {
 	private Date date;
 	private String description;
 
-	//1 treated 0 not treated
-	private int status;
+	private boolean treated;
 	
 	@OneToOne
     private Registered user;  
@@ -34,7 +33,7 @@ public class Complaint {
 	public Complaint(String description, Sale sale, Registered reg){
     	this.date =  UtilDate.trim(new Date());
 		this.description=description;
-		this.status=0;
+		this.treated=false;
 		this.sale=sale;
 		this.user=reg;
 		saleTitle=sale.getTitle();
@@ -72,12 +71,13 @@ public class Complaint {
 		this.description = description;
 	}
 
-	public int getStatus() {
-		return status;
+
+	public boolean isTreated() {
+		return treated;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setTreated(boolean treated) {
+		this.treated = treated;
 	}
 
 	public Registered getUser() {

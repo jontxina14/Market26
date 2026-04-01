@@ -208,30 +208,30 @@ public class DataAccess  {
 	 * @return collection of products that contain desc in a title
 	 */
 	public List<Sale> getPublishedSales(String desc, Date pubDate, String email) {
-	    System.out.println(">> DataAccess: getProducts=> from= " + desc);
+		System.out.println(">> DataAccess: getProducts=> from= " + desc);
 
-	    TypedQuery<Sale> query = db.createQuery(
-	        "SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <= ?2 AND (s.saleStatus = ?3 OR s.saleStatus = ?4)",
-	        Sale.class);
-	    query.setParameter(1, "%" + desc + "%");
-	    query.setParameter(2, pubDate);
-	    query.setParameter(3, SaleStatusType.ON_SALE);
-	    query.setParameter(4, SaleStatusType.USER_REPORTED);
+		TypedQuery<Sale> query = db.createQuery(
+				"SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <= ?2 AND (s.saleStatus = ?3 OR s.saleStatus = ?4)",
+				Sale.class);
+		query.setParameter(1, "%" + desc + "%");
+		query.setParameter(2, pubDate);
+		query.setParameter(3, SaleStatusType.ON_SALE);
+		query.setParameter(4, SaleStatusType.USER_REPORTED);
 
-	    List<Sale> sales = query.getResultList();
-	    ArrayList<Sale> ema = new ArrayList<Sale>();
-	    for (Sale s : sales) {
-	        if (!s.getSeller().getEmail().equals(email)) {
-	            ema.add(s);
-	        }
-	    }
-	    return ema;
+		List<Sale> sales = query.getResultList();
+		ArrayList<Sale> ema = new ArrayList<Sale>();
+		for (Sale s : sales) {
+			if (!s.getSeller().getEmail().equals(email)) {
+				ema.add(s);
+			}
+		}
+		return ema;
 	}
 
 	public List<Sale> getOnSales(String email, String filter) {
-	    System.out.println(">> DataAccess: getOnSales=> from= " + email);
-	    List<Sale> res = db.find(Registered.class, email).getSales();
-	    return getFiltered(res, filter);
+		System.out.println(">> DataAccess: getOnSales=> from= " + email);
+		List<Sale> res = db.find(Registered.class, email).getSales();
+		return getFiltered(res, filter);
 	}
 	public List<Sale> getWhisList(String email, String filter) {
 		System.out.println(">> DataAccess: getWhisList=> from= "+email);
@@ -268,16 +268,15 @@ public class DataAccess  {
 	}
 
 	public List<Complaint> getComplaints(){
-		TypedQuery<Complaint> query = db.createQuery("SELECT c FROM Complaint c",Complaint.class);   
+		TypedQuery<Complaint> query = db.createQuery("SELECT c FROM Complaint c WHERE c.treated = false",Complaint.class);   
 		List<Complaint> list = query.getResultList();
 		return new ArrayList<Complaint>(list);
 	}
-	
+
 	public List<Report> getReports(){
-		TypedQuery<Report> query = db.createQuery("SELECT r FROM Report r", Report.class);   
+		TypedQuery<Report> query = db.createQuery("SELECT r FROM Report r WHERE r.treated = false", Report.class);   
 		return new ArrayList<Report>(query.getResultList());
 	}
-
 
 
 	public void open(){
@@ -428,9 +427,9 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
-	
+
 	public Sale getSale(int saleNumber) {
-	    return db.find(Sale.class, saleNumber);
+		return db.find(Sale.class, saleNumber);
 	}
 
 	public boolean toggleWishList(String mail, int saleNumber) {
@@ -498,8 +497,8 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		return reg;
 	}
-	
-	
+
+
 	public void makeComplaint(String currentUsermail, Sale sale, String complaint) {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class, currentUsermail);
@@ -522,7 +521,7 @@ public class DataAccess  {
 		}
 		return false;
 	}
-	
+
 	public void makeReport(String currentUsermail, Sale sale, ReportReason reason) {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class, currentUsermail);
@@ -536,6 +535,56 @@ public class DataAccess  {
 		db.getTransaction().commit();		
 	}
 
+	public void declineReport(Report report) {
+		db.getTransaction().begin();
+		Report r = db.find(Report.class, report.getId());
+		Registered reg = r.getUser();
+		Sale sale = r.getSale();
+
+		reg.getReports().remove(r);
+		sale.getReports().remove(r);
+
+		if (sale.getReports().isEmpty()) {
+			sale.setSaleStatus(SaleStatusType.ON_SALE);
+		}
+
+		db.remove(r);
+		db.getTransaction().commit();
+	}
+
+	public void adminReport(Report report) {
+		db.getTransaction().begin();
+		Report r = db.find(Report.class, report.getId());
+		Sale sale = r.getSale();
+		sale.setSaleStatus(SaleStatusType.ADMIN_REPORTED);
+		r.setTreated(true);
+		db.getTransaction().commit();
+	}
+
+	public void declineComplaint(Complaint complaint) {
+		db.getTransaction().begin();
+		Complaint c = db.find(Complaint.class, complaint.getId());
+		c.setTreated(true);
+		db.getTransaction().commit();
+	}
+
+	public void acceptComplaint(Complaint complaint) {
+		db.getTransaction().begin();
+		Complaint c = db.find(Complaint.class, complaint.getId());
+		c.setTreated(true);
+		Sale sale = c.getSale();
+		Registered buyer = c.getUser();
+		Registered seller = sale.getSeller();
+		
+		buyer.getBought().remove(sale);
+		//devolver dinero comprador
+		//quitar dinero al vendedor
+		//Crear Movements de devolver y quitar
+		//Hacer algo con Sale(Borrar o algun estado mas)
+		
+		
+		db.getTransaction().commit();
+	}
 
 
 }

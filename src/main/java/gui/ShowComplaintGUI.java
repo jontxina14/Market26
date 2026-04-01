@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.swing.*;
 
+import businessLogic.BLFacade;
 import domain.Complaint;
 
 import java.awt.*;
@@ -38,6 +39,8 @@ public class ShowComplaintGUI extends JFrame {
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(900, 500));
 		this.setLocationRelativeTo(null);
+		
+		BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowComplaintGUI.Name"));
 		fieldTitle.setText(complaint.getSaleTitle());
@@ -58,9 +61,17 @@ public class ShowComplaintGUI extends JFrame {
 		fieldDate.setBounds(250, 180, 150, 30);
 		fieldDescription.setBounds(40, 270, 760, 100);
 
-		jButtonClose.setBounds(150, 400, 140, 40);
-		jButtonDecline.setBounds(350, 400, 140, 40);
-		jButtonAccept.setBounds(550, 400, 140, 40);
+		jButtonClose.setBounds(130, 395, 180, 45);
+		
+		
+		jButtonDecline.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				facade.declineComplaint(complaint);
+				dispose();
+			}
+		});
+		jButtonDecline.setBounds(350, 395, 180, 45);
+		jButtonAccept.setBounds(570, 395, 180, 45);
 
 		fieldTitle.setEditable(false);
 		fieldDescription.setEditable(false);
