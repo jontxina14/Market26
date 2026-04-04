@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlTransient;
 
 import configuration.UtilDate;
 import enums.ReportReason;
@@ -14,10 +15,15 @@ import enums.ReportReason;
 @Entity
 public class Report {
 	
-	@XmlID
+	@XmlTransient
 	@Id
 	@GeneratedValue
 	private int id;
+	@XmlID
+	public String getXmlId() {
+	    return "report-" + id;
+	}
+	
 	private Date date;
 	private ReportReason cause;
 	boolean treated;

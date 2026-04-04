@@ -7,16 +7,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlTransient;
 
 import configuration.UtilDate;
 import enums.MovementType;
 
 @Entity
 public class Movement {
-	@XmlID
+	@XmlTransient
 	@Id
 	@GeneratedValue
 	private int id;
+	@XmlID
+	public String getXmlId() {
+	    return "movement-" + id;
+	}
     private Date date;
     private double amount;
     private double balanceAfter;

@@ -7,16 +7,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlTransient;
 
 import configuration.UtilDate;
 
 @Entity
 public class Complaint {
 	
-	@XmlID
+	@XmlTransient
 	@Id
 	@GeneratedValue
 	private int id;
+	@XmlID
+	public String getXmlId() {
+	    return "complaint-" + id;
+	}
 	private Date date;
 	private String description;
 
