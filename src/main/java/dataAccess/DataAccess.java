@@ -360,7 +360,7 @@ public class DataAccess  {
 		query.setParameter(1, email);
 		query.setParameter(2, pass);
 
-		return query.getResultList().isEmpty()? null: query.getResultList().get(0);
+		return query.getResultList().isEmpty() ? null : query.getResultList().get(0);
 
 	}
 
