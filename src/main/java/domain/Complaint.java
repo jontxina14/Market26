@@ -6,11 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
 
 import configuration.UtilDate;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Complaint {
 	
@@ -18,18 +21,21 @@ public class Complaint {
 	@Id
 	@GeneratedValue
 	private int id;
-	@XmlID
+	
 	public String getXmlId() {
 	    return "complaint-" + id;
 	}
 	private Date date;
 	private String description;
 
+	@XmlID
+    private String xmlId;
 	private boolean treated;
 	
 	@OneToOne
     private Registered user;  
 
+	@XmlIDREF
 	@OneToOne
     private Sale sale;
 	
@@ -42,6 +48,9 @@ public class Complaint {
 		this.sale=sale;
 		this.user=reg;
 		saleTitle=sale.getTitle();
+	}
+	public Complaint() {
+		
 	}
 
 	public String getSaleTitle() {

@@ -13,6 +13,9 @@ public class Admin {
 		this.email=e;
 		this.password=p;
 	}
+	public Admin() {
+	    super();
+	}
 
 	public String getEmail() {
 		return email;

@@ -6,22 +6,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
 
 import configuration.UtilDate;
 import enums.MovementType;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Movement {
 	@XmlTransient
 	@Id
 	@GeneratedValue
 	private int id;
-	@XmlID
+	
 	public String getXmlId() {
 	    return "movement-" + id;
 	}
+	 @XmlID
+	private String xmlId;
+	 
     private Date date;
     private double amount;
     private double balanceAfter;
@@ -33,6 +39,7 @@ public class Movement {
     private Registered user;
     private String email;
 
+    @XmlIDREF
     private Sale sale;         
 
     private String description;
@@ -46,6 +53,9 @@ public class Movement {
     	email=this.user.getEmail();
     	this.sale=sale;
     	//TODO description
+    }
+    public Movement() {
+    	
     }
     
     public Date getDate() {

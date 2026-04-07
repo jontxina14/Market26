@@ -6,12 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
 
 import configuration.UtilDate;
 import enums.ReportReason;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Report {
 	
@@ -19,9 +23,15 @@ public class Report {
 	@Id
 	@GeneratedValue
 	private int id;
-	@XmlID
+	
 	public String getXmlId() {
 	    return "report-" + id;
+	}
+	@XmlID
+	private String XmlId;
+	
+	public Report() {
+		//derrigorrezkoa xml-rako
 	}
 	
 	private Date date;
@@ -31,6 +41,7 @@ public class Report {
 	@OneToOne
 	private Registered user;
 	
+	@XmlIDREF
 	@OneToOne
 	private Sale sale;
 	

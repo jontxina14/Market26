@@ -101,11 +101,18 @@ public class QueryReportGUI extends JFrame {
                 jLabelReports.setText(bundle.getString("QueryReportGUI.NoReports"));
 
             for (Report report : reports){
+                if (report == null) continue;
+
                 Vector<Object> row = new Vector<Object>();
+                
                 row.add(report.getId());
-                row.add(report.getSale().getTitle());
-                row.add(report.getUser().getEmail());
-                row.add(new SimpleDateFormat("dd-MM-yyyy").format(report.getDate()));
+                
+                row.add(report.getSale() != null ? report.getSale().getTitle() : "null");
+                row.add(report.getUser() != null ? report.getUser().getEmail() : "null");
+                row.add(report.getDate() != null 
+                    ? new SimpleDateFormat("dd-MM-yyyy").format(report.getDate()) 
+                    : "null");
+
                 tableModel.addRow(row);
             }
         } catch (Exception e1) {

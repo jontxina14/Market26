@@ -50,10 +50,23 @@ public class ShowReportGUI extends JFrame {
 		
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowReportGUI.Name"));
 
-		fieldTitle.setText(report.getSale().getTitle());
-		fieldUser.setText(report.getUser().getEmail());
-		fieldDate.setText(new SimpleDateFormat("dd-MM-yyyy").format(report.getDate()));
-		fieldCause.setText((String) report.getCause().toString());
+		fieldTitle.setText(
+			    report.getSale() != null ? report.getSale().getTitle() : "null"
+			);
+
+		fieldUser.setText(
+			    report.getUser() != null ? report.getUser().getEmail() : "null"
+			);
+
+		fieldDate.setText(
+			    report.getDate() != null 
+			        ? new SimpleDateFormat("dd-MM-yyyy").format(report.getDate()) 
+			        : "null"
+			);
+
+		fieldCause.setText(
+			    report.getCause() != null ? report.getCause().toString() : "null"
+			);
 
 		
 		jLabelTitle.setBounds(50, 30, 250, 25);
@@ -69,8 +82,14 @@ public class ShowReportGUI extends JFrame {
 		jButtonClose.setBounds(40, 250, 140, 40);
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				facade.declineReport(report);
-				parent.refreshQuery();
+				if (report != null && facade != null) {
+				    facade.declineReport(report);
+				}
+
+				if (parent != null) {
+				    parent.refreshQuery();
+				}
+
 				dispose();
 			}
 		});
