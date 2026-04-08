@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import domain.SaleContainer;
 import exceptions.NotEnoughMoneyException;
 
 public class ShowSaleGUIBought extends ShowSaleGUInonReg {
@@ -26,8 +27,8 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 	private QuerySaleGUI parent;
 	JButton complaintButton;
 
-	public ShowSaleGUIBought(String currentUserMail, Sale sale, JFrame p) {
-		super(sale);
+	public ShowSaleGUIBought(String currentUserMail, Sale s, JFrame p) {
+		super(s);
 
 		this.parent = (QuerySaleGUI) p;
 
@@ -42,7 +43,7 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 		complaintButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintButton")); //$NON-NLS-1$ //$NON-NLS-2$
 
 
-		Sale freshSale = facade.getSale(sale.getSaleNumber());
+		Sale freshSale = facade.getSale(s.getSaleNumber());
 		if(freshSale.hasAnyComplaint()) {
 			complaintButton.setEnabled(false);
 			complaintButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintPending"));
@@ -52,7 +53,7 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 		//BIDEO (Eager complaint)
 		complaintButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new MakeComplaintGUI(currentUserMail, sale);
+				JFrame a = new MakeComplaintGUI(currentUserMail, s);
 				a.setVisible(true);
 				dispose();
 			}

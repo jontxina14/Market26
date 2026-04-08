@@ -30,6 +30,11 @@ public class Report {
 	@XmlID
 	private String XmlId;
 	
+	public void setId(int id) {
+	    this.id = id;
+	    this.XmlId = "report-" + id;
+	}
+
 	public Report() {
 		//derrigorrezkoa xml-rako
 	}
@@ -37,7 +42,8 @@ public class Report {
 	private Date date;
 	private ReportReason cause;
 	boolean treated;
-	
+   
+	@XmlIDREF
 	@OneToOne
 	private Registered user;
 	

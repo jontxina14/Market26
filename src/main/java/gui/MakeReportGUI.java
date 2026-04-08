@@ -2,10 +2,14 @@ package gui;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import domain.SaleContainer;
 import enums.ReportReason;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import com.objectdb.o.CLN.s;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +22,7 @@ public class MakeReportGUI extends JFrame {
     private JLabel errorLabel;
     private ButtonGroup radioGroup;
 
-    public MakeReportGUI(String reporterMail, Sale sale) {
+    public MakeReportGUI(String reporterMail, Sale s) {
         ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
 
         setTitle(bundle.getString("MakeReportGUI.Title"));
@@ -77,7 +81,7 @@ public class MakeReportGUI extends JFrame {
                 }
                 ReportReason reason = ReportReason.valueOf(selected.getActionCommand());
                 BLFacade facade = MainGUInonReg.getBusinessLogic();
-                facade.makeReport(reporterMail, sale, reason);
+                facade.makeReport(reporterMail, s, reason);
                 dispose();
             }
         });

@@ -31,7 +31,7 @@ public class Complaint {
 	@XmlID
     private String xmlId;
 	private boolean treated;
-	
+	@XmlIDREF
 	@OneToOne
     private Registered user;  
 

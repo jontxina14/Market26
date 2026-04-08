@@ -3,6 +3,7 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Sale;
+import domain.SaleContainer;
 import enums.MovementType;
 import enums.QueryFilterType;
 import enums.SaleType;

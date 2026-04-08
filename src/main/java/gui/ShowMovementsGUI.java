@@ -2,6 +2,7 @@ package gui;
 
 import businessLogic.BLFacade;
 import domain.Movement;
+import domain.MovementContainer;
 import enums.MovementType;
 
 import javax.swing.*;
@@ -116,7 +117,7 @@ public class ShowMovementsGUI extends JFrame {
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 			//Query deia
-			List<Movement> movements=facade.getMovements(currentMail,type);
+			List<MovementContainer> movements=facade.getMovements(currentMail,type);
 
 			if (movements.isEmpty() ) {
 				jLabelMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Error"));
@@ -124,12 +125,12 @@ public class ShowMovementsGUI extends JFrame {
 				jLabelMessage.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowMovementsGUI.Movements"));
 			}
 			
-			for (domain.Movement movement:movements){
+			for (MovementContainer movement:movements){
 				Vector<Object> row = new Vector<Object>();
-				row.add(movement.getType());
-				row.add(new SimpleDateFormat("dd-MM-yyyy").format(movement.getDate()));
-				row.add(movement.getAmount());
-				row.add(movement.getBalanceAfter()); // product object added in order to obtain it with tableModelProducts.getValueAt(i,2)
+				row.add(movement.getMovement().getType());
+				row.add(new SimpleDateFormat("dd-MM-yyyy").format(movement.getMovement().getDate()));
+				row.add(movement.getMovement().getAmount());
+				row.add(movement.getMovement().getBalanceAfter()); // product object added in order to obtain it with tableModelProducts.getValueAt(i,2)
 				tableModelProducts.addRow(row);		
 			}
 		} catch (Exception e1) {

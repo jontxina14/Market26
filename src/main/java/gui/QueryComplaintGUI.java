@@ -2,6 +2,7 @@ package gui;
 
 import businessLogic.BLFacade;
 import domain.Complaint;
+import domain.ComplaintContainer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +25,7 @@ public class QueryComplaintGUI extends JFrame {
     private DefaultTableModel tableModel;
     private JFrame thisFrame;
     private String[] columnNames;
-    private List<Complaint> complaints;
+    private List<ComplaintContainer> complaints;
 
     public QueryComplaintGUI() {
 
@@ -66,7 +67,7 @@ public class QueryComplaintGUI extends JFrame {
             public void mousePressed(MouseEvent mouseEvent) {
                 if (mouseEvent.getClickCount() == 2) {
                     int row = table.rowAtPoint(mouseEvent.getPoint());
-                    Complaint c = complaints.get(row);
+                    ComplaintContainer c = complaints.get(row);
                     JFrame a = new ShowComplaintGUI(c,thisFrame);
                     a.setVisible(true);
                 }
@@ -88,12 +89,12 @@ public class QueryComplaintGUI extends JFrame {
             else
                 jLabelComplaints.setText(bundle.getString("QueryComplaintGUI.NoComplaints"));
 
-            for (Complaint complaint : complaints) {
+            for (ComplaintContainer complaint : complaints) {
                 Vector<Object> row = new Vector<Object>();
-                row.add(complaint.getId());
+                row.add(complaint.getComplaint().getId());
                 row.add(complaint.getSale().getTitle());
                 row.add(complaint.getUser().getEmail());
-                row.add(new SimpleDateFormat("dd-MM-yyyy").format(complaint.getDate()));
+                row.add(new SimpleDateFormat("dd-MM-yyyy").format(complaint.getComplaint().getDate()));
                 tableModel.addRow(row);
             }
         } catch (Exception e1) {

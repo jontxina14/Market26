@@ -259,4 +259,12 @@ public class Sale implements Serializable {
 			reports.add(r);
 		}
 	}
+
+	public Sale getSale() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 }

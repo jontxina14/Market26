@@ -34,7 +34,8 @@ public class Movement {
 
     // BUY, SELL, DEPOSIT, WITHDRAW
     private MovementType type;
-
+    
+    @XmlIDREF
     @OneToOne
     private Registered user;
     private String email;
@@ -73,4 +74,12 @@ public class Movement {
     public MovementType getType() {
     	return type;
     }
+	public Sale getSale() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Registered getUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

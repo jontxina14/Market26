@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import domain.SaleContainer;
 
 
 public class ShowSaleGUInonReg extends JFrame {

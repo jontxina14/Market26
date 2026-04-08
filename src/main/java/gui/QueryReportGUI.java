@@ -2,6 +2,7 @@ package gui;
 
 import businessLogic.BLFacade;
 import domain.Report;
+import domain.ReportContainer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +30,7 @@ public class QueryReportGUI extends JFrame {
 
     private String[] columnNames;
     
-    private List<Report> reports;
+    private List<ReportContainer> reports;
 
     public QueryReportGUI() {
         
@@ -75,7 +76,7 @@ public class QueryReportGUI extends JFrame {
             public void mousePressed(MouseEvent mouseEvent) {
                 if(mouseEvent.getClickCount() == 2) {
                 	int row = table.rowAtPoint(mouseEvent.getPoint());
-                	Report c = reports.get(row);
+                	ReportContainer c = reports.get(row);
                 	JFrame a = new ShowReportGUI(c,thisFrame);
     				a.setVisible(true);
 
@@ -100,17 +101,17 @@ public class QueryReportGUI extends JFrame {
             else 
                 jLabelReports.setText(bundle.getString("QueryReportGUI.NoReports"));
 
-            for (Report report : reports){
+            for (ReportContainer report : reports){
                 if (report == null) continue;
 
                 Vector<Object> row = new Vector<Object>();
                 
-                row.add(report.getId());
+                row.add(report.getReport().getId());
                 
                 row.add(report.getSale() != null ? report.getSale().getTitle() : "null");
                 row.add(report.getUser() != null ? report.getUser().getEmail() : "null");
-                row.add(report.getDate() != null 
-                    ? new SimpleDateFormat("dd-MM-yyyy").format(report.getDate()) 
+                row.add(report.getReport().getDate() != null 
+                    ? new SimpleDateFormat("dd-MM-yyyy").format(report.getReport().getDate()) 
                     : "null");
 
                 tableModel.addRow(row);

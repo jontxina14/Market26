@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import domain.SaleContainer;
 import enums.QueryFilterType;
 import exceptions.NotEnoughMoneyException;
 
@@ -21,8 +22,8 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 	private JLabel jLabelError = new JLabel();
 	private QuerySaleGUI parent;
 
-	public ShowSaleGUIReg(String currentUserMail, Sale sale, JFrame p) {
-		super(sale);
+	public ShowSaleGUIReg(String currentUserMail, Sale s, JFrame p) {
+		super(s);
 
 		this.parent = (QuerySaleGUI) p;
 
@@ -38,9 +39,9 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		JButton buyButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.buyButton")); //$NON-NLS-1$ //$NON-NLS-2$
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(sale.getSaleNumber());
+				System.out.println(s.getSaleNumber());
 				try {
-					boolean b = facade.buySale(currentUserMail, sale.getSaleNumber());
+					boolean b = facade.buySale(currentUserMail, s.getSaleNumber());
 					if (b) {
 
 						//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
@@ -62,14 +63,14 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		//Wish list
 		ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/images/heart_empty.png"));
 		ImageIcon filledIcon = new ImageIcon(getClass().getResource("/images/heart_filled.png"));
-		boolean dago = facade.isInWishList(currentUserMail, sale.getSaleNumber());
+		boolean dago = facade.isInWishList(currentUserMail, s.getSaleNumber());
 
 		//JToggleButton selekzionatuta mantentzen delako
 		toggleWishListButton = new JToggleButton(dago ? filledIcon : emptyIcon);
 		toggleWishListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				facade.toggleWishList(currentUserMail, sale.getSaleNumber());
-				boolean dago = facade.isInWishList(currentUserMail, sale.getSaleNumber());
+				facade.toggleWishList(currentUserMail, s.getSaleNumber());
+				boolean dago = facade.isInWishList(currentUserMail, s.getSaleNumber());
 				toggleWishListButton.setIcon(dago ? filledIcon : emptyIcon);
 			}
 		});
@@ -79,14 +80,14 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		getContentPane().add(toggleWishListButton);
 
 		JButton reportButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.reportButton"));
-		if(facade.hasReported(currentUserMail,sale)) {
+		if(facade.hasReported(currentUserMail,s)) {
 			reportButton.setEnabled(false);
 			reportButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AlredyReported"));
 		}
 		
 		reportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new MakeReportGUI(currentUserMail, sale).setVisible(true);
+				new MakeReportGUI(currentUserMail, s).setVisible(true);
 				dispose();
 			}
 		});

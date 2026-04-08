@@ -14,9 +14,12 @@ import enums.ReportReason;
 import enums.SaleType;
 import domain.Admin;
 import domain.Complaint;
+import domain.ComplaintContainer;
 import domain.Movement;
+import domain.MovementContainer;
 import domain.Registered;
 import domain.Report;
+import domain.ReportContainer;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -105,28 +108,43 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * {@inheritDoc}
 	 */
 	@WebMethod 
-	public List<Movement> getMovements(String email, MovementType type) {
+	public List<MovementContainer> getMovements(String email, MovementType type) {
 		dbManager.open();
-		List<Movement> rides= new ArrayList<Movement>();
-		rides = dbManager.getMovements(email, type);
+		List<Movement> rides= dbManager.getMovements(email, type);
+	    List<MovementContainer> res = new ArrayList<>();
+
+		 for (Movement c : rides) {
+		        res.add(new MovementContainer(c));
+		    }
 		dbManager.close();
-		return rides;
+		return res;
 	}
 
-	public List<Complaint> getComplaints() {
+	public List<ComplaintContainer> getComplaints() {
 		dbManager.open();
-		List<Complaint> rides= new ArrayList<Complaint>();
-		rides = dbManager.getComplaints();
+		List<Complaint> rides= dbManager.getComplaints();;
+	    List<ComplaintContainer> com = new ArrayList<>();
+	    
+	    for (Complaint c : rides) {
+	        com.add(new ComplaintContainer(c));
+	    }
+
 		dbManager.close();
-		return rides;
+		return com;
 	}
 	
-	public List<Report> getReports() {
-		dbManager.open();
-		List<Report> rides= new ArrayList<Report>();
-		rides = dbManager.getReports();
-		dbManager.close();
-		return rides;
+	public List<ReportContainer> getReports() {
+	    dbManager.open();
+
+	    List<Report> reports = dbManager.getReports();
+	    List<ReportContainer> res = new ArrayList<>();
+
+	    for (Report r : reports) {
+	        res.add(new ReportContainer(r));
+	    }
+
+	    dbManager.close();
+	    return res;
 	}
 
 
@@ -281,6 +299,8 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.acceptComplaint(complaint);
 		dbManager.close();
 	}
+
+	
 	
 
 }

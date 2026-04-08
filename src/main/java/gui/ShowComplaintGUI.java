@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import businessLogic.BLFacade;
 import domain.Complaint;
+import domain.ComplaintContainer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -36,7 +37,7 @@ public class ShowComplaintGUI extends JFrame {
 	private QueryComplaintGUI parent;
 
 
-	public ShowComplaintGUI(Complaint complaint, JFrame p) {
+	public ShowComplaintGUI(ComplaintContainer c, JFrame p) {
 		thisFrame=this; 
 
 		this.parent = (QueryComplaintGUI) p;
@@ -49,11 +50,11 @@ public class ShowComplaintGUI extends JFrame {
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowComplaintGUI.Name"));
-		fieldTitle.setText(complaint.getSaleTitle());
-		fieldPrice.setText(Float.toString(complaint.getSale().getPrice()));
-		fieldUser.setText(complaint.getUser().getEmail());
-		fieldDate.setText(new SimpleDateFormat("dd-MM-yyyy").format(complaint.getDate()));
-		fieldDescription.setText(complaint.getDescription());
+		fieldTitle.setText(c.getComplaint().getSaleTitle());
+		fieldPrice.setText(Float.toString(c.getSale().getPrice()));
+		fieldUser.setText(c.getUser().getEmail());
+		fieldDate.setText(new SimpleDateFormat("dd-MM-yyyy").format(c.getComplaint().getDate()));
+		fieldDescription.setText(c.getComplaint().getDescription());
 
 		jLabelTitle.setBounds(40, 30, 250, 25);
 		jLabelPrice.setBounds(40, 80, 250, 25);
@@ -72,7 +73,7 @@ public class ShowComplaintGUI extends JFrame {
 		
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				facade.declineComplaint(complaint);
+				facade.declineComplaint(c.getComplaint());
 				parent.refreshQuery();
 				dispose();
 			}
@@ -83,7 +84,7 @@ public class ShowComplaintGUI extends JFrame {
 		jButtonDecline.setBounds(350, 395, 180, 45);
 		jButtonAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				facade.acceptComplaint(complaint);
+				facade.acceptComplaint(c.getComplaint());
 				parent.refreshQuery();
 				dispose();
 			}

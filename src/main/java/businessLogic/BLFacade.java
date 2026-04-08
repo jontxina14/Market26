@@ -10,9 +10,12 @@ import enums.ReportReason;
 import enums.SaleType;
 import domain.Admin;
 import domain.Complaint;
+import domain.ComplaintContainer;
 import domain.Movement;
+import domain.MovementContainer;
 import domain.Registered;
 import domain.Report;
+import domain.ReportContainer;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -63,11 +66,11 @@ public interface BLFacade  {
 	 */
 	@WebMethod public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email);
 	
-	@WebMethod public List<Movement> getMovements(String email, MovementType type);
+	@WebMethod public List<MovementContainer> getMovements(String email, MovementType type);
 
-	@WebMethod public List<Complaint> getComplaints();
+	@WebMethod public List<ComplaintContainer> getComplaints();
 	
-	@WebMethod public List<Report> getReports();
+	@WebMethod public List<ReportContainer> getReports();
 
 	//@WebMethod public List<Sale> getReports(String titleFilter);
 	

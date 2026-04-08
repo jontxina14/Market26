@@ -554,28 +554,37 @@ public class DataAccess  {
 	}
 
 	public void declineReport(Report report) {
-		db.getTransaction().begin();
-		Report r = db.find(Report.class, report.getId());
-		Registered reg = r.getUser();
-		Sale sale = r.getSale();
+	    db.getTransaction().begin();
 
-		reg.getReports().remove(r);
-		sale.getReports().remove(r);
+	    Report r = db.find(Report.class, report.getId()); // ✅ BIEN
 
-		db.remove(r);
+	    if (r == null) {
+	        db.getTransaction().commit();
+	        return;
+	    }
 
-		boolean reportsPending = false;
-		for (Report rep : sale.getReports()) {
-			if (!rep.isTreated()) {
-				reportsPending = true;
-				break;
-			}
-		}
-		if (!reportsPending) {
-			sale.setSaleStatus(SaleStatusType.ON_SALE);
-		}
+	    Registered reg = r.getUser();
+	    Sale sale = r.getSale();
 
-		db.getTransaction().commit();
+	    if (reg != null) reg.getReports().remove(r);
+	    if (sale != null) sale.getReports().remove(r);
+
+	    db.remove(r);
+
+	    if (sale != null) {
+	        boolean reportsPending = false;
+	        for (Report rep : sale.getReports()) {
+	            if (!rep.isTreated()) {
+	                reportsPending = true;
+	                break;
+	            }
+	        }
+	        if (!reportsPending) {
+	            sale.setSaleStatus(SaleStatusType.ON_SALE);
+	        }
+	    }
+
+	    db.getTransaction().commit();
 	}
 
 	public void adminReport(Report report) {

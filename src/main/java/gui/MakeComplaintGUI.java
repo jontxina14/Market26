@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import domain.SaleContainer;
 
 public class MakeComplaintGUI extends JFrame {
 

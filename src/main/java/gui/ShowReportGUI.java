@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import businessLogic.BLFacade;
 import domain.Report;
+import domain.ReportContainer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -35,7 +36,7 @@ public class ShowReportGUI extends JFrame {
 	private QueryReportGUI parent;
 
 
-	public ShowReportGUI(Report report, JFrame p) {
+	public ShowReportGUI(ReportContainer report, JFrame p) {
 		thisFrame=this; 
 		
 		this.parent = (QueryReportGUI) p;
@@ -59,13 +60,13 @@ public class ShowReportGUI extends JFrame {
 			);
 
 		fieldDate.setText(
-			    report.getDate() != null 
-			        ? new SimpleDateFormat("dd-MM-yyyy").format(report.getDate()) 
+			    report.getReport().getDate() != null 
+			        ? new SimpleDateFormat("dd-MM-yyyy").format(report.getReport().getDate()) 
 			        : "null"
 			);
 
 		fieldCause.setText(
-			    report.getCause() != null ? report.getCause().toString() : "null"
+			    report.getReport().getCause() != null ? report.getReport().getCause().toString() : "null"
 			);
 
 		
@@ -83,7 +84,7 @@ public class ShowReportGUI extends JFrame {
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (report != null && facade != null) {
-				    facade.declineReport(report);
+				    facade.declineReport(report.getReport());
 				}
 
 				if (parent != null) {
@@ -98,7 +99,7 @@ public class ShowReportGUI extends JFrame {
 		jButtonDecline.setBounds(200, 250, 140, 40);
 		jButtonBan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				facade.adminReport(report);
+				facade.adminReport(report.getReport());
 				parent.refreshQuery();
 				dispose();
 			}
@@ -126,7 +127,7 @@ public class ShowReportGUI extends JFrame {
 		
 		jButtonShowSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame a = new ShowSaleGUInonReg(report.getSale());
+				JFrame a = new ShowSaleGUInonReg(report.getReport().getSale());
 			}
 		});	
 		
