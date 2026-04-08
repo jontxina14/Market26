@@ -28,4 +28,4 @@ Erabilitako orduak: +-50
 
 Bideoaren link-a: https://youtu.be/OiBspvtbhcU
 
-GitHub-eko direktorioa: 
+GitHub-eko direktorioa: https://github.com/jontxina14/Market26.git
