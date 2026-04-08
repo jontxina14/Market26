@@ -26,5 +26,6 @@ Izandako arazo nagusienak:
 
 Erabilitako orduak: +-50
 
-Bideoaren link-a:
+Bideoaren link-a: https://youtu.be/OiBspvtbhcU
 
+GitHub-eko direktorioa: 
