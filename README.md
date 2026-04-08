@@ -1,23 +1,30 @@
 MARKET26
 Tadekideak:
-- Alain del Ser
-- Jon Peralta (Scrum master)
-- Sohaib Sebban
-- Aimar Telleria
+
+* Alain del Ser
+* Jon Peralta
+* Sohaib Sebban (Scrum master)
+* Aimar Telleria
 
 Implementatutako erabilpen kasuak.
-- Login
-- Register
-- Buy
-- Add to wishlist
+
+* Buy (Aldatu)
+* Report a sale
+* Make a complaint
+* Manage Reports
+* Manage Complaints
+* Manage Money
+* Show Movements
+* Show Profile
 
 Internalizazioa: BAI
 
 Izandako arazo nagusienak:
-- Hasieran Sale-ren eraikitzaile batzuk parametroak orden desegokia zituzten. Hau dela eta status aldagaiak, onartzen ez dituen balio batzuk izaten zituen, errore batzuk emanez.
-- ShowSaleGUI klasetik beste GUI batean eragina izatea automatikoki. Arazoa konpontzeko ShowSaleGUI klaseko eraikitzailean beste parametro bat gehitu, beste GUIaren erreferentzia pasaz.
-- Hasieran produktuak erostean guztiz ezabatu. Hau ez egiteko, atributu bat sortu eta DataAcces klasean hainbat Query atributu honen menpe jarri.
 
-Erabilitako orduak: +-20
+* Window builder-arekin arazo bat izan genuen. Klase batzuetan herentzia implementatzean, eraikitzailearekin arazo bat ematen digu GUI-a aurreikustaraztean.
+* Web zerbitzua implentatzean, erlazio zirkularrak arazoak ematzen zizkigun eta containerrak sortu behar izan ditugu null pointer ekiditeko.
 
-Bideoaren link-a: https://www.youtube.com/watch?v=FdphJ6v2Pjs 
+Erabilitako orduak: +-50
+
+Bideoaren link-a:
+
