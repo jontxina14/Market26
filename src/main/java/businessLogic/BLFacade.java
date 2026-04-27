@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Sale;
+import domain.User;
 import enums.MovementType;
 import enums.ReportReason;
 import enums.SaleType;
@@ -87,6 +88,8 @@ public interface BLFacade  {
 	
 	@WebMethod public Admin isAdmin(String mail, String pass);
 	
+	@WebMethod public User isLogin(String mail, String pass);
+
 	@WebMethod public void register(Registered seller);
 	
 	@WebMethod public Sale getSale(int saleNumber);

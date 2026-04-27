@@ -364,6 +364,18 @@ public class DataAccess  {
 
 	}
 
+	public User isLogin(String email, String pass) {
+		TypedQuery<User> query = db.createQuery(
+				"SELECT u FROM User u WHERE u.email = ?1 AND u.password = ?2",
+				User.class
+				);
+
+		query.setParameter(1, email);
+		query.setParameter(2, pass);
+		System.out.println(query.getResultList());
+		return query.getResultList().isEmpty() ? null : query.getResultList().get(0);
+
+	}
 
 
 

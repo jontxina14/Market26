@@ -9,6 +9,7 @@ import javax.jws.WebService;
 
 import dataAccess.DataAccess;
 import domain.Sale;
+import domain.User;
 import enums.MovementType;
 import enums.ReportReason;
 import enums.SaleType;
@@ -194,6 +195,12 @@ public class BLFacadeImplementation  implements BLFacade {
 	@WebMethod public Admin isAdmin(String mail, String pass){
 		dbManager.open();
 		Admin a = dbManager.isAdmin(mail,pass);
+		dbManager.close();
+		return a;
+	}
+	@WebMethod public User isLogin(String mail, String pass){
+		dbManager.open();
+		User a = dbManager.isLogin(mail,pass);
 		dbManager.close();
 		return a;
 	}

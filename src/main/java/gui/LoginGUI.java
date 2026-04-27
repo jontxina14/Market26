@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import businessLogic.BLFacade;
 import domain.Admin;
 import domain.Registered;
+import domain.User;
 
 import java.awt.event.ActionListener;
 
@@ -44,6 +45,7 @@ public class LoginGUI extends JFrame {
 		JLabel lblUsername = new JLabel(bundle.getString("LoginGUI.Email"));
 		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
 		textFieldUsername = new JTextField();
+		textFieldUsername.setText("seller1@gmail.com");
 
 		// PASSWORD
 		JLabel lblPassword = new JLabel(bundle.getString("LoginGUI.Password"));
@@ -89,24 +91,20 @@ public class LoginGUI extends JFrame {
 			String email = textFieldUsername.getText();
 			String password = new String(textFieldPassword.getPassword());
 
-			Admin admin = facade.isAdmin(email, password);
-			if(admin != null){
-				new MainGUIAdmin(admin).setVisible(true);
+			User u = facade.isLogin(email, password);
+			if(u == null) errorLabel.setText(bundle.getString("LoginGUI.error"));
+
+			else if(u instanceof Admin){
+				new MainGUIAdmin((Admin) u).setVisible(true);
 				dispose();
 				
 				
 			}else {
-
-
-				Registered b = facade.isRegistered(email,password);
-
-				if(b == null) errorLabel.setText(bundle.getString("LoginGUI.error"));
-				else {
-					new MainGUIReg(b).setVisible(true);
+					new MainGUIReg((Registered) u).setVisible(true);
 					dispose();
 				}
 
-			}
+			
 
 
 		});
