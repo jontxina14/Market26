@@ -498,27 +498,27 @@ public class DataAccess  {
 
 	}
 
-	public Registered manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException{
+	public Registered manageMoney(String rMail, double amount, MovementType type) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
-		Registered reg = db.find(Registered.class, r.getEmail());
+		Registered reg = db.find(Registered.class, rMail);
 		double balance = reg.getBalance();
 		if(type == MovementType.WITHDRAW) {
 			if(balance - amount < 0 ) throw new NotEnoughMoneyException();
 			reg.setBalance(balance - amount);
-			reg.addToMovements(new Movement(type, amount ,balance-amount ,null, reg)); 
+			reg.addToMovements(type, amount, balance-amount); 
 		}else if(type == MovementType.DEPOSIT ) {
 			reg.setBalance(balance + amount);
-			reg.addToMovements(new Movement(type, amount ,balance+amount ,null, reg)); 
+			reg.addToMovements(type, amount,balance-amount); 
 		}
 		db.getTransaction().commit();
 		return reg;
 	}
 
 
-	public void makeComplaint(String currentUsermail, Sale sale, String complaint) {
+	public void makeComplaint(String currentUserMail, int saleNumb, String complaint) {
 		db.getTransaction().begin();
-		Registered reg = db.find(Registered.class, currentUsermail);
-		Sale s = db.find(Sale.class, sale.getSaleNumber());
+		Registered reg = db.find(Registered.class, currentUserMail);
+		Sale s = db.find(Sale.class, saleNumb);
 
 		for (Complaint c : reg.getComplaints()) {
 			if (c.getSale().equals(s)) {
@@ -526,11 +526,7 @@ public class DataAccess  {
 				return;
 			}
 		}
-
-		Complaint c = new Complaint(complaint,s,reg);
-		s.addComplaint(c);
-		reg.addComplaint(c);
-		db.persist(c);
+		reg.addComplaint(complaint,s);
 		db.getTransaction().commit();
 	}
 
@@ -543,10 +539,10 @@ public class DataAccess  {
 		return false;
 	}
 
-	public void makeReport(String currentUsermail, Sale sale, ReportReason reason) {
+	public void makeReport(String currentUsermail, int saleNumber, ReportReason reason) {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class, currentUsermail);
-		Sale s = db.find(Sale.class, sale.getSaleNumber());
+		Sale s = db.find(Sale.class, saleNumber);
 
 		for (Report r : reg.getReports()) {
 			if (r.getSale().equals(s)) {
@@ -554,15 +550,9 @@ public class DataAccess  {
 				return;
 			}
 		}
-
-		Report r = new Report(reason,s,reg);
-
-		reg.addReport(r);
-		s.addReport(r);
+		reg.addReport(reason,s);
 		s.setSaleStatus(SaleStatusType.USER_REPORTED);
-		db.persist(r);
-		db.persist(s);
-		db.getTransaction().commit();		
+		db.getTransaction().commit();
 	}
 
 	public void declineReport(Report report) {

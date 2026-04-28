@@ -255,16 +255,16 @@ public class BLFacadeImplementation  implements BLFacade {
 
 
 
-	@WebMethod public Registered manageMoney(Registered r,double amount, MovementType type) throws NotEnoughMoneyException {
+	@WebMethod public Registered manageMoney(String rMail,double amount, MovementType type) throws NotEnoughMoneyException {
 		dbManager.open();
-		Registered result = dbManager.manageMoney(r, amount, type);
+		Registered result = dbManager.manageMoney(rMail, amount, type);
 		dbManager.close();
 		return result;
 	}
 
-	@WebMethod public void makeComplaint(String currentUsermail, Sale sale, String complaint) {
+	@WebMethod public void makeComplaint(String currentUsermail, int saleNumb, String complaint) {
 		dbManager.open();
-		dbManager.makeComplaint(currentUsermail,sale,complaint);
+		dbManager.makeComplaint(currentUsermail,saleNumb,complaint);
 		dbManager.close();
 	}
 	
@@ -276,9 +276,9 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 
 
-	public void makeReport(String currentUsermail, Sale sale, ReportReason reason) {
+	public void makeReport(String currentUsermail, int saleNum, ReportReason reason) {
 		dbManager.open();
-		dbManager.makeReport(currentUsermail,sale,reason);
+		dbManager.makeReport(currentUsermail,saleNum,reason);
 		dbManager.close();
 	}
 	

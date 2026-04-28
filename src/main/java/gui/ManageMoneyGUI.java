@@ -104,7 +104,7 @@ public class ManageMoneyGUI extends JFrame {
 						if(!r.getPass().equals(textFieldPass.getText())) {
 							lblMessage.setText(bundle.getString("ManageMoneyGUI.IncorrectPassword"));
 						}else {
-							Registered reg = facade.manageMoney(r, amount, rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
+							Registered reg = facade.manageMoney(r.getEmail(), amount, rdbtnDeposit.isSelected() ? MovementType.DEPOSIT : MovementType.WITHDRAW);
 							dispose();
 							JFrame a = new ShowProfileGUI(reg);
 							a.setVisible(true);

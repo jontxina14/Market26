@@ -104,13 +104,13 @@ public interface BLFacade  {
 
 	@WebMethod public boolean isInWishList(String mail, int saleNumber);
 	
-	@WebMethod public Registered manageMoney(Registered r, double amount, MovementType type) throws NotEnoughMoneyException;
+	@WebMethod public Registered manageMoney(String rMail, double amount, MovementType type) throws NotEnoughMoneyException;
 	
-	@WebMethod public void makeComplaint(String currentUsermail, Sale sale, String complaint);
+	@WebMethod public void makeComplaint(String currentUsermail, int saleNumb, String complaint);
 	
 	@WebMethod public boolean hasReported(String currentUsermail, Sale sale);
 	
-	@WebMethod public void makeReport(String currentUsermail, Sale sale, ReportReason reason);
+	@WebMethod public void makeReport(String currentUsermail, int saleNum, ReportReason reason);
 
 	@WebMethod public void declineReport(Report report);
 	

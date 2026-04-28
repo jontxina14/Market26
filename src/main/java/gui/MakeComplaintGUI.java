@@ -66,7 +66,7 @@ public class MakeComplaintGUI extends JFrame {
 				BLFacade facade = MainGUInonReg.getBusinessLogic();
 				String text = textField.getText().trim();
 				if(!text.isEmpty()) {
-					facade.makeComplaint(currentUsermail, s, text);
+					facade.makeComplaint(currentUsermail, s.getSaleNumber(), text);
 					dispose();
 				} else {
 					lblMessage.setText(bundle.getString("MakeComplaintGUI.Empty"));

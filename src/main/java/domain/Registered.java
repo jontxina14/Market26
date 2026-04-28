@@ -13,6 +13,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 
+import enums.MovementType;
+import enums.ReportReason;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Registered extends User implements Serializable {
@@ -133,23 +136,11 @@ public class Registered extends User implements Serializable {
 		}
 	}
 
-	public void addToMovements(Movement move) {
-		if(!movements.contains(move)) {
-			movements.add(move);
-		}
+	public void addToMovements(MovementType type, double amount, double balanceAfter) {
+		Movement m = new Movement(type, amount, balanceAfter, null, this);
+		movements.add(m);
 	}
 
-	public void addComplaint(Complaint c) {
-		if(!complaints.contains(c)) {
-			complaints.add(c);
-		}
-	}
-
-	public void addReport(Report r) {
-		if(!reports.contains(r)) {
-			reports.add(r);
-		}
-	}
 
 
 
@@ -167,6 +158,20 @@ public class Registered extends User implements Serializable {
 				return true;
 		return false;
 	}
+	
+	public void addReport(ReportReason reason, Sale s) {
+		Report r = new Report(reason, s,this);
+		reports.add(r);
+		s.addReport(r);
+	}
+	
+	public void addComplaint(String complaint, Sale s) {
+		Complaint c = new Complaint(complaint, s, this);
+		complaints.add(c);
+		s.addComplaint(c);
+	}
+	
+	
 
 
 /*	@Override

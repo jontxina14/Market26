@@ -81,7 +81,7 @@ public class MakeReportGUI extends JFrame {
                 }
                 ReportReason reason = ReportReason.valueOf(selected.getActionCommand());
                 BLFacade facade = MainGUInonReg.getBusinessLogic();
-                facade.makeReport(reporterMail, s, reason);
+                facade.makeReport(reporterMail, s.getSaleNumber(), reason);
                 dispose();
             }
         });
