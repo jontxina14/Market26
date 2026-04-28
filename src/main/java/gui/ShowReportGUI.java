@@ -84,7 +84,7 @@ public class ShowReportGUI extends JFrame {
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (report != null && facade != null) {
-				    facade.declineReport(report.getReport());
+				    facade.declineReport(report.getReport().getId());
 				}
 
 				if (parent != null) {
@@ -99,7 +99,7 @@ public class ShowReportGUI extends JFrame {
 		jButtonDecline.setBounds(200, 250, 140, 40);
 		jButtonBan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				facade.adminReport(report.getReport());
+				facade.adminReport(report.getReport().getId());
 				parent.refreshQuery();
 				dispose();
 			}

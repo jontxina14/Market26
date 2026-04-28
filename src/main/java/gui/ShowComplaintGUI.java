@@ -73,7 +73,7 @@ public class ShowComplaintGUI extends JFrame {
 		
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				facade.declineComplaint(c.getComplaint());
+				facade.declineComplaint(c.getComplaint().getId());
 				parent.refreshQuery();
 				dispose();
 			}
@@ -84,7 +84,7 @@ public class ShowComplaintGUI extends JFrame {
 		jButtonDecline.setBounds(350, 395, 180, 45);
 		jButtonAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				facade.acceptComplaint(c.getComplaint());
+				facade.acceptComplaint(c.getComplaint().getId());
 				parent.refreshQuery();
 				dispose();
 			}

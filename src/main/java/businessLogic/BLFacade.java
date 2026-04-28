@@ -112,12 +112,12 @@ public interface BLFacade  {
 	
 	@WebMethod public void makeReport(String currentUsermail, int saleNum, ReportReason reason);
 
-	@WebMethod public void declineReport(Report report);
+	@WebMethod public void declineReport(int reportID);
 	
-	@WebMethod public void adminReport(Report report);
+	@WebMethod public void adminReport(int reportID);
 	
-	@WebMethod public void declineComplaint(Complaint complaint);
+	@WebMethod public void declineComplaint(int complaintID);
 	
-	@WebMethod public void acceptComplaint(Complaint complaint);
+	@WebMethod public void acceptComplaint(int complaintID);
 
 }

@@ -282,28 +282,28 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 	}
 	
-	public void declineReport(Report report) {
+	public void declineReport(int reportID) {
 		dbManager.open();
-		dbManager.declineReport(report);
+		dbManager.declineReport(reportID);
 		dbManager.close();
 	}
 	
-	public void adminReport(Report report) {
+	public void adminReport(int reportID) {
 		dbManager.open();
-		dbManager.adminReport(report);
+		dbManager.adminReport(reportID);
 		dbManager.close();
 	}
 	
-	public void declineComplaint(Complaint complaint) {
+	public void declineComplaint(int complaintID) {
 		dbManager.open();
-		dbManager.declineComplaint(complaint);
+		dbManager.declineComplaint(complaintID);
 		dbManager.close();
 	}
 	
 
-	public void acceptComplaint(Complaint complaint) {
+	public void acceptComplaint(int complaintID) {
 		dbManager.open();
-		dbManager.acceptComplaint(complaint);
+		dbManager.acceptComplaint(complaintID);
 		dbManager.close();
 	}
 

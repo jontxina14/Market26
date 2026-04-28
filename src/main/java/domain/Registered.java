@@ -136,8 +136,8 @@ public class Registered extends User implements Serializable {
 		}
 	}
 
-	public void addToMovements(MovementType type, double amount, double balanceAfter) {
-		Movement m = new Movement(type, amount, balanceAfter, null, this);
+	public void addToMovements(MovementType type, double amount, double balanceAfter, Sale sale) {
+		Movement m = new Movement(type, amount, balanceAfter, sale, this);
 		movements.add(m);
 	}
 

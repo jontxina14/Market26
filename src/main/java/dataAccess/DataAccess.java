@@ -417,11 +417,12 @@ public class DataAccess  {
 		double newBuyerBalance = buyer.getBalance()-sale.getPrice();
 		buyer.addToBought(sale);
 		buyer.setBalance(newBuyerBalance);
-		buyer.addToMovements(new Movement(MovementType.BUY,sale.getPrice(),newBuyerBalance,sale,buyer));
+		buyer.addToMovements(MovementType.BUY,sale.getPrice(),newBuyerBalance,sale);
+		
 
 		double newSellerBalance = seller.getBalance()+sale.getPrice();
 		seller.setBalance(newSellerBalance);
-		seller.addToMovements(new Movement(MovementType.SELL,sale.getPrice(),newSellerBalance,sale,seller));
+		seller.addToMovements(MovementType.SELL,sale.getPrice(),newSellerBalance,sale);
 
 		cleanWishLists(sale);
 
@@ -505,10 +506,10 @@ public class DataAccess  {
 		if(type == MovementType.WITHDRAW) {
 			if(balance - amount < 0 ) throw new NotEnoughMoneyException();
 			reg.setBalance(balance - amount);
-			reg.addToMovements(type, amount, balance-amount); 
+			reg.addToMovements(type, amount, balance-amount,null); 
 		}else if(type == MovementType.DEPOSIT ) {
 			reg.setBalance(balance + amount);
-			reg.addToMovements(type, amount,balance-amount); 
+			reg.addToMovements(type, amount,balance-amount,null); 
 		}
 		db.getTransaction().commit();
 		return reg;
@@ -555,10 +556,10 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
-	public void declineReport(Report report) {
+	public void declineReport(int reportID) {
 	    db.getTransaction().begin();
 
-	    Report r = db.find(Report.class, report.getId()); // ✅ BIEN
+	    Report r = db.find(Report.class, reportID); // ✅ BIEN
 
 	    if (r == null) {
 	        db.getTransaction().commit();
@@ -589,25 +590,25 @@ public class DataAccess  {
 	    db.getTransaction().commit();
 	}
 
-	public void adminReport(Report report) {
+	public void adminReport(int reportID) {
 		db.getTransaction().begin();
-		Report r = db.find(Report.class, report.getId());
+		Report r = db.find(Report.class, reportID);
 		Sale sale = r.getSale();
 		sale.setSaleStatus(SaleStatusType.ADMIN_REPORTED);
 		r.setTreated(true);
 		db.getTransaction().commit();
 	}
 
-	public void declineComplaint(Complaint complaint) {
+	public void declineComplaint(int complaintID) {
 		db.getTransaction().begin();
-		Complaint c = db.find(Complaint.class, complaint.getId());
+		Complaint c = db.find(Complaint.class, complaintID);
 		c.setTreated(true);
 		db.getTransaction().commit();
 	}
 
-	public void acceptComplaint(Complaint complaint) {
+	public void acceptComplaint(int complaintID) {
 		db.getTransaction().begin();
-		Complaint c = db.find(Complaint.class, complaint.getId());
+		Complaint c = db.find(Complaint.class, complaintID);
 		c.setTreated(true);
 		Sale sale = c.getSale();
 		Registered buyer = c.getUser();
@@ -617,11 +618,11 @@ public class DataAccess  {
 
 		double newBuyerBalance = buyer.getBalance()+sale.getPrice();
 		buyer.setBalance(newBuyerBalance);
-		buyer.addToMovements(new Movement(MovementType.REFUND_BUYER,sale.getPrice(),newBuyerBalance,sale,buyer));
+		buyer.addToMovements(MovementType.REFUND_BUYER, sale.getPrice(), newBuyerBalance,sale);
 
 		double newSellerBalance = seller.getBalance()-sale.getPrice();
 		seller.setBalance(newSellerBalance);
-		seller.addToMovements(new Movement(MovementType.REFUND_SELLER,sale.getPrice(),newSellerBalance,sale,seller));
+		seller.addToMovements(MovementType.REFUND_SELLER,sale.getPrice(),newSellerBalance,sale);
 
 		db.getTransaction().commit();
 	}
