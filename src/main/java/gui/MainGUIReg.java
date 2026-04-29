@@ -32,6 +32,7 @@ public class MainGUIReg extends JFrame {
 	private JButton jButtonCreateQuery = null;
 	private JButton jButtonQueryQueries = null;
 	private JButton jButtonShowProfile = null;
+	private JButton jButtonCreateRequest = null;
 	
     private static BLFacade appFacadeInterface;
 	
@@ -59,7 +60,7 @@ public class MainGUIReg extends JFrame {
 		
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
 		
-		this.setSize(495, 290);
+		this.setSize(495, 350);
 		jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
 		jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
 		jLabelSelectOption.setForeground(Color.BLACK);
@@ -125,12 +126,21 @@ public class MainGUIReg extends JFrame {
 			}
 		});
 		
+		jButtonCreateRequest = new JButton();
+		jButtonCreateRequest.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateRequest"));
+		jButtonCreateRequest.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        JFrame a = new CreateRequestGUI(sellerMail);
+		       a.setVisible(true);
+		    }
+		});
+		
 		jContentPane = new JPanel();
 		jContentPane.setLayout(new GridLayout(5, 1, 0, 0));
-		jContentPane.add(jLabelSelectOption);
-		jContentPane.add(jButtonShowProfile);
 		jContentPane.add(jButtonCreateQuery);
 		jContentPane.add(jButtonQueryQueries);
+		jContentPane.add(jButtonShowProfile);   
+		jContentPane.add(jButtonCreateRequest);
 		jContentPane.add(panel);
 		
 		
@@ -150,6 +160,7 @@ public class MainGUIReg extends JFrame {
 		jButtonShowProfile.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.ShowProfile"));
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
+		jButtonCreateRequest.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateRequest"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ ": "+sellerMail);
 	}
 	
