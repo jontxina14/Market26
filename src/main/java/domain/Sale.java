@@ -264,6 +264,21 @@ public class Sale implements Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;              
+	    if (obj == null) return false;
+	    if (getClass() != obj.getClass()) return false;
+
+	    Sale other = (Sale) obj;
+
+	    if (this.saleNumber == null || other.saleNumber == null) {
+	        return false;
+	    }
+
+	    return this.saleNumber.equals(other.saleNumber);
+	}
 
 	
 	

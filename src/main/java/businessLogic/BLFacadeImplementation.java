@@ -80,11 +80,10 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * {@inheritDoc}
 	 */
 	@WebMethod 
-	public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email) {
+	public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email, String sellerEmail, ArrayList<Sale> basket) {
 		System.out.println(query);
 		dbManager.open();
 		System.out.println(query);
-
 
 		List<Sale> rides= new ArrayList<Sale>();
 		switch (query) {
@@ -92,7 +91,7 @@ public class BLFacadeImplementation  implements BLFacade {
 			rides = dbManager.getOnSales(email, desc);
 			break;
 		case PUBLISHED_SALES:
-			rides = dbManager.getPublishedSales(desc,pubDate,email);
+			rides = (sellerEmail.equals("")) ? dbManager.getPublishedSales(desc,pubDate,email) : dbManager.getPublishedSales(desc,pubDate,email, sellerEmail, basket);
 			break;
 		case PURCHASED:
 			rides = dbManager.getPurchased(email, desc);
@@ -232,9 +231,9 @@ public class BLFacadeImplementation  implements BLFacade {
 		return b;
 	}
 
-	@WebMethod public boolean buySale(String mail, int SaleNumber) throws NotEnoughMoneyException{
+	@WebMethod public boolean buySale(String mail, ArrayList<Integer> saleNumbers) throws NotEnoughMoneyException{
 		dbManager.open();
-		boolean b = dbManager.buySale(mail, SaleNumber);
+		boolean b = dbManager.buySale(mail, saleNumbers);
 		dbManager.close();
 		return b;
 	}

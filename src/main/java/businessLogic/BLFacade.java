@@ -1,6 +1,7 @@
 package businessLogic;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,9 +64,11 @@ public interface BLFacade  {
 	 * 
 	 * @param desc the text to search
 	 * @param pubDate the date  of the publication date
+	 * @param sellerEmail 
+	 * @param basket 
 	 * @return collection of sales that contain desc and published before pubDate
 	 */
-	@WebMethod public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email);
+	@WebMethod public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email, String sellerEmail, ArrayList<Sale> basket);
 	
 	@WebMethod public List<MovementContainer> getMovements(String email, MovementType type);
 
@@ -98,7 +101,7 @@ public interface BLFacade  {
 
 	@WebMethod public boolean removeSale(int SaleNumber);
 	
-	@WebMethod public boolean buySale(String mail, int SaleNumber) throws NotEnoughMoneyException;
+	@WebMethod public boolean buySale(String mail, ArrayList<Integer> saleNumbers) throws NotEnoughMoneyException;
 	
 	@WebMethod public boolean toggleWishList(String mail, int saleNumber);
 

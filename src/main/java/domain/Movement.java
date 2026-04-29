@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -41,18 +42,18 @@ public class Movement {
     private String email;
 
     @XmlIDREF
-    private Sale sale;         
+    private ArrayList<Sale> sales;         
 
     private String description;
     
-    public Movement(MovementType type, double amount, double balanceAfter, Sale sale, Registered user) {
+    public Movement(MovementType type, double amount, double balanceAfter, ArrayList<Sale> sales, Registered user) {
     	this.date =  UtilDate.trim(new Date());
     	this.amount = amount;
     	this.balanceAfter = balanceAfter;
     	this.type = type;
     	this.user=user;
     	email=this.user.getEmail();
-    	this.sale=sale;
+    	this.sales=sales;
     	//TODO description
     }
     public Movement() {

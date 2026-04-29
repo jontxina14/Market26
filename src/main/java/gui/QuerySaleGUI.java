@@ -47,6 +47,9 @@ public class QuerySaleGUI extends JFrame {
 
 	private String QueryMessagge = "";
 	private String emptyQueryMessagge = "";
+	
+	private ArrayList<Sale> basket = new ArrayList<Sale>();
+	private String sellerEmail = "";
 
 
 	
@@ -93,6 +96,16 @@ public class QuerySaleGUI extends JFrame {
 
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
+		
+		JButton jButtonShBasket = new JButton("ALDATU: sh basket");
+		jButtonShBasket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO new ShowBasketGUI(basket)
+			}
+		});
+		jButtonShBasket.setBounds(new Rectangle(220, 379, 130, 30));
+		jButtonShBasket.setBounds(384, 379, 130, 30);
+		getContentPane().add(jButtonShBasket);
 
 
 
@@ -158,9 +171,9 @@ public class QuerySaleGUI extends JFrame {
 
 	}
 
-
 	public void refreshQuery() {
 		try {
+			System.out.println("Basket: " + basket);
 			tableModelProducts.setDataVector(null, columnNamesProducts);
 			tableModelProducts.setColumnCount(4); // another column added to allocate product object
 
@@ -168,7 +181,7 @@ public class QuerySaleGUI extends JFrame {
 			Date today = UtilDate.trim(new Date());
 
 			//Query deia
-			List<Sale> sales = facade.getQuery(jTextFieldSearch.getText(),today,saleType,currentMail);
+			List<Sale> sales = facade.getQuery(jTextFieldSearch.getText(),today,saleType,currentMail, sellerEmail, basket);
 
 			if (sales.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);
@@ -189,5 +202,10 @@ public class QuerySaleGUI extends JFrame {
 		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
 		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(70);
 		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
+	}
+	
+	public boolean addTotheBasket(Sale s, String sellerEmail) {
+		this.sellerEmail = sellerEmail;
+		return basket.add(s);		
 	}
 }

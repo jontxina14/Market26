@@ -35,22 +35,18 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		this.getContentPane().add(jLabelError, null);
 
 
-
 		JButton buyButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.buyButton")); //$NON-NLS-1$ //$NON-NLS-2$
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(s.getSaleNumber());
-				try {
-					boolean b = facade.buySale(currentUserMail, s.getSaleNumber());
-					if (b) {
 
-						//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
-						parent.refreshQuery();
-						dispose();
-					}
-				}catch(NotEnoughMoneyException e) {
-					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
-				}
+
+				//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
+				parent.addTotheBasket(s,s.getSeller().getEmail());
+				parent.refreshQuery();
+				dispose();
+
+
 
 
 
@@ -84,7 +80,7 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 			reportButton.setEnabled(false);
 			reportButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AlredyReported"));
 		}
-		
+
 		reportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new MakeReportGUI(currentUserMail, s).setVisible(true);

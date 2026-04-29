@@ -130,14 +130,19 @@ public class Registered extends User implements Serializable {
 		return sale;
 	}
 
-	public void addToBought(Sale sale) {
-		if(!bought.contains(sale)) {
-			bought.add(sale);
+	public void addToBought(ArrayList<Sale> sales) {
+		for(Sale sale : sales) {
+			if(!bought.contains(sale)) {
+				bought.add(sale);
+			}
 		}
 	}
 
-	public void addToMovements(MovementType type, double amount, double balanceAfter, Sale sale) {
-		Movement m = new Movement(type, amount, balanceAfter, sale, this);
+
+
+
+	public void addToMovements(MovementType type, double amount, double balanceAfter, ArrayList<Sale> sales) {
+		Movement m = new Movement(type, amount, balanceAfter, sales, this);
 		movements.add(m);
 	}
 
@@ -158,23 +163,23 @@ public class Registered extends User implements Serializable {
 				return true;
 		return false;
 	}
-	
+
 	public void addReport(ReportReason reason, Sale s) {
 		Report r = new Report(reason, s,this);
 		reports.add(r);
 		s.addReport(r);
 	}
-	
+
 	public void addComplaint(String complaint, Sale s) {
 		Complaint c = new Complaint(complaint, s, this);
 		complaints.add(c);
 		s.addComplaint(c);
 	}
-	
-	
 
 
-/*	@Override
+
+
+	/*	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -187,6 +192,6 @@ public class Registered extends User implements Serializable {
 			return false;
 		return true;
 	}
-*/
+	 */
 
 }
