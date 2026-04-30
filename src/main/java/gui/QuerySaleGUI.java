@@ -100,7 +100,8 @@ public class QuerySaleGUI extends JFrame {
 		JButton jButtonShBasket = new JButton("ALDATU: sh basket");
 		jButtonShBasket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO new ShowBasketGUI(basket)
+				ShowBasketGUI a = new ShowBasketGUI(basket);
+				a.setVisible(true);
 			}
 		});
 		jButtonShBasket.setBounds(new Rectangle(220, 379, 130, 30));

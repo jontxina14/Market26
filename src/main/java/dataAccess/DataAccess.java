@@ -549,7 +549,7 @@ public class DataAccess  {
 			reg.addToMovements(type, amount, balance-amount,null); 
 		}else if(type == MovementType.DEPOSIT ) {
 			reg.setBalance(balance + amount);
-			reg.addToMovements(type, amount,balance-amount,null); 
+			reg.addToMovements(type, amount,balance+amount,null); 
 		}
 		db.getTransaction().commit();
 		return reg;
