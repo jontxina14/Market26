@@ -669,5 +669,14 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
+	
+	public void createRequest(String mail,String title,String description,double price) {
+		db.getTransaction().begin();
+		Registered reg = db.find(Registered.class,mail);
+		reg.addRequest(title, description, price);
+		db.getTransaction().commit();
+	}
+
+	
 
 }

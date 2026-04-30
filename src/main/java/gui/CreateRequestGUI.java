@@ -25,7 +25,7 @@ public class CreateRequestGUI extends JFrame {
 
 	private JButton jButtonCreate = new JButton(ResourceBundle.getBundle("Etiquetas").getString("CreateRequestGUI.CreateRequest"));
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
-
+	
 	public CreateRequestGUI(String mail) {
 		thisFrame = this;
 		this.mail = mail;
@@ -69,11 +69,11 @@ public class CreateRequestGUI extends JFrame {
 				if (error!=null) 
 					jLabelMsg.setText(error);
 				else {
+					BLFacade facade = MainGUInonReg.getBusinessLogic();
 					String title = fieldTitle.getText();
 					String description = fieldDescription.getText();
 					Double price = Double.parseDouble(fieldPrice.getText().replace(',', '.'));
-					//TODO
-					//createRequest(mail,title,description,price);
+					facade.createRequest(mail,title,description,price);
 					dispose();
 				}
 			}

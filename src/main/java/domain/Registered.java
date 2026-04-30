@@ -44,6 +44,9 @@ public class Registered extends User implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Report> reports = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	private List<Request> requests = new ArrayList<>();
 
 	public Registered() {
 		super();
@@ -174,6 +177,12 @@ public class Registered extends User implements Serializable {
 		Complaint c = new Complaint(complaint, s, this);
 		complaints.add(c);
 		s.addComplaint(c);
+	}
+	
+	public void addRequest(String title,String description, double price) {
+		Request r = new Request(title,description,price);
+		r.setRequester(this);
+		requests.add(r);
 	}
 
 
