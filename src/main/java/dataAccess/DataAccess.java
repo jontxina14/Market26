@@ -426,10 +426,17 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		Registered buyer = db.find(Registered.class, mail);
 		if (buyer == null) return false;
+
 		
 		ArrayList<Sale> sales = new ArrayList<Sale>();
 		Sale first = db.find(Sale.class, saleNumbers.get(0));
-		if(first == null) return false;
+		if(first == null) {
+			db.getTransaction().rollback();
+			return false;
+		}
+		sales.add(first);
+		
+		
 		float totalPrize = first.getPrice();
 		Registered seller = first.getSeller();
 		
@@ -443,10 +450,10 @@ public class DataAccess  {
 		}
 
 		if (totalPrize > buyer.getBalance()) {
-			//db.getTransaction().rollback();
+			db.getTransaction().rollback();
 			throw new NotEnoughMoneyException();
 		}
-
+		
 		for(Sale sale : sales) {
 			sale.setSaleStatus(SaleStatusType.BOUGHT);
 		}

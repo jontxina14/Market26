@@ -7,6 +7,7 @@ import domain.SaleContainer;
 import enums.MovementType;
 import enums.QueryFilterType;
 import enums.SaleType;
+import exceptions.NotEnoughMoneyException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,12 @@ public class ShowBasketGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.initialize")); 
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
+	private JButton jButtonBuy = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowBasketGUI.buyButton"));
+	private JLabel jLabelError = new JLabel((String)null); //$NON-NLS-1$ //$NON-NLS-2$
+	private JLabel jLabelTotalPriceAns = new JLabel((String) null);
+	private	JLabel jLabelTotalPrice = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowBasketGUI.totalPrice"));
+
+
 
 	private JScrollPane scrollPanelProducts = new JScrollPane();
 
@@ -49,8 +56,9 @@ public class ShowBasketGUI extends JFrame {
 
 
 
-	public ShowBasketGUI(ArrayList<Sale> basket) {
+	public ShowBasketGUI(String mail, ArrayList<Sale> basket) {
 		this.basket=basket;
+		this.currentMail=mail;
 
 		tableProducts.setEnabled(false);
 		//thisFrame=this;
@@ -61,9 +69,34 @@ public class ShowBasketGUI extends JFrame {
 		jLabelProducts.setBounds(52, 50, 427, 16);
 		this.getContentPane().add(jLabelProducts);
 
-		jButtonClose.setBounds(new Rectangle(220, 379, 130, 30));
-		jButtonClose.addActionListener(e -> thisFrame.setVisible(false));
+		jButtonClose.setBounds(new Rectangle(210, 379, 130, 30));
+		jButtonClose.addActionListener(e -> dispose());
 		this.getContentPane().add(jButtonClose, null);
+
+		jButtonBuy.setBounds(new Rectangle(360, 379, 130, 30));
+		jButtonBuy.addActionListener(e -> {
+			BLFacade facade = MainGUInonReg.getBusinessLogic();
+
+			if(basket.isEmpty()) {
+				jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowBasketGUI.EmptyBasket"));
+			}else {
+
+				ArrayList<Integer> numbBasket = new ArrayList<Integer>();
+				for(Sale s:basket) {
+					numbBasket.add(s.getSaleNumber());
+				}
+
+
+				try{
+					facade.buySale(currentMail, numbBasket);
+					basket.clear();
+					dispose();
+				}catch (NotEnoughMoneyException ex){
+					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
+				}
+			}
+		});
+		this.getContentPane().add(jButtonBuy, null);
 
 		scrollPanelProducts.setBounds(new Rectangle(52, 76, 459, 211));
 		scrollPanelProducts.setViewportView(tableProducts);
@@ -76,20 +109,26 @@ public class ShowBasketGUI extends JFrame {
 		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
 		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
 		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(70);
-		
+
 		refreshQuery();
 
 
 
 		this.getContentPane().add(scrollPanelProducts, null);
-		
-		JLabel jLabelTotalPrice = new JLabel((String) null);
+
 		jLabelTotalPrice.setBounds(52, 309, 141, 16);
 		getContentPane().add(jLabelTotalPrice);
-		
-		JLabel jLabelTotalPriceAns = new JLabel((String) null);
+
 		jLabelTotalPriceAns.setBounds(220, 309, 141, 16);
 		getContentPane().add(jLabelTotalPriceAns);
+		int prezioTot=0;
+		for(Sale s:basket) {
+			prezioTot += s.getPrice();
+		}
+		jLabelTotalPriceAns.setText(String.valueOf(prezioTot));
+
+		jLabelError.setBounds(58, 347, 141, 16);
+		getContentPane().add(jLabelError);
 
 
 		tableProducts.addMouseListener(new MouseAdapter() {
@@ -97,7 +136,7 @@ public class ShowBasketGUI extends JFrame {
 			public void mousePressed(MouseEvent mouseEvent) {
 				if(mouseEvent.getClickCount() == 2)
 				{
-					
+
 				}
 			}
 		});

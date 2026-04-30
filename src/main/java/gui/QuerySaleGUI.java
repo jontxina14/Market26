@@ -6,6 +6,7 @@ import domain.Sale;
 import domain.SaleContainer;
 import enums.MovementType;
 import enums.QueryFilterType;
+import enums.SaleStatusType;
 import enums.SaleType;
 
 import javax.swing.*;
@@ -97,10 +98,11 @@ public class QuerySaleGUI extends JFrame {
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
 		
-		JButton jButtonShBasket = new JButton("ALDATU: sh basket");
+		JButton jButtonShBasket = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.ShBasket"));
+		jButtonShBasket.setVisible(saleType.equals(SaleType.PUBLISHED_SALES));
 		jButtonShBasket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ShowBasketGUI a = new ShowBasketGUI(basket);
+				ShowBasketGUI a = new ShowBasketGUI(currentUserMail,basket);
 				a.setVisible(true);
 			}
 		});
