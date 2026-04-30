@@ -122,5 +122,8 @@ public interface BLFacade  {
 	@WebMethod public void declineComplaint(int complaintID);
 	
 	@WebMethod public void acceptComplaint(int complaintID);
+	
+	@WebMethod public void createRequest(String mail,String title,String description,double price);
+
 
 }

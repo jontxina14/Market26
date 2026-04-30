@@ -7,6 +7,8 @@ import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import com.objectdb.o.CLN.p;
+
 import dataAccess.DataAccess;
 import domain.Sale;
 import domain.User;
@@ -307,6 +309,11 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 
 	
+	public void createRequest(String mail,String title,String description,double price) {
+		dbManager.open();
+		dbManager.createRequest(mail,title,description,price);
+		dbManager.close();
+	}
 	
 
 }

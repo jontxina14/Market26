@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import enums.RequestStatusType;
 import enums.SaleStatusType;
 
 
@@ -29,9 +30,9 @@ public class Request implements Serializable {
 	private String title;
 	private String description;
 	private double price;
-	private String requestStatus;
+	private RequestStatusType requestStatus;
 	@XmlIDREF
-	private Registered seller;
+	private Registered requester;
 
 	
 	public Request(){
@@ -43,7 +44,7 @@ public class Request implements Serializable {
 		this.description = description;
 		this.price = price;
 		
-		this.requestStatus = "";
+		this.requestStatus = RequestStatusType.AVAILABLE;
 	}
 
 	public Integer getRequestNumber() {
@@ -78,20 +79,20 @@ public class Request implements Serializable {
 		this.price = price;
 	}
 
-	public String getRequestStatus() {
+	public RequestStatusType getRequestStatus() {
 		return requestStatus;
 	}
 
-	public void setRequestStatus(String requestStatus) {
+	public void setRequestStatus(RequestStatusType requestStatus) {
 		this.requestStatus = requestStatus;
 	}
 
-	public Registered getSeller() {
-		return seller;
+	public Registered getRequester() {
+		return requester;
 	}
 
-	public void setSeller(Registered seller) {
-		this.seller = seller;
+	public void setRequester(Registered requester) {
+		this.requester = requester;
 	}
 	
 	
