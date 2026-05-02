@@ -34,6 +34,8 @@ public class Request implements Serializable {
 	@XmlIDREF
 	private Registered requester;
 
+	//TODO: offeren lista sartu (addOfermetodoa egin offer bat sortzean deitzeko)
+
 	
 	public Request(){
 		super();
