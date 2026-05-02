@@ -23,6 +23,7 @@ import domain.MovementContainer;
 import domain.Registered;
 import domain.Report;
 import domain.ReportContainer;
+import domain.Request;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -147,6 +148,18 @@ public class BLFacadeImplementation  implements BLFacade {
 
 	    dbManager.close();
 	    return res;
+	}
+	
+	
+	
+	//WEB ZERBITZUA BEGIRATU
+	@WebMethod public List<Request> getRequests(String currentMail){
+	    dbManager.open();
+
+	    List<Request> reports = dbManager.getRequests(currentMail);
+	   
+	    dbManager.close();
+	    return reports;
 	}
 
 

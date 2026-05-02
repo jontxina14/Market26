@@ -29,7 +29,7 @@ public class Request implements Serializable {
 	private Integer requestNumber;
 	private String title;
 	private String description;
-	private double price;
+	private double suggestedPrice;
 	private RequestStatusType requestStatus;
 	@XmlIDREF
 	private Registered requester;
@@ -42,7 +42,7 @@ public class Request implements Serializable {
 	public Request(String title, String description, double price) {
 		this.title = title;
 		this.description = description;
-		this.price = price;
+		this.suggestedPrice = price;
 		
 		this.requestStatus = RequestStatusType.AVAILABLE;
 	}
@@ -72,11 +72,11 @@ public class Request implements Serializable {
 	}
 
 	public double getPrice() {
-		return price;
+		return suggestedPrice;
 	}
 
 	public void setPrice(double price) {
-		this.price = price;
+		this.suggestedPrice = price;
 	}
 
 	public RequestStatusType getRequestStatus() {

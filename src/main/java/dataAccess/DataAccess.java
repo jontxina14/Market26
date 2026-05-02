@@ -23,6 +23,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import enums.MovementType;
 import enums.ReportReason;
+import enums.RequestStatusType;
 import enums.SaleStatusType;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -304,6 +305,23 @@ public class DataAccess  {
 		TypedQuery<Report> query = db.createQuery("SELECT r FROM Report r WHERE r.treated = false", Report.class);   
 		return new ArrayList<Report>(query.getResultList());
 	}
+	
+	
+	public List<Request> getRequests(String email) {
+		TypedQuery<Request> query = db.createQuery("SELECT r FROM Request r WHERE r.requestStatus =  ?1", Request.class);
+		query.setParameter(1, RequestStatusType.AVAILABLE);
+		
+		ArrayList<Request> requests = new ArrayList<Request>();
+		for(Request r:query.getResultList()) {
+			if(!r.getRequester().getEmail().equals(email)) {
+				requests.add(r);
+			}
+		}
+		return requests;
+		
+	}
+
+	
 
 
 	public void open(){
@@ -431,9 +449,11 @@ public class DataAccess  {
 		ArrayList<Sale> sales = new ArrayList<Sale>();
 		Sale first = db.find(Sale.class, saleNumbers.get(0));
 		if(first == null) {
-			db.getTransaction().rollback();
+			//db.getTransaction().rollback();
 			return false;
 		}
+		
+		
 		sales.add(first);
 		
 		
@@ -450,7 +470,7 @@ public class DataAccess  {
 		}
 
 		if (totalPrize > buyer.getBalance()) {
-			db.getTransaction().rollback();
+			//db.getTransaction().rollback();
 			throw new NotEnoughMoneyException();
 		}
 		
@@ -684,6 +704,6 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
-	
+
 
 }

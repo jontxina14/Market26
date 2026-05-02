@@ -99,7 +99,7 @@ public class QuerySaleGUI extends JFrame {
 		getContentPane().add(jButtonSearch);
 		
 		JButton jButtonShBasket = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.ShBasket"));
-		jButtonShBasket.setVisible(saleType.equals(SaleType.PUBLISHED_SALES));
+		jButtonShBasket.setVisible(saleType.equals(SaleType.PUBLISHED_SALES)&&!currentUserMail.equals(""));
 		jButtonShBasket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ShowBasketGUI a = new ShowBasketGUI(currentUserMail,basket);

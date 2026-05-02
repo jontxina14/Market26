@@ -33,6 +33,7 @@ public class MainGUIReg extends JFrame {
 	private JButton jButtonQueryQueries = null;
 	private JButton jButtonShowProfile = null;
 	private JButton jButtonCreateRequest = null;
+	private JButton queryRequestButton = null;
 	
     private static BLFacade appFacadeInterface;
 	
@@ -135,12 +136,22 @@ public class MainGUIReg extends JFrame {
 		    }
 		});
 		
+		queryRequestButton = new JButton();
+		queryRequestButton.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QueryRequests"));
+		queryRequestButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				JFrame a = new QueryRequestGUI(sellerMail);
+				a.setVisible(true);
+			}
+		});
+		
 		jContentPane = new JPanel();
-		jContentPane.setLayout(new GridLayout(5, 1, 0, 0));
+		jContentPane.setLayout(new GridLayout(6, 1, 0, 0));
 		jContentPane.add(jButtonCreateQuery);
 		jContentPane.add(jButtonQueryQueries);
-		jContentPane.add(jButtonShowProfile);   
+		jContentPane.add(jButtonShowProfile);
 		jContentPane.add(jButtonCreateRequest);
+		jContentPane.add(queryRequestButton);
 		jContentPane.add(panel);
 		
 		
