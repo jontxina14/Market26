@@ -22,6 +22,7 @@ import javax.persistence.TypedQuery;
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import enums.MovementType;
+import enums.OfferStatusType;
 import enums.ReportReason;
 import enums.RequestStatusType;
 import enums.SaleStatusType;
@@ -319,6 +320,20 @@ public class DataAccess  {
 		}
 		return requests;
 		
+	}
+	
+	public List<Offer> getOffers(String currentMail) {
+		TypedQuery<Offer> query = db.createQuery("SELECT o FROM Offer o WHERE o.offerStatus = ?1", Offer.class);
+		query.setParameter(1, OfferStatusType.WAITING);
+		
+		ArrayList<Offer> offers = new ArrayList<Offer>();
+		for(Offer o:query.getResultList()) {
+			if(!o.getRegistered().getEmail().equals(currentMail) && o.getRequest().getRequestStatus().equals(RequestStatusType.AVAILABLE)) {
+				offers.add(o);
+			}
+		}
+		return offers;
+
 	}
 
 	
@@ -703,6 +718,18 @@ public class DataAccess  {
 		reg.addRequest(title, description, price);
 		db.getTransaction().commit();
 	}
+
+	public void makeOffer(String offererMail, Request request, double price, String description) {
+		db.getTransaction().begin();
+		Registered reg = db.find(Registered.class,offererMail);
+		reg.addOffer(request,price,description);
+		db.getTransaction().commit();
+		
+
+		
+	}
+
+	
 
 
 

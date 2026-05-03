@@ -35,7 +35,9 @@ public class Request implements Serializable {
 	private Registered requester;
 
 	//TODO: offeren lista sartu (addOfermetodoa egin offer bat sortzean deitzeko)
-
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	private List<Offer> offers = new ArrayList<>();
 	
 	public Request(){
 		super();
@@ -97,6 +99,10 @@ public class Request implements Serializable {
 		this.requester = requester;
 	}
 	
+	
+	public boolean addOffer(Offer o) {
+		return offers.add(o);
+	}
 	
 	
 }

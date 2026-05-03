@@ -2,6 +2,7 @@ package gui;
 
 import businessLogic.BLFacade;
 import configuration.UtilDate;
+import domain.Offer;
 import domain.Request;
 import domain.Sale;
 import domain.SaleContainer;
@@ -20,7 +21,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
-public class QueryRequestGUI extends JFrame {
+public class QueryOfferGUI extends JFrame {
 
 	private String currentMail;
 	private SaleType saleType;
@@ -49,7 +50,7 @@ public class QueryRequestGUI extends JFrame {
 	private String emptyQueryMessagge = "";
 	
 	
-	public QueryRequestGUI(String currentUserMail) {
+	public QueryOfferGUI(String currentUserMail) {
 		this.currentMail = currentUserMail;
 
 		tableProducts.setEnabled(false);
@@ -111,7 +112,7 @@ public class QueryRequestGUI extends JFrame {
 					Request r=(Request) tableModelProducts.getValueAt(row, 2);
 					System.out.println(currentUserMail);
 					
-						JFrame a = new ShowRequestGUI(r,currentUserMail);
+						JFrame a = new ShowOffer(o,currentUserMail);
 				}
 			}
 		});
@@ -128,16 +129,16 @@ public class QueryRequestGUI extends JFrame {
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 			//Query deia
-			List<Request> requests = facade.getRequests(currentMail);
+			List<Offer> offers = facade.getOffers(currentMail);
 
-			if (requests.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
+			if (offers.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);
 
-			for (Request request : requests){
+			for (Offer offer : offers){
 				Vector<Object> row = new Vector<Object>();
-				row.add(request.getTitle());
-				row.add(request.getPrice());
-				row.add(request); 
+				row.add(offer.getRequest().getTitle());
+				row.add(offer.getPrice());
+				row.add(offer); 
 				tableModelProducts.addRow(row);		
 			}
 		} catch (Exception e1) {

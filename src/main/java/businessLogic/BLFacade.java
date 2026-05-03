@@ -15,6 +15,7 @@ import domain.Complaint;
 import domain.ComplaintContainer;
 import domain.Movement;
 import domain.MovementContainer;
+import domain.Offer;
 import domain.Registered;
 import domain.Report;
 import domain.ReportContainer;
@@ -78,6 +79,9 @@ public interface BLFacade  {
 	@WebMethod public List<ReportContainer> getReports();
 	
 	@WebMethod public List<Request> getRequests(String currentMail);
+	
+	@WebMethod 	public List<Offer> getOffers(String currentMail);
+
 
 	//@WebMethod public List<Sale> getReports(String titleFilter);
 	
@@ -127,4 +131,8 @@ public interface BLFacade  {
 	@WebMethod public void acceptComplaint(int complaintID);
 	
 	@WebMethod public void createRequest(String mail,String title,String description,double price);
+
+	@WebMethod public void makeOffer(String offererMail, Request request, double price, String description);
+
+
 }

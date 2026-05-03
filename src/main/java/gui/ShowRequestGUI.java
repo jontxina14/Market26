@@ -43,7 +43,7 @@ public class ShowRequestGUI extends JFrame {
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
-	public ShowRequestGUI(Request request) { 
+	public ShowRequestGUI(Request request, String currentMail) { 
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
@@ -97,6 +97,12 @@ public class ShowRequestGUI extends JFrame {
 		fieldDescription.setBounds(150, 95, 680, 100);
 		getContentPane().add(fieldDescription);
 		fieldDescription.setColumns(10);
+		jButtonMakeAnOffer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a = new MakeAnOfferGUI(currentMail,request);
+				a.setVisible(true);
+			}
+		});
 		
 		jButtonMakeAnOffer.setBounds(new Rectangle(150, 380, 140, 40));
 		jButtonMakeAnOffer.setBounds(333, 380, 140, 40);

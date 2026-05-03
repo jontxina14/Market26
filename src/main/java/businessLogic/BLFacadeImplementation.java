@@ -20,6 +20,7 @@ import domain.Complaint;
 import domain.ComplaintContainer;
 import domain.Movement;
 import domain.MovementContainer;
+import domain.Offer;
 import domain.Registered;
 import domain.Report;
 import domain.ReportContainer;
@@ -156,12 +157,21 @@ public class BLFacadeImplementation  implements BLFacade {
 	@WebMethod public List<Request> getRequests(String currentMail){
 	    dbManager.open();
 
-	    List<Request> reports = dbManager.getRequests(currentMail);
+	    List<Request> requests = dbManager.getRequests(currentMail);
 	   
 	    dbManager.close();
-	    return reports;
+	    return requests;
 	}
 
+	
+	@WebMethod public List<Offer> getOffers(String currentMail){
+		dbManager.open();
+
+	    List<Offer> offers = dbManager.getOffers(currentMail);
+	   
+	    dbManager.close();
+	    return offers;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -329,5 +339,12 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 	
 
+	public void makeOffer(String offererMail, Request request, double price, String description) {
+		dbManager.open();
+		dbManager.makeOffer(offererMail,request,price,description);
+		dbManager.close();
+	}
+
+	
 }
 

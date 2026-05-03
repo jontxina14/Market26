@@ -18,8 +18,9 @@ public class Offer {
 	@GeneratedValue
 	private int offerId;
 	
-	
 	private double price;
+	
+	private String description;
 	
 	private OfferStatusType offerStatus;
 
@@ -29,8 +30,9 @@ public class Offer {
 	@OneToOne
 	private Request request;
 	
-	public Offer(Double price, Registered reg, Request req) {
+	public Offer(Double price, String description, Registered reg, Request req) {
 		this.price=price;
+		this.description=description;
 		this.offerStatus=OfferStatusType.WAITING;
 		this.registered=reg;
 		this.request=req;

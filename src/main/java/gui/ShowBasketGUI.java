@@ -23,6 +23,7 @@ public class ShowBasketGUI extends JFrame {
 
 	private String currentMail;
 	private SaleType saleType;
+	private QuerySaleGUI parent;
 
 	private static final long serialVersionUID = 1L;
 	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.initialize")); 
@@ -56,10 +57,11 @@ public class ShowBasketGUI extends JFrame {
 
 
 
-	public ShowBasketGUI(String mail, ArrayList<Sale> basket) {
+	public ShowBasketGUI(String mail, ArrayList<Sale> basket, JFrame p) {
 		this.basket=basket;
 		this.currentMail=mail;
-
+		this.parent = (QuerySaleGUI) p;
+		
 		tableProducts.setEnabled(false);
 		//thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -136,7 +138,23 @@ public class ShowBasketGUI extends JFrame {
 			public void mousePressed(MouseEvent mouseEvent) {
 				if(mouseEvent.getClickCount() == 2)
 				{
-
+					JTable table = (JTable) mouseEvent.getSource();
+		            Point point = mouseEvent.getPoint();
+		            int row = table.rowAtPoint(point);
+		            if (row >= 0) {
+		                Sale s = (Sale) tableModelProducts.getValueAt(row, 3);
+		                basket.remove(s);
+		                refreshQuery();
+		                
+		                parent.removeFromBasket(s);
+		                parent.refreshQuery();
+		                
+		                int prezioTot = 0;
+		                for (Sale sale : basket) {
+		                    prezioTot += sale.getPrice();
+		                }
+		                jLabelTotalPriceAns.setText(String.valueOf(prezioTot));
+		            }
 				}
 			}
 		});
@@ -149,6 +167,7 @@ public class ShowBasketGUI extends JFrame {
 		try {
 			System.out.println("BasketGUI: " + basket);
 			tableModelProducts.setDataVector(null, columnNamesProducts);
+			tableModelProducts.setColumnCount(4);	
 
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 			Date today = UtilDate.trim(new Date());

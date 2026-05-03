@@ -102,7 +102,7 @@ public class QuerySaleGUI extends JFrame {
 		jButtonShBasket.setVisible(saleType.equals(SaleType.PUBLISHED_SALES)&&!currentUserMail.equals(""));
 		jButtonShBasket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ShowBasketGUI a = new ShowBasketGUI(currentUserMail,basket);
+				ShowBasketGUI a = new ShowBasketGUI(currentUserMail,basket,thisFrame);
 				a.setVisible(true);
 			}
 		});
@@ -211,4 +211,14 @@ public class QuerySaleGUI extends JFrame {
 		this.sellerEmail = sellerEmail;
 		return basket.add(s);		
 	}
+	
+	public void removeFromBasket(Sale sale) {
+		System.out.println("QUERYGUI remove sale");
+		System.out.println(basket);
+		basket.remove(sale);
+		if(basket.isEmpty()) {
+			sellerEmail="";
+		}
+	}
+	
 }

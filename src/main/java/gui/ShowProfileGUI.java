@@ -44,10 +44,10 @@ public class ShowProfileGUI extends JFrame {
 	public ShowProfileGUI(Registered r) {
 		user = r;
 		thisFrame = this;
-		
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1100, 500);
-		
+
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -96,7 +96,7 @@ public class ShowProfileGUI extends JFrame {
 		qPurchasedButton.setBounds(30, 300, 200, 45);
 		contentPane.add(qPurchasedButton);
 		qPurchasedButton.addActionListener(e -> query(SaleType.PURCHASED));
-		
+
 		JButton qOnSaleButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.onSale"));
 		qOnSaleButton.setBounds(240, 300, 200, 45);
 		contentPane.add(qOnSaleButton);
@@ -113,7 +113,7 @@ public class ShowProfileGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame a = new ShowMovementsGUI(user.getEmail());
 				a.setVisible(true);
-			
+
 			}
 		});
 		sMovementsButtton.setBounds(660, 300, 200, 45);
@@ -130,7 +130,7 @@ public class ShowProfileGUI extends JFrame {
 			}
 		});
 
-		
+
 		JButton closeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.close"));
 		closeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -139,15 +139,25 @@ public class ShowProfileGUI extends JFrame {
 		});
 		closeButton.setBounds(500, 380, 100, 45);
 		contentPane.add(closeButton);
-		
+
+		JButton shOffersButton = new JButton("OffertaButon");
+		shOffersButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a = new QueryOfferGUI(r.getEmail());
+				a.setVisible(true);
+			}
+		});
+		shOffersButton.setBounds(870, 380, 200, 45);
+		contentPane.add(shOffersButton);
+
 
 	}
-	
+
 	private void query(SaleType type) {
 		JFrame a = new QuerySaleGUI(user.getEmail(), type);
 		a.setVisible(true);
 	}
-	
+
 	public void refreshBalance() {
 		balanceTextField.setText((user != null) ? String.valueOf(user.getBalance()) : "");
 	}
