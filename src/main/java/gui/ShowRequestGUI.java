@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import businessLogic.BLFacade;
 import domain.Request;
+import domain.RequestContainer;
 import domain.Sale;
 import domain.SaleContainer;
 
@@ -43,17 +44,17 @@ public class ShowRequestGUI extends JFrame {
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
-	public ShowRequestGUI(Request request, String currentMail) { 
+	public ShowRequestGUI(RequestContainer r, String currentMail) { 
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(900, 500));
 		this.setLocationRelativeTo(null);
 
-		fieldTitle.setText(request.getTitle());
-		fieldDescription.setText(request.getDescription());
+		fieldTitle.setText(r.getRequest().getTitle());
+		fieldDescription.setText(r.getRequest().getDescription());
 
-		fieldSuggestedPrice.setText(Double.toString(request.getPrice()));
+		fieldSuggestedPrice.setText(Double.toString(r.getRequest().getPrice()));
 		
 		jLabelTitle.setBounds(new Rectangle(50, 50, 140, 25));
 		
@@ -99,7 +100,7 @@ public class ShowRequestGUI extends JFrame {
 		fieldDescription.setColumns(10);
 		jButtonMakeAnOffer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new MakeAnOfferGUI(currentMail,request);
+				JFrame a = new MakeAnOfferGUI(currentMail,r);
 				a.setVisible(true);
 			}
 		});

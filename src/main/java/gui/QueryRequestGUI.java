@@ -3,6 +3,7 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Request;
+import domain.RequestContainer;
 import domain.Sale;
 import domain.SaleContainer;
 import enums.MovementType;
@@ -108,7 +109,7 @@ public class QueryRequestGUI extends JFrame {
 					JTable table =(JTable) mouseEvent.getSource();
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
-					Request r=(Request) tableModelProducts.getValueAt(row, 2);
+					RequestContainer r=(RequestContainer) tableModelProducts.getValueAt(row, 2);
 					System.out.println(currentUserMail);
 					
 						JFrame a = new ShowRequestGUI(r,currentUserMail);
@@ -128,15 +129,15 @@ public class QueryRequestGUI extends JFrame {
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 			//Query deia
-			List<Request> requests = facade.getRequests(currentMail);
+			List<RequestContainer> requests = facade.getRequests(currentMail);
 
 			if (requests.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);
 
-			for (Request request : requests){
+			for (RequestContainer request : requests){
 				Vector<Object> row = new Vector<Object>();
-				row.add(request.getTitle());
-				row.add(request.getPrice());
+				row.add(request.getRequest().getTitle());
+				row.add(request.getRequest().getPrice());
 				row.add(request); 
 				tableModelProducts.addRow(row);		
 			}

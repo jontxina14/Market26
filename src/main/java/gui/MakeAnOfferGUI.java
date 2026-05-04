@@ -2,6 +2,7 @@ package gui;
 
 import businessLogic.BLFacade;
 import domain.Request;
+import domain.RequestContainer;
 import domain.Sale;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,7 +21,7 @@ public class MakeAnOfferGUI extends JFrame {
 	DefaultComboBoxModel<String> statusOptions = new DefaultComboBoxModel<String>();
 	List<String> status;
 
-    public MakeAnOfferGUI(String offererMail, Request request) {
+    public MakeAnOfferGUI(String offererMail, RequestContainer request) {
         ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
 
         setTitle(bundle.getString("MakeOfferGUI.Title"));
@@ -106,4 +107,6 @@ public class MakeAnOfferGUI extends JFrame {
             }
         });
     }
+
+	
 }

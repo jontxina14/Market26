@@ -21,10 +21,12 @@ import domain.ComplaintContainer;
 import domain.Movement;
 import domain.MovementContainer;
 import domain.Offer;
+import domain.OfferContainer;
 import domain.Registered;
 import domain.Report;
 import domain.ReportContainer;
 import domain.Request;
+import domain.RequestContainer;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -153,24 +155,33 @@ public class BLFacadeImplementation  implements BLFacade {
 
 
 
-	//WEB ZERBITZUA BEGIRATU
-	@WebMethod public List<Request> getRequests(String currentMail){
+	@WebMethod public List<RequestContainer> getRequests(String currentMail){
 		dbManager.open();
 
 		List<Request> requests = dbManager.getRequests(currentMail);
+		List<RequestContainer> req = new ArrayList<>();
+		
+		for (Request r : requests) {
+			req.add(new RequestContainer(r));
+		}
 
 		dbManager.close();
-		return requests;
+		return req;
 	}
 
 
-	@WebMethod public List<Offer> getOffers(String currentMail){
+	@WebMethod public List<OfferContainer> getOffers(String currentMail){
 		dbManager.open();
 
 		List<Offer> offers = dbManager.getOffers(currentMail);
+		List<OfferContainer> ofs = new ArrayList<>();
+		
+		for (Offer o : offers) {
+			ofs.add(new OfferContainer(o));
+		}
 
 		dbManager.close();
-		return offers;
+		return ofs;
 	}
 
 	/**
@@ -358,6 +369,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.declineOffer(offer);
 		dbManager.close();
 
+	}
+
+	@Override
+	public void makeOffer(String offererMail, RequestContainer request, double price, int status, String description) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

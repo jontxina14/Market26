@@ -3,6 +3,7 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Offer;
+import domain.OfferContainer;
 import domain.Request;
 import domain.Sale;
 import domain.SaleContainer;
@@ -109,7 +110,7 @@ public class QueryOfferGUI extends JFrame {
 					JTable table =(JTable) mouseEvent.getSource();
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
-					Offer o = (Offer) tableModelProducts.getValueAt(row, 2);
+					OfferContainer o = (OfferContainer) tableModelProducts.getValueAt(row, 2);
 					System.out.println(currentUserMail);
 
 					JFrame a = new ShowOfferGUI(o,currentUserMail);
@@ -130,15 +131,15 @@ public class QueryOfferGUI extends JFrame {
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 			//Query deia
-			List<Offer> offers = facade.getOffers(currentMail);
+			List<OfferContainer> offers = facade.getOffers(currentMail);
 
 			if (offers.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);
 
-			for (Offer offer : offers){
+			for (OfferContainer offer : offers){
 				Vector<Object> row = new Vector<Object>();
 				row.add(offer.getRequest().getTitle());
-				row.add(offer.getPrice());
+				row.add(offer.getOffer().getPrice());
 				row.add(offer); 
 				tableModelProducts.addRow(row);		
 			}

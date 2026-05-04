@@ -16,10 +16,12 @@ import domain.ComplaintContainer;
 import domain.Movement;
 import domain.MovementContainer;
 import domain.Offer;
+import domain.OfferContainer;
 import domain.Registered;
 import domain.Report;
 import domain.ReportContainer;
 import domain.Request;
+import domain.RequestContainer;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -78,9 +80,9 @@ public interface BLFacade  {
 	
 	@WebMethod public List<ReportContainer> getReports();
 	
-	@WebMethod public List<Request> getRequests(String currentMail);
+	@WebMethod public List<RequestContainer> getRequests(String currentMail);
 	
-	@WebMethod 	public List<Offer> getOffers(String currentMail);
+	@WebMethod 	public List<OfferContainer> getOffers(String currentMail);
 
 
 	//@WebMethod public List<Sale> getReports(String titleFilter);
@@ -132,7 +134,7 @@ public interface BLFacade  {
 	
 	@WebMethod public void createRequest(String mail,String title,String description,double price);
 
-	@WebMethod public void makeOffer(String offererMail, Request request, double price, int status, String description);
+	@WebMethod public void makeOffer(String offererMail, RequestContainer request, double price, int status, String description);
 
 	@WebMethod public void acceptOffer(Offer offer);
 	

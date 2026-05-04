@@ -33,6 +33,12 @@ public class Request implements Serializable {
 	private RequestStatusType requestStatus;
 	@XmlIDREF
 	private Registered requester;
+	
+	public String getXmlId() {
+	    return "request-" + requestNumber;
+	}
+	@XmlID
+    private String xmlId;
 
 	//TODO: offeren lista sartu (addOfermetodoa egin offer bat sortzean deitzeko)
 	
@@ -50,6 +56,7 @@ public class Request implements Serializable {
 		
 		this.requestStatus = RequestStatusType.AVAILABLE;
 	}
+	
 
 	public Integer getRequestNumber() {
 		return requestNumber;
@@ -102,6 +109,10 @@ public class Request implements Serializable {
 	
 	public boolean addOffer(Offer o) {
 		return offers.add(o);
+	}
+
+	public Request getRequest() {
+		return null;
 	}
 	
 	

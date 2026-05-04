@@ -1,18 +1,23 @@
 package domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
 
 import enums.OfferStatusType;
 
+@SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Offer {
+public class Offer implements Serializable{
 	@XmlTransient
 	@Id
 	@GeneratedValue
@@ -23,12 +28,18 @@ public class Offer {
 	private String description;
 	
 	private int status;
+	public String getXmlId() {
+	    return "offer-" + offerId;
+	}
+	
+	@XmlID
+    private String xmlId;
 	
 	private OfferStatusType offerStatus;
-
+	@XmlIDREF
 	@OneToOne
 	private Registered registered;
-	
+	@XmlIDREF
 	@OneToOne
 	private Request request;
 	
@@ -40,7 +51,9 @@ public class Offer {
 		this.request=req;
 		this.status=status;
 	}
-	
+	public Offer() {
+		
+	}
 	
 	public int getOfferId() {
 		return offerId;
@@ -101,6 +114,9 @@ public class Offer {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+	
+	
 	
 	
 	

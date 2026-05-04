@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import businessLogic.BLFacade;
 import domain.Offer;
+import domain.OfferContainer;
 import domain.Report;
 import domain.ReportContainer;
 
@@ -37,7 +38,7 @@ public class ShowOfferGUI extends JFrame {
 	private JTextField textFieldStatus;
 
 
-	public ShowOfferGUI(Offer offer, String requesterEmail) {
+	public ShowOfferGUI(OfferContainer offer, String requesterEmail) {
 				
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 440));
@@ -57,10 +58,10 @@ public class ShowOfferGUI extends JFrame {
 			);
 
 		fieldUser.setText(
-			    offer.getRegistered().getEmail() != null ? offer.getRegistered().getEmail() : ""
+			    offer.getOffer().getRegistered().getEmail() != null ? offer.getRegistered().getEmail() : ""
 			);
 
-		fieldPrice.setText(String.valueOf(offer.getPrice()));
+		fieldPrice.setText(String.valueOf(offer.getOffer().getPrice()));
 		
 		jLabelTitle.setBounds(40, 30, 180, 25);
 		jLabelUser.setBounds(40, 75, 180, 25);
@@ -74,7 +75,7 @@ public class ShowOfferGUI extends JFrame {
 		jButtonClose.setBounds(60, 330, 160, 45);
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				facade.acceptOffer(offer);
+				facade.acceptOffer(offer.getOffer());
 				dispose();
 			}
 		});
@@ -128,13 +129,13 @@ public class ShowOfferGUI extends JFrame {
 		getContentPane().add(jLabelDesc);
 		
 		textFieldDesc = new JTextField();
-		textFieldDesc.setText(offer.getDescription());
+		textFieldDesc.setText(offer.getOffer().getDescription());
 		textFieldDesc.setEditable(false);
 		textFieldDesc.setBounds(240, 118, 400, 60);
 		getContentPane().add(textFieldDesc);
 		
 		
-		String stringStatus=status.get(offer.getStatus());
+		String stringStatus=status.get(offer.getOffer().getStatus());
 		
 		textFieldStatus = new JTextField();
 		textFieldStatus.setText(stringStatus);
