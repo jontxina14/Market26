@@ -32,7 +32,7 @@ public class Offer {
 	
 	public Offer(Double price, String description, Registered reg, Request req) {
 		this.price=price;
-		this.description=description;
+		this.setDescription(description);
 		this.offerStatus=OfferStatusType.WAITING;
 		this.registered=reg;
 		this.request=req;
@@ -77,6 +77,16 @@ public class Offer {
 
 	public void setRequest(Request request) {
 		this.request = request;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

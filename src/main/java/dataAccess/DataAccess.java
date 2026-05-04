@@ -332,6 +332,9 @@ public class DataAccess  {
 				offers.add(o);
 			}
 		}
+		//TODO
+		//offers.sort();
+		
 		return offers;
 
 	}

@@ -48,8 +48,8 @@ public class QueryOfferGUI extends JFrame {
 
 	private String QueryMessagge = "";
 	private String emptyQueryMessagge = "";
-	
-	
+
+
 	public QueryOfferGUI(String currentUserMail) {
 		this.currentMail = currentUserMail;
 
@@ -58,7 +58,7 @@ public class QueryOfferGUI extends JFrame {
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 500));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.FindProducts"));
-		
+
 		jLabelProducts.setBounds(52, 108, 427, 16);
 		this.getContentPane().add(jLabelProducts);
 
@@ -68,7 +68,7 @@ public class QueryOfferGUI extends JFrame {
 
 		scrollPanelProducts.setBounds(new Rectangle(52, 137, 459, 150));
 		scrollPanelProducts.setViewportView(tableProducts);
-		
+
 		tableModelProducts = new DefaultTableModel(null, columnNamesProducts);
 		tableProducts.setModel(tableModelProducts);
 
@@ -91,8 +91,8 @@ public class QueryOfferGUI extends JFrame {
 
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
-		
-	
+
+
 		//TODO
 		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
 		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale");
@@ -109,10 +109,11 @@ public class QueryOfferGUI extends JFrame {
 					JTable table =(JTable) mouseEvent.getSource();
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
-					Request r=(Request) tableModelProducts.getValueAt(row, 2);
+					Offer o = (Offer) tableModelProducts.getValueAt(row, 2);
 					System.out.println(currentUserMail);
-					
-						JFrame a = new ShowOffer(o,currentUserMail);
+
+					JFrame a = new ShowOfferGUI(o,currentUserMail);
+					a.setVisible(true);
 				}
 			}
 		});
@@ -149,5 +150,5 @@ public class QueryOfferGUI extends JFrame {
 		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
 		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(2)); // not shown in JTable
 	}
-	
+
 }
