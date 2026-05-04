@@ -732,6 +732,34 @@ public class DataAccess  {
 		
 	}
 
+	public void acceptOffer(Offer offer) {
+		db.getTransaction().begin();
+		Offer o = db.find(Offer.class, offer);
+		Request r = o.getRequest();
+		o.setOfferStatus(OfferStatusType.ACCEPTED);
+		String offererEmail = o.getRegistered().getEmail();
+		String requesterEmail = r.getRequester().getEmail();
+		Registered requester = db.find(Registered.class, requesterEmail);
+		Registered offerer = db.find(Registered.class, offererEmail);
+
+		Sale s = offerer.addSale(r.getTitle(), r.getDescription(), o.getStatus(), (float) o.getPrice(), UtilDate.trim(new Date()), null);
+		buySale(requester.getEmail(),new ArrayList<Integer>().add(s.getSaleNumber()));
+		
+		
+		
+		db.getTransaction().commit();
+		
+		
+	}
+
+	public void declineOffer(Offer offer) {
+		db.getTransaction().begin();
+		Offer o = db.find(Offer.class, offer);
+		o.setOfferStatus(OfferStatusType.DECLINED);
+		db.getTransaction().commit();
+		
+	}
+
 	
 
 

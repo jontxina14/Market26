@@ -347,10 +347,16 @@ public class BLFacadeImplementation  implements BLFacade {
 
 
 	public void acceptOffer(Offer offer) {
+		dbManager.open();
+		dbManager.acceptOffer(offer);
+		dbManager.close();
 
 	}
 
 	public void declineOffer(Offer offer) {
+		dbManager.open();
+		dbManager.declineOffer(offer);
+		dbManager.close();
 
 	}
 
