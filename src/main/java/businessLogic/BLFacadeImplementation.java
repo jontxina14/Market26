@@ -350,14 +350,15 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 
 
-	public void makeOffer(String offererMail, Request request, double price, int status, String description) {
+	public void makeOffer(String offererMail, RequestContainer request, double price, int status, String description) {
 		dbManager.open();
-		dbManager.makeOffer(offererMail,request,price,status,description);
-		dbManager.close();
+	    dbManager.makeOffer(offererMail, request, price, status, description);
+	    dbManager.close();
+		
 	}
-
-
-	public void acceptOffer(Offer offer) {
+	
+	
+	public void acceptOffer(Offer offer) throws NotEnoughMoneyException {
 		dbManager.open();
 		dbManager.acceptOffer(offer);
 		dbManager.close();
@@ -370,13 +371,6 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 
 	}
-
-	@Override
-	public void makeOffer(String offererMail, RequestContainer request, double price, int status, String description) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }
 

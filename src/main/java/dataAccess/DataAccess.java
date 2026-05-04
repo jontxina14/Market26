@@ -722,33 +722,54 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
-	public void makeOffer(String offererMail, Request request, double price, int status, String description) {
+	public void makeOffer(String offererMail, RequestContainer request, double price, int status, String description) {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class,offererMail);
-		reg.addOffer(request,status,price,description);
+		reg.addOffer(request.getRequest(),status,price,description);
 		db.getTransaction().commit();
 		
 
 		
 	}
 
-	public void acceptOffer(Offer offer) {
+	public void acceptOffer(Offer offer) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
-		Offer o = db.find(Offer.class, offer);
+		
+		Offer o = db.find(Offer.class, offer.getOfferId());
 		Request r = o.getRequest();
+		
 		o.setOfferStatus(OfferStatusType.ACCEPTED);
+		r.setRequestStatus(RequestStatusType.COMPLETED);
+		
 		String offererEmail = o.getRegistered().getEmail();
 		String requesterEmail = r.getRequester().getEmail();
+		
 		Registered requester = db.find(Registered.class, requesterEmail);
 		Registered offerer = db.find(Registered.class, offererEmail);
+		
+		Double price = o.getPrice();
+		
+		if (price > requester.getBalance()) {
+	        throw new NotEnoughMoneyException();
+	    }
 
 		Sale s = offerer.addSale(r.getTitle(), r.getDescription(), o.getStatus(), (float) o.getPrice(), UtilDate.trim(new Date()), null);
-		buySale(requester.getEmail(),new ArrayList<Integer>().add(s.getSaleNumber()));
+		s.setSaleStatus(SaleStatusType.BOUGHT);
 		
+	    ArrayList<Sale> saleList = new ArrayList<>();
+	    saleList.add(s);
 		
-		
+		double newBuyerBalance  = requester.getBalance() - price;
+	    double newSellerBalance = offerer.getBalance()   + price;
+
+	    requester.addToBought(saleList);
+	    requester.setBalance(newBuyerBalance);
+	    requester.addToMovements(MovementType.BUY, price, newBuyerBalance, saleList);
+
+	    offerer.setBalance(newSellerBalance);
+	    offerer.addToMovements(MovementType.SELL, price, newSellerBalance, saleList);
+
 		db.getTransaction().commit();
-		
 		
 	}
 

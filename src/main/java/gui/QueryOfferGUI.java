@@ -42,6 +42,7 @@ public class QueryOfferGUI extends JFrame {
 
 	private String[] columnNamesProducts = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Title"), 
+			ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Status"), 
 			ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Price")	
 	};
 
@@ -74,13 +75,13 @@ public class QueryOfferGUI extends JFrame {
 		tableProducts.setModel(tableModelProducts);
 
 		tableModelProducts.setDataVector(null, columnNamesProducts);
-		tableModelProducts.setColumnCount(3); // another column added to allocate ride objects
+		tableModelProducts.setColumnCount(4); // another column added to allocate ride objects
 
-		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
-		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
+		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(150);
+		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(40);
+		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(20);
 
-
-		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(2)); // not shown in JTable
+		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
 
 		this.getContentPane().add(scrollPanelProducts, null);
 
@@ -110,7 +111,7 @@ public class QueryOfferGUI extends JFrame {
 					JTable table =(JTable) mouseEvent.getSource();
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
-					OfferContainer o = (OfferContainer) tableModelProducts.getValueAt(row, 2);
+					OfferContainer o = (OfferContainer) tableModelProducts.getValueAt(row, 3);
 					System.out.println(currentUserMail);
 
 					JFrame a = new ShowOfferGUI(o,currentUserMail);
@@ -126,7 +127,7 @@ public class QueryOfferGUI extends JFrame {
 	public void refreshQuery() {
 		try {
 			tableModelProducts.setDataVector(null, columnNamesProducts);
-			tableModelProducts.setColumnCount(3); // another column added to allocate product object
+			tableModelProducts.setColumnCount(4); // another column added to allocate product object
 
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
@@ -136,9 +137,13 @@ public class QueryOfferGUI extends JFrame {
 			if (offers.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);
 
+			List<String> stList = Utils.getStatus();
+			
+			
 			for (OfferContainer offer : offers){
 				Vector<Object> row = new Vector<Object>();
 				row.add(offer.getRequest().getTitle());
+				row.add(stList.get(offer.getOffer().getStatus()));
 				row.add(offer.getOffer().getPrice());
 				row.add(offer); 
 				tableModelProducts.addRow(row);		
@@ -147,9 +152,12 @@ public class QueryOfferGUI extends JFrame {
 
 			e1.printStackTrace();
 		}
-		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
-		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
-		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(2)); // not shown in JTable
+		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(150);
+		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(40);
+		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(20);
+		tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
 	}
 
 }
+
+

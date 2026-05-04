@@ -10,6 +10,7 @@ import domain.Offer;
 import domain.OfferContainer;
 import domain.Report;
 import domain.ReportContainer;
+import exceptions.NotEnoughMoneyException;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -75,7 +76,6 @@ public class ShowOfferGUI extends JFrame {
 		jButtonClose.setBounds(60, 330, 160, 45);
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				facade.acceptOffer(offer.getOffer());
 				dispose();
 			}
 		});
@@ -83,7 +83,7 @@ public class ShowOfferGUI extends JFrame {
 		jButtonDecline.setBounds(260, 330, 160, 45);
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//facade.declineOffer();
+				facade.declineOffer(offer.getOffer());
 				dispose();
 			}
 		});
@@ -93,7 +93,12 @@ public class ShowOfferGUI extends JFrame {
 		jButtonAccept.setBounds(460, 330, 160, 45);
 		jButtonAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				try {
+					facade.acceptOffer(offer.getOffer());
+				}catch (NotEnoughMoneyException ex){
+					jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
+				}
+				
 				dispose();
 			}
 		});
@@ -105,7 +110,7 @@ public class ShowOfferGUI extends JFrame {
 		fieldPrice.setEditable(false);
 		
 
-		jLabelMsg.setBounds(new Rectangle(380, 248, 260, 20));
+		jLabelMsg.setBounds(new Rectangle(35, 299, 260, 20));
 		jLabelMsg.setForeground(Color.red);
 
 
