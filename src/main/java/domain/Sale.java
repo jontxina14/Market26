@@ -28,7 +28,7 @@ public class Sale implements Serializable {
 	private Integer saleNumber;
 	private String title;
 	private String description;
-	private int  status;
+	private  int status;
 	private float price;
 	private Date pubDate;
 	private String fileName;

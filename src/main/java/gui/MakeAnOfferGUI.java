@@ -8,19 +8,24 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MakeAnOfferGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JLabel errorLabel;
+    
+    JComboBox<String> jComboBoxStatus = new JComboBox<String>();
+	DefaultComboBoxModel<String> statusOptions = new DefaultComboBoxModel<String>();
+	List<String> status;
 
     public MakeAnOfferGUI(String offererMail, Request request) {
         ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
 
         setTitle(bundle.getString("MakeOfferGUI.Title"));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 320);
+        setSize(400, 375);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -28,11 +33,20 @@ public class MakeAnOfferGUI extends JFrame {
         contentPane.setLayout(new BorderLayout(10, 15));
         setContentPane(contentPane);
 
+        
+        status=Utils.getStatus();
+		for(String s:status) statusOptions.addElement(s);
+		
+		
+		jComboBoxStatus.setModel(statusOptions);
+		jComboBoxStatus.setBounds(90, 183, 114, 27);
+        
+        
         errorLabel = new JLabel(" ");
         errorLabel.setForeground(Color.RED);
         contentPane.add(errorLabel, BorderLayout.NORTH);
 
-        JPanel centerPanel = new JPanel(new GridLayout(4, 2, 10, 15));
+        JPanel centerPanel = new JPanel(new GridLayout(5, 2, 10, 15));
 
         JLabel lblPrice = new JLabel(bundle.getString("MakeOfferGUI.Price"));
         lblPrice.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -46,6 +60,7 @@ public class MakeAnOfferGUI extends JFrame {
         centerPanel.add(priceField);
         centerPanel.add(lblDescription);
         centerPanel.add(descriptionField);
+        centerPanel.add(jComboBoxStatus);
 
         contentPane.add(centerPanel, BorderLayout.CENTER);
 
@@ -64,7 +79,9 @@ public class MakeAnOfferGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String priceText = priceField.getText();
                 String description = descriptionField.getText();
-
+            	String s=(String)jComboBoxStatus.getSelectedItem();
+				int numStatus=status.indexOf(s);
+				
                 if (priceText.isEmpty() || description.isEmpty()) {
                     errorLabel.setText(bundle.getString("MakeOfferGUI.FieldsEmpty"));
                     return;
@@ -84,7 +101,7 @@ public class MakeAnOfferGUI extends JFrame {
                 }
 
                 BLFacade facade = MainGUInonReg.getBusinessLogic();
-                facade.makeOffer(offererMail, request, price, description);
+                facade.makeOffer(offererMail, request, price, numStatus, description);
                 dispose();
             }
         });

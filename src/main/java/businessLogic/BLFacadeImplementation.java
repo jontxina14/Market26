@@ -115,11 +115,11 @@ public class BLFacadeImplementation  implements BLFacade {
 	public List<MovementContainer> getMovements(String email, MovementType type) {
 		dbManager.open();
 		List<Movement> rides= dbManager.getMovements(email, type);
-	    List<MovementContainer> res = new ArrayList<>();
+		List<MovementContainer> res = new ArrayList<>();
 
-		 for (Movement c : rides) {
-		        res.add(new MovementContainer(c));
-		    }
+		for (Movement c : rides) {
+			res.add(new MovementContainer(c));
+		}
 		dbManager.close();
 		return res;
 	}
@@ -127,50 +127,50 @@ public class BLFacadeImplementation  implements BLFacade {
 	public List<ComplaintContainer> getComplaints() {
 		dbManager.open();
 		List<Complaint> rides= dbManager.getComplaints();;
-	    List<ComplaintContainer> com = new ArrayList<>();
-	    
-	    for (Complaint c : rides) {
-	        com.add(new ComplaintContainer(c));
-	    }
+		List<ComplaintContainer> com = new ArrayList<>();
+
+		for (Complaint c : rides) {
+			com.add(new ComplaintContainer(c));
+		}
 
 		dbManager.close();
 		return com;
 	}
-	
+
 	public List<ReportContainer> getReports() {
-	    dbManager.open();
+		dbManager.open();
 
-	    List<Report> reports = dbManager.getReports();
-	    List<ReportContainer> res = new ArrayList<>();
+		List<Report> reports = dbManager.getReports();
+		List<ReportContainer> res = new ArrayList<>();
 
-	    for (Report r : reports) {
-	        res.add(new ReportContainer(r));
-	    }
+		for (Report r : reports) {
+			res.add(new ReportContainer(r));
+		}
 
-	    dbManager.close();
-	    return res;
+		dbManager.close();
+		return res;
 	}
-	
-	
-	
+
+
+
 	//WEB ZERBITZUA BEGIRATU
 	@WebMethod public List<Request> getRequests(String currentMail){
-	    dbManager.open();
+		dbManager.open();
 
-	    List<Request> requests = dbManager.getRequests(currentMail);
-	   
-	    dbManager.close();
-	    return requests;
+		List<Request> requests = dbManager.getRequests(currentMail);
+
+		dbManager.close();
+		return requests;
 	}
 
-	
+
 	@WebMethod public List<Offer> getOffers(String currentMail){
 		dbManager.open();
 
-	    List<Offer> offers = dbManager.getOffers(currentMail);
-	   
-	    dbManager.close();
-	    return offers;
+		List<Offer> offers = dbManager.getOffers(currentMail);
+
+		dbManager.close();
+		return offers;
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return s;
 	}
-	
+
 	public Registered getRegistered(String email) {
 		dbManager.open();
 		Registered reg = dbManager.getRegistered(email);
@@ -291,12 +291,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.makeComplaint(currentUsermail,saleNumb,complaint);
 		dbManager.close();
 	}
-	
+
 	@WebMethod public boolean hasReported(String currentUsermail, Sale sale) {
-	    dbManager.open();
-	    boolean result = dbManager.hasReported(currentUsermail, sale);
-	    dbManager.close();
-	    return result;
+		dbManager.open();
+		boolean result = dbManager.hasReported(currentUsermail, sale);
+		dbManager.close();
+		return result;
 	}
 
 
@@ -305,25 +305,25 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.makeReport(currentUsermail,saleNum,reason);
 		dbManager.close();
 	}
-	
+
 	public void declineReport(int reportID) {
 		dbManager.open();
 		dbManager.declineReport(reportID);
 		dbManager.close();
 	}
-	
+
 	public void adminReport(int reportID) {
 		dbManager.open();
 		dbManager.adminReport(reportID);
 		dbManager.close();
 	}
-	
+
 	public void declineComplaint(int complaintID) {
 		dbManager.open();
 		dbManager.declineComplaint(complaintID);
 		dbManager.close();
 	}
-	
+
 
 	public void acceptComplaint(int complaintID) {
 		dbManager.open();
@@ -331,20 +331,29 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 	}
 
-	
+
 	public void createRequest(String mail,String title,String description,double price) {
 		dbManager.open();
 		dbManager.createRequest(mail,title,description,price);
 		dbManager.close();
 	}
-	
 
-	public void makeOffer(String offererMail, Request request, double price, String description) {
+
+	public void makeOffer(String offererMail, Request request, double price, int status, String description) {
 		dbManager.open();
-		dbManager.makeOffer(offererMail,request,price,description);
+		dbManager.makeOffer(offererMail,request,price,status,description);
 		dbManager.close();
 	}
 
-	
+
+	public void acceptOffer(Offer offer) {
+
+	}
+
+	public void declineOffer(Offer offer) {
+
+	}
+
+
 }
 

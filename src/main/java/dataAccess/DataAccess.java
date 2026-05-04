@@ -722,10 +722,10 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
-	public void makeOffer(String offererMail, Request request, double price, String description) {
+	public void makeOffer(String offererMail, Request request, double price, int status, String description) {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class,offererMail);
-		reg.addOffer(request,price,description);
+		reg.addOffer(request,status,price,description);
 		db.getTransaction().commit();
 		
 

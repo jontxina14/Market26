@@ -22,6 +22,8 @@ public class Offer {
 	
 	private String description;
 	
+	private int status;
+	
 	private OfferStatusType offerStatus;
 
 	@OneToOne
@@ -30,12 +32,13 @@ public class Offer {
 	@OneToOne
 	private Request request;
 	
-	public Offer(Double price, String description, Registered reg, Request req) {
+	public Offer(Double price, String description, int status, Registered reg, Request req) {
 		this.price=price;
 		this.setDescription(description);
 		this.offerStatus=OfferStatusType.WAITING;
 		this.registered=reg;
 		this.request=req;
+		this.status=status;
 	}
 	
 	
@@ -87,6 +90,16 @@ public class Offer {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+
+	public int getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 	
