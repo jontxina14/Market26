@@ -41,7 +41,7 @@ public class QueryOfferGUI extends JFrame {
 
 	private String[] columnNamesProducts = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Title"), 
-			"ALDATU"
+			ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Price")	
 	};
 
 	private JTextField jTextFieldSearch;

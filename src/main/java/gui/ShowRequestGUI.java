@@ -29,7 +29,7 @@ public class ShowRequestGUI extends JFrame {
 	private JTextField fieldDescription=new JTextField();
 
 	private JLabel jLabelTitle = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.Title"));
-	private JLabel jLabelDescription = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Description")); 
+	private JLabel jLabelDescription = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Description")); 
 	private JLabel jLabelSuggestedPrice = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Price"));
 	private JTextField fieldSuggestedPrice = new JTextField();
 	private File selectedFile;
@@ -55,21 +55,21 @@ public class ShowRequestGUI extends JFrame {
 
 		fieldSuggestedPrice.setText(Double.toString(request.getPrice()));
 		
-		jLabelTitle.setBounds(new Rectangle(6, 56, 140, 20));
+		jLabelTitle.setBounds(new Rectangle(50, 50, 140, 25));
 		
-		jLabelSuggestedPrice.setBounds(new Rectangle(6, 220, 140, 25));
+		jLabelSuggestedPrice.setBounds(new Rectangle(50, 220, 140, 25));
 		fieldSuggestedPrice.setEditable(false);
-		fieldSuggestedPrice.setBounds(new Rectangle(150, 220, 100, 30));
+		fieldSuggestedPrice.setBounds(new Rectangle(200, 220, 100, 30));
 
 		
-		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
-		jButtonClose.setBounds(new Rectangle(150, 380, 140, 40));
+		scrollPaneEvents.setBounds(new Rectangle(50, 280, 346, 80));
+		jButtonClose.setBounds(new Rectangle(250, 380, 150, 40));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);			}
 		});
 
-		jLabelMsg.setBounds(new Rectangle(275, 214, 305, 20));
+		jLabelMsg.setBounds(new Rectangle(320, 225, 305, 20));
 		jLabelMsg.setForeground(Color.red);
 
 		
@@ -83,18 +83,18 @@ public class ShowRequestGUI extends JFrame {
 		this.getContentPane().add(jLabelSuggestedPrice, null);
 		this.getContentPane().add(fieldSuggestedPrice, null);
 		
-		jLabelDescription.setBounds(6, 81, 109, 16);
+		jLabelDescription.setBounds(50, 95, 140, 25);
 		getContentPane().add(jLabelDescription);
 		fieldTitle.setEditable(false);
 		
 		
-		fieldTitle.setBounds(150, 50, 500, 30);
+		fieldTitle.setBounds(200, 50, 630, 30);
 		getContentPane().add(fieldTitle);
 		fieldTitle.setColumns(10);
 		fieldDescription.setEditable(false);
 		
 		
-		fieldDescription.setBounds(150, 95, 680, 100);
+		fieldDescription.setBounds(200, 95, 630, 100);
 		getContentPane().add(fieldDescription);
 		fieldDescription.setColumns(10);
 		jButtonMakeAnOffer.addActionListener(new ActionListener() {
@@ -104,8 +104,7 @@ public class ShowRequestGUI extends JFrame {
 			}
 		});
 		
-		jButtonMakeAnOffer.setBounds(new Rectangle(150, 380, 140, 40));
-		jButtonMakeAnOffer.setBounds(333, 380, 140, 40);
+		jButtonMakeAnOffer.setBounds(450, 380, 150, 40);
 		getContentPane().add(jButtonMakeAnOffer);
 				
 	}	 

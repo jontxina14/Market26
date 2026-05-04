@@ -68,14 +68,14 @@ public class ShowBasketGUI extends JFrame {
 		this.setSize(new Dimension(700, 500));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.FindProducts"));
 
-		jLabelProducts.setBounds(52, 50, 427, 16);
+		jLabelProducts.setBounds(50, 30, 450, 20);
 		this.getContentPane().add(jLabelProducts);
 
-		jButtonClose.setBounds(new Rectangle(210, 379, 130, 30));
+		jButtonClose.setBounds(new Rectangle(190, 400, 150, 35));
 		jButtonClose.addActionListener(e -> dispose());
 		this.getContentPane().add(jButtonClose, null);
 
-		jButtonBuy.setBounds(new Rectangle(360, 379, 130, 30));
+		jButtonBuy.setBounds(new Rectangle(360, 400, 150, 35));
 		jButtonBuy.addActionListener(e -> {
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
@@ -100,7 +100,7 @@ public class ShowBasketGUI extends JFrame {
 		});
 		this.getContentPane().add(jButtonBuy, null);
 
-		scrollPanelProducts.setBounds(new Rectangle(52, 76, 459, 211));
+		scrollPanelProducts.setBounds(new Rectangle(50, 60, 580, 230));
 		scrollPanelProducts.setViewportView(tableProducts);
 
 		tableModelProducts = new DefaultTableModel(null, columnNamesProducts);
@@ -108,9 +108,9 @@ public class ShowBasketGUI extends JFrame {
 
 		tableModelProducts.setDataVector(null, columnNamesProducts);
 
-		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
-		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
-		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(70);
+		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(300);
+		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(50);
+		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(100);
 
 		refreshQuery();
 
@@ -118,10 +118,10 @@ public class ShowBasketGUI extends JFrame {
 
 		this.getContentPane().add(scrollPanelProducts, null);
 
-		jLabelTotalPrice.setBounds(52, 309, 141, 16);
+		jLabelTotalPrice.setBounds(50, 310, 150, 20);
 		getContentPane().add(jLabelTotalPrice);
 
-		jLabelTotalPriceAns.setBounds(220, 309, 141, 16);
+		jLabelTotalPriceAns.setBounds(200, 310, 150, 20);
 		getContentPane().add(jLabelTotalPriceAns);
 		int prezioTot=0;
 		for(Sale s:basket) {
@@ -129,7 +129,7 @@ public class ShowBasketGUI extends JFrame {
 		}
 		jLabelTotalPriceAns.setText(String.valueOf(prezioTot));
 
-		jLabelError.setBounds(58, 347, 141, 16);
+		jLabelError.setBounds(50, 350, 400, 25);
 		getContentPane().add(jLabelError);
 
 
@@ -167,7 +167,6 @@ public class ShowBasketGUI extends JFrame {
 		try {
 			System.out.println("BasketGUI: " + basket);
 			tableModelProducts.setDataVector(null, columnNamesProducts);
-			tableModelProducts.setColumnCount(4);	
 
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 			Date today = UtilDate.trim(new Date());
@@ -188,9 +187,9 @@ public class ShowBasketGUI extends JFrame {
 
 			e1.printStackTrace();
 		}
-		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(200);
-		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(20);
-		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(70);
+		tableProducts.getColumnModel().getColumn(0).setPreferredWidth(300);
+		tableProducts.getColumnModel().getColumn(1).setPreferredWidth(50);
+		tableProducts.getColumnModel().getColumn(2).setPreferredWidth(100);
 		//tableProducts.getColumnModel().removeColumn(tableProducts.getColumnModel().getColumn(3)); // not shown in JTable
 	}
 }

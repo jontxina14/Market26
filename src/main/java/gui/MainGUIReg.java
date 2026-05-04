@@ -171,7 +171,8 @@ public class MainGUIReg extends JFrame {
 		jButtonShowProfile.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.ShowProfile"));
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
-		jButtonCreateRequest.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateRequest"));
+		jButtonCreateRequest.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QueryRequests"));
+		queryRequestButton.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QueryRequests"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ ": "+sellerMail);
 	}
 	

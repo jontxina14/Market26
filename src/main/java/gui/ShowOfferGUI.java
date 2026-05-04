@@ -24,9 +24,9 @@ public class ShowOfferGUI extends JFrame {
 
 	private JLabel jLabelTitle = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowReportGUI.Title"));
 	private JLabel jLabelUser = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowReportGUI.User"));
-	private final JLabel jLabelPrice = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowReportGUI.Date"));
-	private final JButton jButtonDecline = new JButton("ALDATU, bazter");
-	private final JButton jButtonAccept = new JButton("ALDATU, onart");
+	private final JLabel jLabelPrice = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Price"));
+	private final JButton jButtonDecline = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Decline"));
+	private final JButton jButtonAccept = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Accept"));
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowReportGUI.Close"));
 
 	private JLabel jLabelMsg = new JLabel();
@@ -40,16 +40,17 @@ public class ShowOfferGUI extends JFrame {
 	public ShowOfferGUI(Offer offer, String requesterEmail) {
 				
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(700, 420));
+		this.setSize(new Dimension(700, 440));
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
+		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Name"));
 		
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
 		
 		List<String> status;
 		status=Utils.getStatus();
 		
-		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowReportGUI.Name"));
+		
 
 		fieldTitle.setText(
 			    offer.getRequest().getTitle() != null ? offer.getRequest().getTitle() : ""
@@ -61,16 +62,16 @@ public class ShowOfferGUI extends JFrame {
 
 		fieldPrice.setText(String.valueOf(offer.getPrice()));
 		
-		jLabelTitle.setBounds(50, 30, 250, 25);
-		jLabelUser.setBounds(50, 75, 250, 25);
-		jLabelPrice.setBounds(53, 256, 140, 25);
+		jLabelTitle.setBounds(40, 30, 180, 25);
+		jLabelUser.setBounds(40, 75, 180, 25);
+		jLabelPrice.setBounds(40, 245, 1800, 25);
 
-		fieldTitle.setBounds(220, 30, 400, 30);
-		fieldUser.setBounds(220, 75, 300, 30);
-		fieldPrice.setBounds(223, 256, 120, 30);
+		fieldTitle.setBounds(240, 28, 400, 30);
+		fieldUser.setBounds(240, 73, 400, 30);
+		fieldPrice.setBounds(240, 243, 120, 30);
 		
 		
-		jButtonClose.setBounds(44, 321, 140, 40);
+		jButtonClose.setBounds(60, 330, 160, 45);
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				facade.acceptOffer(offer);
@@ -78,7 +79,7 @@ public class ShowOfferGUI extends JFrame {
 			}
 		});
 
-		jButtonDecline.setBounds(204, 321, 140, 40);
+		jButtonDecline.setBounds(260, 330, 160, 45);
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//facade.declineOffer();
@@ -88,7 +89,7 @@ public class ShowOfferGUI extends JFrame {
 		
 		
 ;
-		jButtonAccept.setBounds(364, 321, 140, 40);
+		jButtonAccept.setBounds(460, 330, 160, 45);
 		jButtonAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -103,7 +104,7 @@ public class ShowOfferGUI extends JFrame {
 		fieldPrice.setEditable(false);
 		
 
-		jLabelMsg.setBounds(new Rectangle(376, 261, 300, 20));
+		jLabelMsg.setBounds(new Rectangle(380, 248, 260, 20));
 		jLabelMsg.setForeground(Color.red);
 
 
@@ -122,14 +123,14 @@ public class ShowOfferGUI extends JFrame {
 		getContentPane().add(jLabelPrice);
 		getContentPane().add(fieldPrice);
 		
-		JLabel jLabelDesc = new JLabel("JON: ALDATU DESC && DENA");
-		jLabelDesc.setBounds(30, 124, 130, 25);
+		JLabel jLabelDesc = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Description"));
+		jLabelDesc.setBounds(40, 120, 180, 25);
 		getContentPane().add(jLabelDesc);
 		
 		textFieldDesc = new JTextField();
 		textFieldDesc.setText(offer.getDescription());
 		textFieldDesc.setEditable(false);
-		textFieldDesc.setBounds(220, 130, 378, 55);
+		textFieldDesc.setBounds(240, 118, 400, 60);
 		getContentPane().add(textFieldDesc);
 		
 		
@@ -138,11 +139,11 @@ public class ShowOfferGUI extends JFrame {
 		textFieldStatus = new JTextField();
 		textFieldStatus.setText(stringStatus);
 		textFieldStatus.setEditable(false);
-		textFieldStatus.setBounds(220, 200, 300, 30);
+		textFieldStatus.setBounds(240, 198, 200, 30);
 		getContentPane().add(textFieldStatus);
 		
-		JLabel jLabelStatus = new JLabel("JON: ALDATU STATUS && DENA");
-		jLabelStatus.setBounds(30, 200, 130, 25);
+		JLabel jLabelStatus = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Status"));
+		jLabelStatus.setBounds(40, 200, 180, 25);
 		getContentPane().add(jLabelStatus);
 		this.setVisible(true);
 
