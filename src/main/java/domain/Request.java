@@ -18,11 +18,9 @@ import enums.RequestStatusType;
 import enums.SaleStatusType;
 
 
-@SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Request implements Serializable {
-	@XmlID
 	@Id 
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
@@ -41,7 +39,6 @@ public class Request implements Serializable {
     private String xmlId;
 
 	//TODO: offeren lista sartu (addOfermetodoa egin offer bat sortzean deitzeko)
-	
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Offer> offers = new ArrayList<>();
 	
@@ -111,9 +108,7 @@ public class Request implements Serializable {
 		return offers.add(o);
 	}
 
-	public Request getRequest() {
-		return null;
-	}
+	
 	
 	
 }

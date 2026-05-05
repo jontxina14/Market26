@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import enums.OfferStatusType;
 
-@SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Offer implements Serializable{
@@ -50,6 +50,7 @@ public class Offer implements Serializable{
 		this.registered=reg;
 		this.request=req;
 		this.status=status;
+		this.xmlId = "offer-" + UUID.randomUUID();
 	}
 	public Offer() {
 		

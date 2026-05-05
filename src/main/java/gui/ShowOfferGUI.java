@@ -61,7 +61,7 @@ public class ShowOfferGUI extends JFrame {
 			);
 
 		fieldUser.setText(
-			    offer.getOffer().getRegistered().getEmail() != null ? offer.getRegistered().getEmail() : ""
+			    offer.getRegistered().getEmail() != null ? offer.getRegistered().getEmail() : ""
 			);
 
 		fieldPrice.setText(String.valueOf(offer.getOffer().getPrice()));

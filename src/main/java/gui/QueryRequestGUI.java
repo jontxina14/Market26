@@ -138,7 +138,7 @@ public class QueryRequestGUI extends JFrame {
 				Vector<Object> row = new Vector<Object>();
 				row.add(request.getRequest().getTitle());
 				row.add(request.getRequest().getPrice());
-				row.add(request); 
+				row.add(request.getRequest()); 
 				tableModelProducts.addRow(row);		
 			}
 		} catch (Exception e1) {
