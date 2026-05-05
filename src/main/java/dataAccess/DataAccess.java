@@ -329,7 +329,8 @@ public class DataAccess  {
 		
 		ArrayList<Offer> offers = new ArrayList<Offer>();
 		for(Offer o:query.getResultList()) {
-			if(!o.getRegistered().getEmail().equals(currentMail) && o.getRequest().getRequestStatus().equals(RequestStatusType.AVAILABLE)) {
+			if(o.getRequest().getRequester().getEmail().equals(currentMail) && o.getRequest().getRequestStatus().equals(RequestStatusType.AVAILABLE)) {
+				System.out.println("getOffers, currentmail: "+currentMail);
 				offers.add(o);
 			}
 		}
