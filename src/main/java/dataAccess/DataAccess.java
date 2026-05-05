@@ -318,6 +318,7 @@ public class DataAccess  {
 				requests.add(r);
 			}
 		}
+		
 		return requests;
 		
 	}
@@ -722,10 +723,10 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
-	public void makeOffer(String offererMail, RequestContainer request, double price, int status, String description) {
+	public void makeOffer(String offererMail, Request request, double price, int status, String description) {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class,offererMail);
-		reg.addOffer(request.getRequest(),status,price,description);
+		reg.addOffer(request,status,price,description);
 		db.getTransaction().commit();
 		
 
@@ -775,7 +776,7 @@ public class DataAccess  {
 
 	public void declineOffer(Offer offer) {
 		db.getTransaction().begin();
-		Offer o = db.find(Offer.class, offer);
+		Offer o = db.find(Offer.class, offer.getOfferId());
 		o.setOfferStatus(OfferStatusType.DECLINED);
 		db.getTransaction().commit();
 		

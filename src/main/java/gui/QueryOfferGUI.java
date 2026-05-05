@@ -114,7 +114,7 @@ public class QueryOfferGUI extends JFrame {
 					OfferContainer o = (OfferContainer) tableModelProducts.getValueAt(row, 3);
 					System.out.println(currentUserMail);
 
-					JFrame a = new ShowOfferGUI(o,currentUserMail);
+					JFrame a = new ShowOfferGUI(o,currentUserMail,thisFrame);
 					a.setVisible(true);
 				}
 			}

@@ -34,13 +34,15 @@ public class ShowOfferGUI extends JFrame {
 	private JLabel jLabelMsg = new JLabel();
 	private JFrame thisFrame;
 	
-	private QueryReportGUI parent;
 	private JTextField textFieldDesc;
 	private JTextField textFieldStatus;
 
 
-	public ShowOfferGUI(OfferContainer offer, String requesterEmail) {
+	public ShowOfferGUI(OfferContainer offer, String requesterEmail, JFrame p) {
 				
+		
+		QueryOfferGUI parent = (QueryOfferGUI) p;
+		
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 440));
 		this.setLocationRelativeTo(null);
@@ -98,7 +100,7 @@ public class ShowOfferGUI extends JFrame {
 				}catch (NotEnoughMoneyException ex){
 					jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
 				}
-				
+				parent.refreshQuery();
 				dispose();
 			}
 		});

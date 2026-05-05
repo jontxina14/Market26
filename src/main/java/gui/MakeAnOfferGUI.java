@@ -102,7 +102,7 @@ public class MakeAnOfferGUI extends JFrame {
                 }
 
                 BLFacade facade = MainGUInonReg.getBusinessLogic();
-                facade.makeOffer(offererMail, request, price, numStatus, description);
+                facade.makeOffer(offererMail, request.getRequest(), price, numStatus, description);
                 dispose();
             }
         });

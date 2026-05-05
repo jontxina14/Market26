@@ -134,7 +134,7 @@ public interface BLFacade  {
 	
 	@WebMethod public void createRequest(String mail,String title,String description,double price);
 
-	@WebMethod public void makeOffer(String offererMail, RequestContainer request, double price, int status, String description);
+	@WebMethod public void makeOffer(String offererMail, Request request, double price, int status, String description);
 
 	@WebMethod public void acceptOffer(Offer offer)  throws NotEnoughMoneyException;
 	

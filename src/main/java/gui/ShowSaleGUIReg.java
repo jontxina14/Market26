@@ -40,7 +40,6 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(s.getSaleNumber());
 
-
 				//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
 				parent.addTotheBasket(s,s.getSeller().getEmail());
 				parent.refreshQuery();
@@ -90,6 +89,18 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 
 		reportButton.setBounds(738, 50, 100, 30);
 		getContentPane().add(reportButton);
+		
+		
+		JButton showProfButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.showProfButton"));
+		showProfButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//JFrame a = new ShowOtherProfileGUI(s);
+				//a.setVisible(true);
+				dispose();
+			}
+		});
+		showProfButton.setBounds(600, 380, 200, 40);
+		getContentPane().add(showProfButton);
 
 	}
 }

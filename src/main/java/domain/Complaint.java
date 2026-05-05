@@ -1,5 +1,6 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import configuration.UtilDate;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Complaint {
+public class Complaint implements Serializable {
 	
 	@XmlTransient
 	@Id

@@ -26,6 +26,7 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 	private JLabel jLabelError = new JLabel();
 	private QuerySaleGUI parent;
 	JButton complaintButton;
+	JButton reviewtButton;
 
 	public ShowSaleGUIBought(String currentUserMail, Sale s, JFrame p) {
 		super(s);
@@ -49,8 +50,6 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 			complaintButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintPending"));
 		}
 
-
-		//BIDEO (Eager complaint)
 		complaintButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame a = new MakeComplaintGUI(currentUserMail, s);
@@ -58,8 +57,21 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 				dispose();
 			}
 		});
-		complaintButton.setBounds(300, 380, 250, 40);
+		complaintButton.setBounds(320, 380, 250, 40);
 		getContentPane().add(complaintButton);
+
+		
+		
+		reviewtButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.reviewButton"));
+		reviewtButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a = new MakeReviewGUI(currentUserMail, s);
+				a.setVisible(true);
+				dispose();
+			}
+		});
+		reviewtButton.setBounds(600, 380, 250, 40);
+		getContentPane().add(reviewtButton);
 
 
 	}
