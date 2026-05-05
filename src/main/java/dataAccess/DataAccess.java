@@ -726,6 +726,7 @@ public class DataAccess  {
 	public void makeOffer(String offererMail, Request request, double price, int status, String description) {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class,offererMail);
+		if (reg== null) return;
 		reg.addOffer(request,status,price,description);
 		db.getTransaction().commit();
 		

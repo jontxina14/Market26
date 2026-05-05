@@ -107,6 +107,10 @@ public class Request implements Serializable {
 	public boolean addOffer(Offer o) {
 		return offers.add(o);
 	}
+	
+	public String toString() {
+		return requestNumber + title + description + suggestedPrice + requestStatus;
+	}
 
 	
 	

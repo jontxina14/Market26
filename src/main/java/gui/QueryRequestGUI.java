@@ -100,16 +100,17 @@ public class QueryRequestGUI extends JFrame {
 
 		jButtonSearch.addActionListener(e -> refreshQuery());
 
-
 		tableProducts.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent mouseEvent) {
-				if(mouseEvent.getClickCount() == 2)
-				{
+				if(mouseEvent.getClickCount() == 2){
 					JTable table =(JTable) mouseEvent.getSource();
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
-					RequestContainer r=(RequestContainer) tableModelProducts.getValueAt(row, 2);
+					System.out.println("\nAYUDA: " + tableModelProducts.getValueAt(row, 2));
+					System.out.println(tableModelProducts.getValueAt(row, 2).getClass());
+
+					RequestContainer r = new RequestContainer( (Request) tableModelProducts.getValueAt(row, 2));
 					System.out.println(currentUserMail);
 					
 						JFrame a = new ShowRequestGUI(r,currentUserMail);

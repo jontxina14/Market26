@@ -142,10 +142,10 @@ public class ShowBasketGUI extends JFrame {
 		            Point point = mouseEvent.getPoint();
 		            int row = table.rowAtPoint(point);
 		            if (row >= 0) {
-		                Sale s = (Sale) tableModelProducts.getValueAt(row, 3);
-		                basket.remove(s);
+		            	System.out.println("row: "+row);
+		                Sale s = basket.remove(row);
 		                refreshQuery();
-		                
+		                System.out.println("\nSaskitik ezabatua: "+s);
 		                parent.removeFromBasket(s);
 		                parent.refreshQuery();
 		                
@@ -165,11 +165,9 @@ public class ShowBasketGUI extends JFrame {
 
 	public void refreshQuery() {
 		try {
-			System.out.println("BasketGUI: " + basket);
+			System.out.println("BasketGUI_basket: " + basket);
 			tableModelProducts.setDataVector(null, columnNamesProducts);
 
-			BLFacade facade = MainGUInonReg.getBusinessLogic();
-			Date today = UtilDate.trim(new Date());
 
 
 			if (basket.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);

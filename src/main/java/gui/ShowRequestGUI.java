@@ -16,7 +16,6 @@ import domain.RequestContainer;
 import domain.Sale;
 import domain.SaleContainer;
 
-
 public class ShowRequestGUI extends JFrame {
 	
     File targetFile;

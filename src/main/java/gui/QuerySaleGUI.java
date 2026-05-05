@@ -135,6 +135,7 @@ public class QuerySaleGUI extends JFrame {
 		}
 
 		jButtonSearch.addActionListener(e -> refreshQuery());
+		refreshQuery();
 
 
 		tableProducts.addMouseListener(new MouseAdapter() {
@@ -176,7 +177,7 @@ public class QuerySaleGUI extends JFrame {
 
 	public void refreshQuery() {
 		try {
-			System.out.println("Basket: " + basket);
+			System.out.println("QSale-Basket: " + basket);
 			tableModelProducts.setDataVector(null, columnNamesProducts);
 			tableModelProducts.setColumnCount(4); // another column added to allocate product object
 
@@ -214,11 +215,10 @@ public class QuerySaleGUI extends JFrame {
 	
 	public void removeFromBasket(Sale sale) {
 		System.out.println("QUERYGUI remove sale");
-		System.out.println(basket);
+		//System.out.println(basket);
 		basket.remove(sale);
-		if(basket.isEmpty()) {
-			sellerEmail="";
-		}
+		if(basket.isEmpty())  sellerEmail="";
+		
 	}
 	
 }

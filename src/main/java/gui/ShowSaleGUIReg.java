@@ -92,15 +92,17 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		
 		
 		JButton showProfButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.showProfButton"));
+		getContentPane().add(showProfButton);
+		showProfButton.setBounds(500, 380, 200, 40);
 		showProfButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("KAIXO");
 				//JFrame a = new ShowOtherProfileGUI(s);
 				//a.setVisible(true);
-				dispose();
+				//dispose();
 			}
 		});
-		showProfButton.setBounds(600, 380, 200, 40);
-		getContentPane().add(showProfButton);
+
 
 	}
 }
