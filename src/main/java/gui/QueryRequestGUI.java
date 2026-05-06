@@ -110,7 +110,7 @@ public class QueryRequestGUI extends JFrame {
 					System.out.println("\nAYUDA: " + tableModelProducts.getValueAt(row, 2));
 					System.out.println(tableModelProducts.getValueAt(row, 2).getClass());
 
-					RequestContainer r = new RequestContainer( (Request) tableModelProducts.getValueAt(row, 2));
+					RequestContainer r=(RequestContainer) tableModelProducts.getValueAt(row, 2);					
 					System.out.println(currentUserMail);
 					
 						JFrame a = new ShowRequestGUI(r,currentUserMail);
@@ -139,7 +139,7 @@ public class QueryRequestGUI extends JFrame {
 				Vector<Object> row = new Vector<Object>();
 				row.add(request.getRequest().getTitle());
 				row.add(request.getRequest().getPrice());
-				row.add(request.getRequest()); 
+				row.add(request); 
 				tableModelProducts.addRow(row);		
 			}
 		} catch (Exception e1) {
