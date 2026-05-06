@@ -323,6 +323,8 @@ public class DataAccess  {
 		
 	}
 	
+
+	
 	public List<Offer> getOffers(String currentMail) {
 		TypedQuery<Offer> query = db.createQuery("SELECT o FROM Offer o WHERE o.offerStatus = ?1", Offer.class);
 		query.setParameter(1, OfferStatusType.WAITING);
@@ -339,6 +341,17 @@ public class DataAccess  {
 		
 		return offers;
 
+	}
+	
+	public boolean hasOffer(Request request, String currentUserMail) {
+		TypedQuery<Offer> query = db.createQuery("SELECT o FROM Offer o", Offer.class);
+		for(Offer o : query.getResultList()) {
+			if(o.getRegistered().getEmail().equals(currentUserMail) && o.getRequest().equals(request))
+				return true;
+		}
+		
+		return false;
+		
 	}
 
 	
@@ -783,6 +796,8 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		
 	}
+
+
 
 	
 

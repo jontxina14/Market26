@@ -86,6 +86,7 @@ public class ShowOfferGUI extends JFrame {
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				facade.declineOffer(offer.getOffer());
+				parent.refreshQuery();
 				dispose();
 			}
 		});
@@ -97,11 +98,12 @@ public class ShowOfferGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					facade.acceptOffer(offer.getOffer());
+					parent.refreshQuery();
+					dispose();
 				}catch (NotEnoughMoneyException ex){
 					jLabelMsg.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
 				}
-				parent.refreshQuery();
-				dispose();
+
 			}
 		});
 		

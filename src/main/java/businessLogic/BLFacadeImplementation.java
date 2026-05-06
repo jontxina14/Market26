@@ -371,6 +371,14 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 
 	}
+	
+	public boolean hasOffer(Request request, String currentUserMail) {
+		dbManager.open();
+		boolean b = dbManager.hasOffer(request,currentUserMail);
+		dbManager.close();
+		return b;
+	}
+
 
 }
 

@@ -7,21 +7,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.awt.image.BufferedImage;
 
-import businessLogic.BLFacade;
-import domain.Request;
+
 import domain.RequestContainer;
-import domain.Sale;
-import domain.SaleContainer;
 
 public class ShowRequestGUI extends JFrame {
 	
     File targetFile;
     BufferedImage targetImg;
-    private static final int baseSize = 220;
-	private static final String basePath="src/main/resources/images/";
+
 	
 	private static final long serialVersionUID = 1L;
 
@@ -32,18 +27,14 @@ public class ShowRequestGUI extends JFrame {
 	private JLabel jLabelDescription = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Description")); 
 	private JLabel jLabelSuggestedPrice = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.Price"));
 	private JTextField fieldSuggestedPrice = new JTextField();
-	private File selectedFile;
-    private String irudia;
 
 	private JScrollPane scrollPaneEvents = new JScrollPane();
-	DefaultComboBoxModel<String> statusOptions = new DefaultComboBoxModel<String>();
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
-	JButton jButtonMakeAnOffer = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowRequestGUI.MakeAnOffer"));
+	private JButton jButtonMakeAnOffer = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowRequestGUI.MakeAnOffer"));
 	private JLabel jLabelMsg = new JLabel();
-	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
-	public ShowRequestGUI(RequestContainer r, String currentMail) { 
+	public ShowRequestGUI(RequestContainer r, String currentMail, boolean hasOffer) { 
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
@@ -97,9 +88,11 @@ public class ShowRequestGUI extends JFrame {
 		fieldDescription.setBounds(200, 95, 630, 100);
 		getContentPane().add(fieldDescription);
 		fieldDescription.setColumns(10);
+		
+		jButtonMakeAnOffer.setEnabled(!hasOffer);
 		jButtonMakeAnOffer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new MakeAnOfferGUI(currentMail,r);
+				JFrame a = new MakeAnOfferGUI(currentMail,r,thisFrame);
 				a.setVisible(true);
 			}
 		});
@@ -107,7 +100,11 @@ public class ShowRequestGUI extends JFrame {
 		jButtonMakeAnOffer.setBounds(450, 380, 150, 40);
 		getContentPane().add(jButtonMakeAnOffer);
 				
-	}	 
+	}
+	
+	public void lehioaItxi() {
+		this.dispose();
+	}
 	
 }
 

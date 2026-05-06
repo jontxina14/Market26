@@ -49,6 +49,8 @@ public class QueryRequestGUI extends JFrame {
 	private String QueryMessagge = "";
 	private String emptyQueryMessagge = "";
 	
+	private BLFacade facade = MainGUInonReg.getBusinessLogic();
+	
 	
 	public QueryRequestGUI(String currentUserMail) {
 		this.currentMail = currentUserMail;
@@ -107,13 +109,11 @@ public class QueryRequestGUI extends JFrame {
 					JTable table =(JTable) mouseEvent.getSource();
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
-					System.out.println("\nAYUDA: " + tableModelProducts.getValueAt(row, 2));
-					System.out.println(tableModelProducts.getValueAt(row, 2).getClass());
 
-					RequestContainer r=(RequestContainer) tableModelProducts.getValueAt(row, 2);					
+					RequestContainer r = (RequestContainer) tableModelProducts.getValueAt(row, 2);					
 					System.out.println(currentUserMail);
-					
-						JFrame a = new ShowRequestGUI(r,currentUserMail);
+					boolean b = facade.hasOffer(r.getRequest(),currentUserMail);
+						JFrame a = new ShowRequestGUI(r,currentUserMail,b);
 				}
 			}
 		});
@@ -127,7 +127,7 @@ public class QueryRequestGUI extends JFrame {
 			tableModelProducts.setDataVector(null, columnNamesProducts);
 			tableModelProducts.setColumnCount(3); // another column added to allocate product object
 
-			BLFacade facade = MainGUInonReg.getBusinessLogic();
+			
 
 			//Query deia
 			List<RequestContainer> requests = facade.getRequests(currentMail);

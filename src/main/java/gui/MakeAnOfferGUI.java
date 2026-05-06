@@ -20,8 +20,10 @@ public class MakeAnOfferGUI extends JFrame {
     JComboBox<String> jComboBoxStatus = new JComboBox<String>();
 	DefaultComboBoxModel<String> statusOptions = new DefaultComboBoxModel<String>();
 	List<String> status;
+	private ShowRequestGUI parent;
 
-    public MakeAnOfferGUI(String offererMail, RequestContainer request) {
+    public MakeAnOfferGUI(String offererMail, RequestContainer request, JFrame p) {
+    	this.parent = (ShowRequestGUI) p;
         ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
 
         setTitle(bundle.getString("MakeOfferGUI.Title"));
@@ -103,7 +105,9 @@ public class MakeAnOfferGUI extends JFrame {
 
                 BLFacade facade = MainGUInonReg.getBusinessLogic();
                 facade.makeOffer(offererMail, request.getRequest(), price, numStatus, description);
+                parent.lehioaItxi(); 
                 dispose();
+                         
             }
         });
     }

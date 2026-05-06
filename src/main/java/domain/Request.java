@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.imageio.ImageIO;
 import javax.persistence.*;
@@ -111,7 +112,22 @@ public class Request implements Serializable {
 	public String toString() {
 		return requestNumber + title + description + suggestedPrice + requestStatus;
 	}
+	
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Request other = (Request) obj;
+		return Objects.equals(requestNumber, other.requestNumber);
+	}
+
+	
 	
 	
 	

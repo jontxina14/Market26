@@ -140,5 +140,7 @@ public interface BLFacade  {
 	
 	@WebMethod public void declineOffer(Offer offer);
 
+	@WebMethod public boolean hasOffer(Request request, String currentUserMail);
+
 
 }
