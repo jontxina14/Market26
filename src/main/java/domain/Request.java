@@ -38,7 +38,7 @@ public class Request implements Serializable {
 	}
 	@XmlID
     private String xmlId;
-
+	@XmlIDREF
 	//TODO: offeren lista sartu (addOfermetodoa egin offer bat sortzean deitzeko)
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Offer> offers = new ArrayList<>();

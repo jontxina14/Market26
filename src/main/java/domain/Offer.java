@@ -12,29 +12,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import enums.OfferStatusType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Offer implements Serializable{
-	@XmlTransient
+	private static final long serialVersionUID = 1L;
+
+	@XmlID
+	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@Id
 	@GeneratedValue
 	private int offerId;
-	
 	private double price;
-	
 	private String description;
-	
 	private int status;
-	public String getXmlId() {
-	    return "offer-" + offerId;
-	}
-	
-	@XmlID
-    private String xmlId;
-	
 	private OfferStatusType offerStatus;
 	@XmlIDREF
 	@OneToOne
@@ -50,7 +44,6 @@ public class Offer implements Serializable{
 		this.registered=reg;
 		this.request=req;
 		this.status=status;
-		this.xmlId = "offer-" + UUID.randomUUID();
 	}
 	public Offer() {
 		

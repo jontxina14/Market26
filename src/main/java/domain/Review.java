@@ -9,17 +9,18 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import configuration.UtilDate;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Review implements Serializable{
-	
+	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@XmlTransient
 	@Id
 	@GeneratedValue
-	private String reviewId;
+	private Integer reviewId;
 	
 	private int rating;
 	
@@ -33,11 +34,11 @@ public class Review implements Serializable{
 		this.date=UtilDate.trim(new Date());
 	}
 
-	public String getReviewId() {
+	public Integer getReviewId() {
 		return reviewId;
 	}
 
-	public void setReviewId(String reviewId) {
+	public void setReviewId(Integer reviewId) {
 		this.reviewId = reviewId;
 	}
 

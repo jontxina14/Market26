@@ -118,7 +118,6 @@ public class ShowOfferGUI extends JFrame {
 		jLabelMsg.setForeground(Color.red);
 
 
-
 		this.getContentPane().add(jLabelMsg, null);
 		this.getContentPane().add(jButtonClose, null);
 		this.getContentPane().add(jLabelTitle, null);

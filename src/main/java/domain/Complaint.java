@@ -12,25 +12,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import configuration.UtilDate;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Complaint implements Serializable {
 	
-	@XmlTransient
+	@XmlID
+	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@Id
 	@GeneratedValue
 	private int id;
 	
-	public String getXmlId() {
-	    return "complaint-" + id;
-	}
 	private Date date;
 	private String description;
 
-	@XmlID
-    private String xmlId;
 	private boolean treated;
 	@XmlIDREF
 	@OneToOne

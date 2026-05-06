@@ -12,23 +12,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import configuration.UtilDate;
 import enums.MovementType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Movement {
-	@XmlTransient
+	 @XmlID
+	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@Id
 	@GeneratedValue
 	private int id;
-	
-	public String getXmlId() {
-	    return "movement-" + id;
-	}
-	 @XmlID
-	private String xmlId;
-	 
     private Date date;
     private double amount;
     private double balanceAfter;
