@@ -27,6 +27,7 @@ import domain.Report;
 import domain.ReportContainer;
 import domain.Request;
 import domain.RequestContainer;
+import domain.Review;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -160,7 +161,7 @@ public class BLFacadeImplementation  implements BLFacade {
 
 		List<Request> requests = dbManager.getRequests(currentMail);
 		List<RequestContainer> req = new ArrayList<>();
-		
+
 		for (Request r : requests) {
 			req.add(new RequestContainer(r));
 		}
@@ -175,7 +176,7 @@ public class BLFacadeImplementation  implements BLFacade {
 
 		List<Offer> offers = dbManager.getOffers(currentMail);
 		List<OfferContainer> ofs = new ArrayList<>();
-		
+
 		for (Offer o : offers) {
 			ofs.add(new OfferContainer(o));
 		}
@@ -183,6 +184,17 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return ofs;
 	}
+	
+	@WebMethod public List<Review> getReviews(String currentMail){
+		dbManager.open();
+		List<Review> reviews = dbManager.getReviews(currentMail);
+		dbManager.close();
+		
+		return reviews;
+
+
+	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -352,12 +364,12 @@ public class BLFacadeImplementation  implements BLFacade {
 
 	public void makeOffer(String offererMail, Request request, double price, int status, String description) {
 		dbManager.open();
-	    dbManager.makeOffer(offererMail, request, price, status, description);
-	    dbManager.close();
-		
+		dbManager.makeOffer(offererMail, request, price, status, description);
+		dbManager.close();
+
 	}
-	
-	
+
+
 	public void acceptOffer(Offer offer) throws NotEnoughMoneyException {
 		dbManager.open();
 		dbManager.acceptOffer(offer);
@@ -371,10 +383,23 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 
 	}
-	
+
 	public boolean hasOffer(Request request, String currentUserMail) {
 		dbManager.open();
 		boolean b = dbManager.hasOffer(request,currentUserMail);
+		dbManager.close();
+		return b;
+	}
+
+	public void makeReview(String currentUserMail, Sale sale, int rating, String desc) {
+		dbManager.open();
+		dbManager.makeReview(currentUserMail,sale,rating,desc);
+		dbManager.close();
+	}
+
+	public boolean hasReviewed(String currentUserMail, Sale s) {
+		dbManager.open();
+		boolean b = dbManager.hasReviewed(currentUserMail, s);
 		dbManager.close();
 		return b;
 	}

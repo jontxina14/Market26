@@ -26,6 +26,7 @@ public class Registered extends User implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private String name; 
 	private double balance;
+	private double rating;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Sale> sales = new ArrayList<Sale>();
@@ -50,6 +51,9 @@ public class Registered extends User implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Offer> offers = new ArrayList<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	private List<Review> reviews = new ArrayList<>();	
 
 	public Registered() {
 		super();
@@ -58,7 +62,8 @@ public class Registered extends User implements Serializable {
 	public Registered(String email, String name,String pass) {
 		super(email,pass);
 		this.name = name;
-		this.balance = 0;
+		this.balance = 0.0;
+		this.rating=0.0;
 	}
 
 
@@ -109,6 +114,14 @@ public class Registered extends User implements Serializable {
 
 	public List<Report> getReports() {
 		return reports;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 	public String toString(){
@@ -193,8 +206,22 @@ public class Registered extends User implements Serializable {
 		offers.add(o);
 		request.addOffer(o);
 	}
+	
+	public void addReview(int rat, String desc,Sale s,Registered evaluator) {
+		Review r = new Review(rat,desc,s,evaluator);
+		reviews.add(r);
+	}
 
+	public List<Review> getReviews() {
+		return reviews;
+	}
 
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	
+	
 
 	/*	@Override
 	public boolean equals(Object obj) {

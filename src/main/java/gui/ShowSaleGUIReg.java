@@ -96,11 +96,8 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		showProfButton.setBounds(500, 380, 200, 40);
 		showProfButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("KAIXO");
-				//JFrame a = new ShowOtherProfileGUI(s);
-				//a.setVisible(true);
-				//dispose();
-			}
+				JFrame a = new ShowOtherProfileGUI(s.getSeller());
+				a.setVisible(true);			}
 		});
 
 

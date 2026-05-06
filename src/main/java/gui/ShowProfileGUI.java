@@ -27,6 +27,7 @@ public class ShowProfileGUI extends JFrame {
 	private JTextField balanceTextField;
 	private JFrame thisFrame; 
 	private Registered user;
+	private JTextField ratingTextField;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -139,6 +140,28 @@ public class ShowProfileGUI extends JFrame {
 		closeButton.setBounds(560, 380, 180, 45);
 		contentPane.add(closeButton);
 		closeButton.addActionListener(e -> thisFrame.setVisible(false));
+		
+		
+		JButton shReviewsButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.shReviews"));
+		shReviewsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a = new QueryReviewGUI(r.getEmail());
+				a.setVisible(true);
+			}
+		});
+		shReviewsButton.setBounds(875, 365, 200, 45);
+		contentPane.add(shReviewsButton);
+		
+		JLabel ratingLbl = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.rating"));
+		ratingLbl.setBounds(480, 229, 100, 20);
+		contentPane.add(ratingLbl);
+		
+		ratingTextField = new JTextField();
+		ratingTextField.setText(String.valueOf(r.getRating()));
+		ratingTextField.setEnabled(false);
+		ratingTextField.setDisabledTextColor(Color.BLACK);
+		ratingTextField.setBounds(600, 224, 150, 25);
+		contentPane.add(ratingTextField);
 	}
 
 	private void query(SaleType type) {

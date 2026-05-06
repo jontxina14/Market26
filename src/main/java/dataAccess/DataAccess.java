@@ -227,10 +227,10 @@ public class DataAccess  {
 				ema.add(s);
 			}
 		}
-		
+
 		return ema;
 	}
-	
+
 	public List<Sale> getPublishedSales(String desc, Date pubDate, String buyerEmail, String sellerMail, ArrayList<Sale> basket) {
 		System.out.println(">> DataAccess: getProducts=> from= " + desc);
 
@@ -241,7 +241,7 @@ public class DataAccess  {
 		query.setParameter(2, pubDate);
 		query.setParameter(3, SaleStatusType.ON_SALE);
 		query.setParameter(4, SaleStatusType.USER_REPORTED);
-		
+
 
 		List<Sale> sales = query.getResultList();
 		ArrayList<Sale> ema = new ArrayList<Sale>();
@@ -251,7 +251,7 @@ public class DataAccess  {
 			if (!s.getSeller().getEmail().equals(buyerEmail) && s.getSeller().getEmail().equals(sellerMail)) {
 				System.out.println("s: " + s);
 				if(!basket.contains(s))
-				ema.add(s);
+					ema.add(s);
 			}
 		}
 		return ema;
@@ -291,8 +291,8 @@ public class DataAccess  {
 			query = db.createQuery("SELECT m FROM Movement m WHERE m.user.email = ?1",Movement.class);   
 			query.setParameter(1, email);
 		}
-		List<Movement> sales = query.getResultList();
-		return new ArrayList<Movement>(sales);
+		List<Movement> movs = query.getResultList();
+		return new ArrayList<Movement>(movs);
 
 	}
 
@@ -306,29 +306,29 @@ public class DataAccess  {
 		TypedQuery<Report> query = db.createQuery("SELECT r FROM Report r WHERE r.treated = false", Report.class);   
 		return new ArrayList<Report>(query.getResultList());
 	}
-	
-	
+
+
 	public List<Request> getRequests(String email) {
 		TypedQuery<Request> query = db.createQuery("SELECT r FROM Request r WHERE r.requestStatus =  ?1", Request.class);
 		query.setParameter(1, RequestStatusType.AVAILABLE);
-		
+
 		ArrayList<Request> requests = new ArrayList<Request>();
 		for(Request r:query.getResultList()) {
 			if(!r.getRequester().getEmail().equals(email)) {
 				requests.add(r);
 			}
 		}
-		
-		return requests;
-		
-	}
-	
 
-	
+		return requests;
+
+	}
+
+
+
 	public List<Offer> getOffers(String currentMail) {
 		TypedQuery<Offer> query = db.createQuery("SELECT o FROM Offer o WHERE o.offerStatus = ?1", Offer.class);
 		query.setParameter(1, OfferStatusType.WAITING);
-		
+
 		ArrayList<Offer> offers = new ArrayList<Offer>();
 		for(Offer o:query.getResultList()) {
 			if(o.getRequest().getRequester().getEmail().equals(currentMail) && o.getRequest().getRequestStatus().equals(RequestStatusType.AVAILABLE)) {
@@ -338,23 +338,48 @@ public class DataAccess  {
 		}
 		//TODO
 		//offers.sort();
-		
+
 		return offers;
 
 	}
-	
+
+
+
 	public boolean hasOffer(Request request, String currentUserMail) {
 		TypedQuery<Offer> query = db.createQuery("SELECT o FROM Offer o", Offer.class);
 		for(Offer o : query.getResultList()) {
 			if(o.getRegistered().getEmail().equals(currentUserMail) && o.getRequest().equals(request))
 				return true;
 		}
-		
+
 		return false;
-		
+
 	}
 
+
+	public List<Review> getReviews(String currentMail) {
+		TypedQuery<Review> query = db.createQuery("SELECT r FROM Review r", Review.class);
+		
+		ArrayList<Review> ema = new ArrayList<Review>();
+		
+		for(Review r:query.getResultList()) {
+			if(r.getSale().getSeller().getEmail().equals(currentMail)) {
+				ema.add(r);
+			}
+		}
+		return ema;
+	}
 	
+	public boolean hasReviewed(String currentUserMail, Sale sale) {
+		db.getTransaction().begin();
+		TypedQuery<Review> query = db.createQuery("SELECT r FROM Review r", Review.class);
+		for(Review r : query.getResultList()) {
+			if(r.getEvaluator().getEmail().equals(currentUserMail) && r.getSale().equals(sale))
+				return true;
+		}
+		db.getTransaction().commit();	
+		return false;
+	}
 
 
 	public void open(){
@@ -478,21 +503,21 @@ public class DataAccess  {
 		Registered buyer = db.find(Registered.class, mail);
 		if (buyer == null) return false;
 
-		
+
 		ArrayList<Sale> sales = new ArrayList<Sale>();
 		Sale first = db.find(Sale.class, saleNumbers.get(0));
 		if(first == null) {
 			//db.getTransaction().rollback();
 			return false;
 		}
-		
-		
+
+
 		sales.add(first);
-		
-		
+
+
 		float totalPrize = first.getPrice();
 		Registered seller = first.getSeller();
-		
+
 		int i = 1;
 		while(i < saleNumbers.size()) {
 			Sale s = db.find(Sale.class, saleNumbers.get(i));
@@ -506,7 +531,7 @@ public class DataAccess  {
 			//db.getTransaction().rollback();
 			throw new NotEnoughMoneyException();
 		}
-		
+
 		for(Sale sale : sales) {
 			sale.setSaleStatus(SaleStatusType.BOUGHT);
 		}
@@ -729,7 +754,7 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 
-	
+
 	public void createRequest(String mail,String title,String description,double price) {
 		db.getTransaction().begin();
 		Registered reg = db.find(Registered.class,mail);
@@ -743,50 +768,50 @@ public class DataAccess  {
 		if (reg== null) return;
 		reg.addOffer(request,status,price,description);
 		db.getTransaction().commit();
-		
 
-		
+
+
 	}
 
 	public void acceptOffer(Offer offer) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
-		
+
 		Offer o = db.find(Offer.class, offer.getOfferId());
 		Request r = o.getRequest();
-		
+
 		o.setOfferStatus(OfferStatusType.ACCEPTED);
 		r.setRequestStatus(RequestStatusType.COMPLETED);
-		
+
 		String offererEmail = o.getRegistered().getEmail();
 		String requesterEmail = r.getRequester().getEmail();
-		
+
 		Registered requester = db.find(Registered.class, requesterEmail);
 		Registered offerer = db.find(Registered.class, offererEmail);
-		
+
 		Double price = o.getPrice();
-		
+
 		if (price > requester.getBalance()) {
-	        throw new NotEnoughMoneyException();
-	    }
+			throw new NotEnoughMoneyException();
+		}
 
 		Sale s = offerer.addSale(r.getTitle(), r.getDescription(), o.getStatus(), (float) o.getPrice(), UtilDate.trim(new Date()), null);
 		s.setSaleStatus(SaleStatusType.BOUGHT);
-		
-	    ArrayList<Sale> saleList = new ArrayList<>();
-	    saleList.add(s);
-		
+
+		ArrayList<Sale> saleList = new ArrayList<>();
+		saleList.add(s);
+
 		double newBuyerBalance  = requester.getBalance() - price;
-	    double newSellerBalance = offerer.getBalance()   + price;
+		double newSellerBalance = offerer.getBalance()   + price;
 
-	    requester.addToBought(saleList);
-	    requester.setBalance(newBuyerBalance);
-	    requester.addToMovements(MovementType.BUY, price, newBuyerBalance, saleList);
+		requester.addToBought(saleList);
+		requester.setBalance(newBuyerBalance);
+		requester.addToMovements(MovementType.BUY, price, newBuyerBalance, saleList);
 
-	    offerer.setBalance(newSellerBalance);
-	    offerer.addToMovements(MovementType.SELL, price, newSellerBalance, saleList);
+		offerer.setBalance(newSellerBalance);
+		offerer.addToMovements(MovementType.SELL, price, newSellerBalance, saleList);
 
 		db.getTransaction().commit();
-		
+
 	}
 
 	public void declineOffer(Offer offer) {
@@ -794,12 +819,32 @@ public class DataAccess  {
 		Offer o = db.find(Offer.class, offer.getOfferId());
 		o.setOfferStatus(OfferStatusType.DECLINED);
 		db.getTransaction().commit();
-		
+
+	}
+
+	public void makeReview(String currentUserMail, Sale sale, int rating, String desc) {
+		db.getTransaction().begin();
+		Registered buyer = db.find(Registered.class,currentUserMail);
+		Registered seller = db.find(Registered.class,sale.getSeller().getEmail());
+
+		seller.addReview(rating, desc, sale, buyer);
+
+		int sum = 0;
+		for(Review r : seller.getReviews()) {
+			if (r.getSale().getSeller().equals(seller)) {
+				sum += r.getRating();
+			}
+		}
+
+		Double newRating = (double) sum / seller.getReviews().size();
+		seller.setRating(newRating);
+
+		db.getTransaction().commit();
 	}
 
 
 
-	
+
 
 
 

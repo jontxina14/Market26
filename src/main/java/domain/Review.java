@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
 
 import configuration.UtilDate;
@@ -19,7 +20,7 @@ public class Review implements Serializable{
 	@XmlTransient
 	@Id
 	@GeneratedValue
-	private String reviewId;
+	private Integer reviewId;
 	
 	private int rating;
 	
@@ -27,17 +28,26 @@ public class Review implements Serializable{
 	
 	private Date date;
 	
-	public Review(int rating, String description) {
+	private Sale sale;
+	
+	@XmlIDREF	
+	private Registered evaluator;
+	
+	public Review() {}
+	
+	public Review(int rating, String description, Sale s, Registered evaluator) {
 		this.rating=rating;
 		this.description=description;
 		this.date=UtilDate.trim(new Date());
+		this.sale=s;
+		this.evaluator=evaluator;
 	}
 
-	public String getReviewId() {
+	public Integer getReviewId() {
 		return reviewId;
 	}
 
-	public void setReviewId(String reviewId) {
+	public void setReviewId(Integer reviewId) {
 		this.reviewId = reviewId;
 	}
 
@@ -59,6 +69,22 @@ public class Review implements Serializable{
 
 	public Date getDate() {
 		return date;
+	}
+
+	public Sale getSale() {
+		return sale;
+	}
+
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
+
+	public Registered getEvaluator() {
+		return evaluator;
+	}
+
+	public void setEvaluator(Registered evaluator) {
+		this.evaluator = evaluator;
 	}
 
 	public void setDate(Date date) {

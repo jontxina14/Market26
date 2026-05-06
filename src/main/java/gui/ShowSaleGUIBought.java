@@ -28,7 +28,7 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 	JButton complaintButton;
 	JButton reviewtButton;
 
-	public ShowSaleGUIBought(String currentUserMail, Sale s, JFrame p) {
+	public ShowSaleGUIBought(String currentUserMail, Sale s, boolean hasOffer, JFrame p) {
 		super(s);
 
 		this.parent = (QuerySaleGUI) p;
@@ -63,8 +63,11 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 		
 		
 		reviewtButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.reviewButton"));
+		reviewtButton.setEnabled(!hasOffer);
 		reviewtButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {		
+				
+				
 				JFrame a = new MakeReviewGUI(currentUserMail, s);
 				a.setVisible(true);
 				dispose();
