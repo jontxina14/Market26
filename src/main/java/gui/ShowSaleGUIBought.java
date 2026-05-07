@@ -28,28 +28,26 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 	JButton complaintButton;
 	JButton reviewtButton;
 
+
 	public ShowSaleGUIBought(String currentUserMail, Sale s, boolean hasOffer, JFrame p) {
 		super(s);
-
 		this.parent = (QuerySaleGUI) p;
 
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 		jLabelError.setBounds(new Rectangle(6, 350, 320, 20));
 		jLabelError.setForeground(Color.red);
-
-		this.getContentPane().add(jLabelError, null);
-
+		this.getContentPane().add(jLabelError);
 
 		complaintButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintButton")); //$NON-NLS-1$ //$NON-NLS-2$
-
+		complaintButton.setBounds(320,380,250,40);
 
 		Sale freshSale = facade.getSale(s.getSaleNumber());
 		if(freshSale.hasAnyComplaint()) {
 			complaintButton.setEnabled(false);
 			complaintButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.complaintPending"));
 		}
-
+		
 		complaintButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame a = new MakeComplaintGUI(currentUserMail, s);
@@ -57,25 +55,21 @@ public class ShowSaleGUIBought extends ShowSaleGUInonReg {
 				dispose();
 			}
 		});
-		complaintButton.setBounds(320, 380, 250, 40);
-		getContentPane().add(complaintButton);
 
-		
-		
+		getContentPane().add(complaintButton);
 		reviewtButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.reviewButton"));
+		reviewtButton.setBounds(600, 380, 250, 40);
 		reviewtButton.setEnabled(!hasOffer);
 		reviewtButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {		
-				
-				
+			public void actionPerformed(ActionEvent arg0) {
 				JFrame a = new MakeReviewGUI(currentUserMail, s);
 				a.setVisible(true);
 				dispose();
 			}
+
 		});
-		reviewtButton.setBounds(600, 380, 250, 40);
 		getContentPane().add(reviewtButton);
-
-
+		this.setVisible(true);
 	}
 }
+

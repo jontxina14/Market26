@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.util.ResourceBundle;
 
 import javax.swing.ButtonGroup;
@@ -125,6 +126,9 @@ public class ManageMoneyGUI extends JFrame {
 		contentPane.add(btnConfirm);
 
 		JButton btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ManageMoneyGUI.close"));
+		btnClose.setBackground(new Color(231, 76, 60));
+		btnClose.setForeground(Color.WHITE);
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);

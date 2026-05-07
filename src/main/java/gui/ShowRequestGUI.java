@@ -55,6 +55,9 @@ public class ShowRequestGUI extends JFrame {
 		
 		scrollPaneEvents.setBounds(new Rectangle(50, 280, 346, 80));
 		jButtonClose.setBounds(new Rectangle(250, 380, 150, 40));
+		jButtonClose.setBackground(new Color(231, 76, 60));
+		jButtonClose.setForeground(Color.WHITE);
+		jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);			}

@@ -77,6 +77,9 @@ public class MakeComplaintGUI extends JFrame {
 
 		JButton btnClose = new JButton(bundle.getString("ManageMoneyGUI.close"));
 		btnClose.setBounds(195, 225, 120, 30);
+		btnClose.setBackground(new Color(231, 76, 60));
+		btnClose.setForeground(Color.WHITE);
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

@@ -76,6 +76,9 @@ public class ShowOfferGUI extends JFrame {
 		
 		
 		jButtonClose.setBounds(60, 330, 160, 45);
+		jButtonClose.setBackground(new Color(231, 76, 60));
+		jButtonClose.setForeground(Color.WHITE);
+		jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

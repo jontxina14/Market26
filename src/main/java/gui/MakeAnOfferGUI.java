@@ -74,7 +74,11 @@ public class MakeAnOfferGUI extends JFrame {
         btnClose.setPreferredSize(new Dimension(140, 28));
         buttonPanel.add(btnSend);
         buttonPanel.add(btnClose);
+        btnClose.setBackground(new Color(231, 76, 60));
+		btnClose.setForeground(Color.WHITE);
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
+        
 
         btnClose.addActionListener(e -> dispose());
 

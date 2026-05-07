@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FileDialog;
+import java.awt.Font;
 import java.util.ResourceBundle;
 
 import javax.swing.JTextField;
@@ -56,6 +57,9 @@ public class MakeReviewGUI extends JFrame{
 		getContentPane().add(msgLbl);
 		
 		JButton btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
+		btnClose.setBackground(new Color(231, 76, 60));
+		btnClose.setForeground(Color.WHITE);
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

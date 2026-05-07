@@ -65,6 +65,9 @@ public class LoginGUI extends JFrame {
 		btnLogin.setPreferredSize(new Dimension(140, 28));
 
 		JButton btnClose = new JButton(bundle.getString("LoginGUI.CloseButton"));
+		btnClose.setBackground(new Color(231, 76, 60));
+		btnClose.setForeground(Color.WHITE);
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();

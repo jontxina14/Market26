@@ -75,8 +75,20 @@ public class ShowReviewGUI extends JFrame {
         dateTextField.setColumns(10);
         dateTextField.setBounds(180, 241, 146, 20);
         getContentPane().add(dateTextField);
+        
+        JButton btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close")); //$NON-NLS-1$ //$NON-NLS-2$
+        btnClose.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		dispose();
+        	}
+        });
+        btnClose.setBackground(new Color(231, 76, 60));
+        btnClose.setForeground(Color.WHITE);
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnClose.setBounds(164, 290, 126, 35);
+        getContentPane().add(btnClose);
 
-        this.setSize(new Dimension(460, 360));
+        this.setSize(new Dimension(460, 380));
         this.setLocationRelativeTo(null);
 
 

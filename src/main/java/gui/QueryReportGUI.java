@@ -55,6 +55,9 @@ public class QueryReportGUI extends JFrame {
         this.getContentPane().add(jLabelReports);
 
         jButtonClose.setBounds(new Rectangle(52, 355, 141, 30));
+        jButtonClose.setBackground(new Color(231, 76, 60));
+        jButtonClose.setForeground(Color.WHITE);
+        jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
         jButtonClose.addActionListener(e -> thisFrame.setVisible(false));
         this.getContentPane().add(jButtonClose, null);
 

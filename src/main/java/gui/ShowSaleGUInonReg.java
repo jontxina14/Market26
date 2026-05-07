@@ -69,6 +69,9 @@ public class ShowSaleGUInonReg extends JFrame {
 		
 		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
 		jButtonClose.setBounds(new Rectangle(150, 380, 140, 40));
+		jButtonClose.setBackground(new Color(231, 76, 60));
+		jButtonClose.setForeground(Color.WHITE);
+		jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);			}
@@ -108,7 +111,7 @@ public class ShowSaleGUInonReg extends JFrame {
 		fieldDescription.setColumns(10);
 		
 		panel_1 = new JPanel();
-		panel_1.setBounds(520, 210, 250, 220);
+		panel_1.setBounds(520, 210, 227, 161);
 		getContentPane().add(panel_1);
 		
 		labelStatus.setFont(new Font("Lucida Grande", Font.BOLD, 13));
@@ -130,7 +133,7 @@ public class ShowSaleGUInonReg extends JFrame {
 		getContentPane().add(statusField);
 		
 		
-		
+
 		
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)

@@ -56,6 +56,9 @@ public class ShowMovementsGUI extends JFrame {
 		this.getContentPane().add(jLabelChoose);
 
 		jButtonClose.setBounds(new Rectangle(220, 379, 130, 30));
+		jButtonClose.setBackground(new Color(231, 76, 60));
+		jButtonClose.setForeground(Color.WHITE);
+		jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{

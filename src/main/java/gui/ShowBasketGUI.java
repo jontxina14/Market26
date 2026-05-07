@@ -72,6 +72,9 @@ public class ShowBasketGUI extends JFrame {
 		this.getContentPane().add(jLabelProducts);
 
 		jButtonClose.setBounds(new Rectangle(190, 400, 150, 35));
+		jButtonClose.setBackground(new Color(231, 76, 60));
+		jButtonClose.setForeground(Color.WHITE);
+		jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jButtonClose.addActionListener(e -> dispose());
 		this.getContentPane().add(jButtonClose, null);
 

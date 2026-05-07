@@ -89,6 +89,9 @@ public class RegisterGUI extends JFrame {
 		btnClose.setPreferredSize(new Dimension(140, 28));
 		buttonPanel.add(btnRegister);
 		buttonPanel.add(btnClose);
+		btnClose.setBackground(new Color(231, 76, 60));
+		btnClose.setForeground(Color.WHITE);
+		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
 		btnClose.addActionListener(new ActionListener() {

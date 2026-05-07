@@ -81,6 +81,9 @@ public class ShowReportGUI extends JFrame {
 		fieldCause.setBounds(220, 165, 200, 30);
 
 		jButtonClose.setBounds(40, 250, 140, 40);
+		jButtonClose.setBackground(new Color(231, 76, 60));
+		jButtonClose.setForeground(Color.WHITE);
+		jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jButtonDecline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (report != null && facade != null) {

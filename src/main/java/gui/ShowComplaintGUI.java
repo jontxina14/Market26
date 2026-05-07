@@ -69,6 +69,9 @@ public class ShowComplaintGUI extends JFrame {
 		fieldDescription.setBounds(40, 270, 760, 100);
 
 		jButtonClose.setBounds(130, 395, 180, 45);
+		jButtonClose.setBackground(new Color(231, 76, 60));
+		jButtonClose.setForeground(Color.WHITE);
+		jButtonClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		
 		jButtonDecline.addActionListener(new ActionListener() {

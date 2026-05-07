@@ -85,6 +85,9 @@ public class ShowOtherProfileGUI extends JFrame {
 
 		
 		JButton closeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowProfileGUI.close"));
+		closeButton.setBackground(new Color(231, 76, 60));
+		closeButton.setForeground(Color.WHITE);
+		closeButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		closeButton.setBounds(173, 282, 180, 45);
 		contentPane.add(closeButton);
 		
