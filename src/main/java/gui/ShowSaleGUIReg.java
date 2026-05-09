@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.awt.image.BufferedImage;
 
 import businessLogic.BLFacade;
+import domain.Registered;
 import domain.Sale;
 import domain.SaleContainer;
 import enums.QueryFilterType;
@@ -22,7 +23,7 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 	private JLabel jLabelError = new JLabel();
 	private QuerySaleGUI parent;
 
-	public ShowSaleGUIReg(String currentUserMail, Sale s, JFrame p) {
+	public ShowSaleGUIReg(Registered r, Sale s, JFrame p) {
 		super(s);
 
 		this.parent = (QuerySaleGUI) p;
@@ -41,7 +42,7 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 				System.out.println(s.getSaleNumber());
 
 				//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
-				parent.addTotheBasket(s,s.getSeller().getEmail());
+				parent.addTotheBasket(s,r.getEmail());
 				parent.refreshQuery();
 				dispose();
 
@@ -58,14 +59,14 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		//Wish list
 		ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/images/heart_empty.png"));
 		ImageIcon filledIcon = new ImageIcon(getClass().getResource("/images/heart_filled.png"));
-		boolean dago = facade.isInWishList(currentUserMail, s.getSaleNumber());
+		boolean dago = facade.isInWishList(r.getEmail(), s.getSaleNumber());
 
 		//JToggleButton selekzionatuta mantentzen delako
 		toggleWishListButton = new JToggleButton(dago ? filledIcon : emptyIcon);
 		toggleWishListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				facade.toggleWishList(currentUserMail, s.getSaleNumber());
-				boolean dago = facade.isInWishList(currentUserMail, s.getSaleNumber());
+				facade.toggleWishList(r.getEmail(), s.getSaleNumber());
+				boolean dago = facade.isInWishList(r.getEmail(), s.getSaleNumber());
 				toggleWishListButton.setIcon(dago ? filledIcon : emptyIcon);
 			}
 		});
@@ -75,14 +76,14 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		getContentPane().add(toggleWishListButton);
 
 		JButton reportButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.reportButton"));
-		if(facade.hasReported(currentUserMail,s)) {
+		if(facade.hasReported(r.getEmail(),s)) {
 			reportButton.setEnabled(false);
 			reportButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AlredyReported"));
 		}
 
 		reportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new MakeReportGUI(currentUserMail, s).setVisible(true);
+				new MakeReportGUI(r.getEmail(), s).setVisible(true);
 				dispose();
 			}
 		});
@@ -96,7 +97,7 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		showProfButton.setBounds(500, 380, 200, 40);
 		showProfButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new ShowOtherProfileGUI(s.getSeller());
+				JFrame a = new ShowOtherProfileGUI(r);
 				a.setVisible(true);			}
 		});
 
