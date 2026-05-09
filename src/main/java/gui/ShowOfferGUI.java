@@ -8,6 +8,7 @@ import javax.swing.*;
 import businessLogic.BLFacade;
 import domain.Offer;
 import domain.OfferContainer;
+import domain.Registered;
 import domain.Report;
 import domain.ReportContainer;
 import exceptions.NotEnoughMoneyException;
@@ -50,7 +51,7 @@ public class ShowOfferGUI extends JFrame {
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Name"));
 		
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
-		
+		Registered r= facade.getRegistered(requesterEmail);
 		List<String> status;
 		status=Utils.getStatus();
 		
@@ -61,7 +62,7 @@ public class ShowOfferGUI extends JFrame {
 			);
 
 		fieldUser.setText(
-			    offer.getRegistered().getEmail() != null ? offer.getRegistered().getEmail() : ""
+			    r.getEmail() != null ? r.getEmail() : ""
 			);
 
 		fieldPrice.setText(String.valueOf(offer.getOffer().getPrice()));
