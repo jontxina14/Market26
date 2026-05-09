@@ -23,6 +23,7 @@ import domain.ReportContainer;
 import domain.Request;
 import domain.RequestContainer;
 import domain.Review;
+import domain.ReviewContainer;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -147,7 +148,7 @@ public interface BLFacade  {
 
 	@WebMethod public boolean hasReviewed(String currentUserMail, Sale s);
 
-	@WebMethod public List<Review> getReviews(String currentMail);
+	@WebMethod public List<ReviewContainer> getReviews(String currentMail);
 
 
 }

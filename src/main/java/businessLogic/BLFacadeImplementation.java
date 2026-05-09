@@ -28,6 +28,7 @@ import domain.ReportContainer;
 import domain.Request;
 import domain.RequestContainer;
 import domain.Review;
+import domain.ReviewContainer;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
@@ -185,12 +186,17 @@ public class BLFacadeImplementation  implements BLFacade {
 		return ofs;
 	}
 	
-	@WebMethod public List<Review> getReviews(String currentMail){
+	@WebMethod public List<ReviewContainer> getReviews(String currentMail){
 		dbManager.open();
 		List<Review> reviews = dbManager.getReviews(currentMail);
+		List<ReviewContainer> rvs= new ArrayList<>();
+		
+		for(Review r: reviews) {
+			rvs.add(new ReviewContainer(r));
+		}
 		dbManager.close();
 		
-		return reviews;
+		return rvs;
 
 
 	}

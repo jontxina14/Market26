@@ -6,6 +6,7 @@ import domain.Offer;
 import domain.OfferContainer;
 import domain.Request;
 import domain.Review;
+import domain.ReviewContainer;
 import domain.Sale;
 import domain.SaleContainer;
 import enums.MovementType;
@@ -132,16 +133,16 @@ public class QueryReviewGUI extends JFrame {
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 			//Query deia
-			List<Review> reviews = facade.getReviews(currentMail);
+			List<ReviewContainer> reviews = facade.getReviews(currentMail);
 
 			if (reviews.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);			
 
-			for (Review r : reviews){
+			for (ReviewContainer r : reviews){
 				Vector<Object> row = new Vector<Object>();
-				row.add(r.getSale().getTitle());
-				row.add(r.getRating());
-				row.add(r.getDate());
+				row.add(r.getReview().getSale().getTitle());
+				row.add(r.getReview().getRating());
+				row.add(r.getReview().getDate());
 				row.add(r); 
 				tableModelProducts.addRow(row);		
 			}
