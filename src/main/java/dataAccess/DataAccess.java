@@ -276,6 +276,7 @@ public class DataAccess  {
 	private ArrayList<Sale> getFiltered(List<Sale> list, String filter){
 		ArrayList<Sale> res = new ArrayList<Sale>();
 		for (Sale s : list) {
+			System.out.println("Sale filter: " + filter);
 			if(s.getTitle().contains(filter)) res.add(s);
 		}
 		return res;
@@ -325,13 +326,16 @@ public class DataAccess  {
 
 
 
-	public List<Offer> getOffers(String currentMail) {
+	public List<Offer> getOffers(String currentMail, String filter) {
 		TypedQuery<Offer> query = db.createQuery("SELECT o FROM Offer o WHERE o.offerStatus = ?1", Offer.class);
 		query.setParameter(1, OfferStatusType.WAITING);
 
 		ArrayList<Offer> offers = new ArrayList<Offer>();
 		for(Offer o:query.getResultList()) {
-			if(o.getRequest().getRequester().getEmail().equals(currentMail) && o.getRequest().getRequestStatus().equals(RequestStatusType.AVAILABLE)) {
+			Request r = o.getRequest();
+			if(	r.getRequester().getEmail().equals(currentMail) && 
+					r.getRequestStatus().equals(RequestStatusType.AVAILABLE) &&
+					r.getTitle().contains(filter)) {
 				System.out.println("getOffers, currentmail: "+currentMail);
 				offers.add(o);
 			}
@@ -357,19 +361,20 @@ public class DataAccess  {
 	}
 
 
-	public List<Review> getReviews(String currentMail) {
+	public List<Review> getReviews(String currentMail, String filter) {
 		TypedQuery<Review> query = db.createQuery("SELECT r FROM Review r", Review.class);
-		
+
 		ArrayList<Review> ema = new ArrayList<Review>();
-		
+
 		for(Review r:query.getResultList()) {
-			if(r.getSale().getSeller().getEmail().equals(currentMail)) {
+
+			if(r.getSale().getSeller().getEmail().equals(currentMail) && r.getSale().getTitle().contains(filter)) 
 				ema.add(r);
-			}
+
 		}
 		return ema;
 	}
-	
+
 	public boolean hasReviewed(String currentUserMail, Sale sale) {
 		db.getTransaction().begin();
 		TypedQuery<Review> query = db.createQuery("SELECT r FROM Review r", Review.class);

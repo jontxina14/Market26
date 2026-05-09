@@ -135,7 +135,7 @@ public class QueryOfferGUI extends JFrame {
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 			//Query deia
-			List<OfferContainer> offers = facade.getOffers(currentMail);
+			List<OfferContainer> offers = facade.getOffers(currentMail,jTextFieldSearch.getText());
 
 			if (offers.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);

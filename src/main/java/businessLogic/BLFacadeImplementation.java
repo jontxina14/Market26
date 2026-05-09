@@ -172,10 +172,10 @@ public class BLFacadeImplementation  implements BLFacade {
 	}
 
 
-	@WebMethod public List<OfferContainer> getOffers(String currentMail){
+	@WebMethod public List<OfferContainer> getOffers(String currentMail,String filter){
 		dbManager.open();
 
-		List<Offer> offers = dbManager.getOffers(currentMail);
+		List<Offer> offers = dbManager.getOffers(currentMail,filter);
 		List<OfferContainer> ofs = new ArrayList<>();
 
 		for (Offer o : offers) {
@@ -186,9 +186,9 @@ public class BLFacadeImplementation  implements BLFacade {
 		return ofs;
 	}
 	
-	@WebMethod public List<ReviewContainer> getReviews(String currentMail){
+	@WebMethod public List<ReviewContainer> getReviews(String currentMail, String filter){
 		dbManager.open();
-		List<Review> reviews = dbManager.getReviews(currentMail);
+		List<Review> reviews = dbManager.getReviews(currentMail, filter);
 		List<ReviewContainer> rvs= new ArrayList<>();
 		
 		for(Review r: reviews) {

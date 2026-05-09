@@ -104,6 +104,7 @@ public class QueryReviewGUI extends JFrame {
 
 
 		jButtonSearch.addActionListener(e -> refreshQuery());
+		refreshQuery();
 
 
 		tableProducts.addMouseListener(new MouseAdapter() {
@@ -114,8 +115,9 @@ public class QueryReviewGUI extends JFrame {
 					JTable table =(JTable) mouseEvent.getSource();
 					Point point = mouseEvent.getPoint();
 					int row = table.rowAtPoint(point);
-					Review r = (Review) tableModelProducts.getValueAt(row, 3);
-					JFrame a = new ShowReviewGUI(r);
+					//TODO
+					ReviewContainer r = (ReviewContainer) tableModelProducts.getValueAt(row, 3);
+					JFrame a = new ShowReviewGUI(r.getReview());
 					a.setVisible(true);
 				}
 			}
@@ -133,7 +135,7 @@ public class QueryReviewGUI extends JFrame {
 			BLFacade facade = MainGUInonReg.getBusinessLogic();
 
 			//Query deia
-			List<ReviewContainer> reviews = facade.getReviews(currentMail);
+			List<ReviewContainer> reviews = facade.getReviews(currentMail,jTextFieldSearch.getText());
 
 			if (reviews.isEmpty()) 	jLabelProducts.setText(emptyQueryMessagge);
 			else 					jLabelProducts.setText(QueryMessagge);			

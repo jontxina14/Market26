@@ -84,10 +84,12 @@ public interface BLFacade  {
 	
 	@WebMethod public List<RequestContainer> getRequests(String currentMail);
 	
-	@WebMethod 	public List<OfferContainer> getOffers(String currentMail);
-
+	@WebMethod 	public List<OfferContainer> getOffers(String currentMail, String filter);
 
 	//@WebMethod public List<Sale> getReports(String titleFilter);
+	
+	@WebMethod public List<ReviewContainer> getReviews(String currentMail, String filter);
+
 	
 	
 	/**
@@ -148,7 +150,6 @@ public interface BLFacade  {
 
 	@WebMethod public boolean hasReviewed(String currentUserMail, Sale s);
 
-	@WebMethod public List<ReviewContainer> getReviews(String currentMail);
 
 
 }
