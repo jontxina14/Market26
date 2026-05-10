@@ -22,9 +22,9 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 	private JToggleButton toggleWishListButton;
 	private JLabel jLabelError = new JLabel();
 	private QuerySaleGUI parent;
-
-	public ShowSaleGUIReg(Registered r, Sale s, JFrame p) {
+	public ShowSaleGUIReg(String currentUserMail, Sale s, JFrame p) {
 		super(s);
+		SaleContainer s2 = new SaleContainer(s);
 
 		this.parent = (QuerySaleGUI) p;
 
@@ -40,9 +40,9 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(s.getSaleNumber());
-
+				SaleContainer s2 = new SaleContainer(s);
 				//Aurreko pantaila errefreskatu, berriro bilaturi eman beharrik gabe
-				parent.addTotheBasket(s,r.getEmail());
+				parent.addTotheBasket(s,s2.getUser().getEmail());
 				parent.refreshQuery();
 				dispose();
 
@@ -55,18 +55,17 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		buyButton.setBounds(320, 380, 140, 40);
 		getContentPane().add(buyButton);
 
-
 		//Wish list
 		ImageIcon emptyIcon = new ImageIcon(getClass().getResource("/images/heart_empty.png"));
 		ImageIcon filledIcon = new ImageIcon(getClass().getResource("/images/heart_filled.png"));
-		boolean dago = facade.isInWishList(r.getEmail(), s.getSaleNumber());
+		boolean dago = facade.isInWishList(s2.getUser().getEmail(), s.getSaleNumber());
 
 		//JToggleButton selekzionatuta mantentzen delako
 		toggleWishListButton = new JToggleButton(dago ? filledIcon : emptyIcon);
 		toggleWishListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				facade.toggleWishList(r.getEmail(), s.getSaleNumber());
-				boolean dago = facade.isInWishList(r.getEmail(), s.getSaleNumber());
+				facade.toggleWishList(s2.getUser().getEmail(), s.getSaleNumber());
+				boolean dago = facade.isInWishList(s2.getUser().getEmail(), s.getSaleNumber());
 				toggleWishListButton.setIcon(dago ? filledIcon : emptyIcon);
 			}
 		});
@@ -76,14 +75,14 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		getContentPane().add(toggleWishListButton);
 
 		JButton reportButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.reportButton"));
-		if(facade.hasReported(r.getEmail(),s)) {
+		if(facade.hasReported(s2.getUser().getEmail(),s)) {
 			reportButton.setEnabled(false);
 			reportButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.AlredyReported"));
 		}
 
 		reportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new MakeReportGUI(r.getEmail(), s).setVisible(true);
+				new MakeReportGUI(s2.getUser().getEmail(), s).setVisible(true);
 				dispose();
 			}
 		});
@@ -97,7 +96,7 @@ public class ShowSaleGUIReg extends ShowSaleGUInonReg{
 		showProfButton.setBounds(500, 380, 200, 40);
 		showProfButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a = new ShowOtherProfileGUI(r);
+				JFrame a = new ShowOtherProfileGUI(s2.getUser());
 				a.setVisible(true);			}
 		});
 

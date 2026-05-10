@@ -60,7 +60,6 @@ public class QuerySaleGUI extends JFrame {
 		this.saleType = saleType;
 
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
-		Registered r =facade.getRegistered(currentUserMail);
 		tableProducts.setEnabled(false);
 		thisFrame=this;
 		this.getContentPane().setLayout(null);
@@ -162,14 +161,14 @@ public class QuerySaleGUI extends JFrame {
 							new ShowSaleGUInonReg(s);
 							break;
 						case PUBLISHED_SALES:
-							new ShowSaleGUIReg(r,s,thisFrame);
+							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
 							break;
 						case PURCHASED:
 							Boolean hasOffer = facade.hasReviewed(currentUserMail,s);
 							new ShowSaleGUIBought(currentUserMail,s,hasOffer,thisFrame);
 							break;
 						case WISHLIST:
-							new ShowSaleGUIReg(r,s,thisFrame);
+							new ShowSaleGUIReg(currentUserMail,s,thisFrame);
 							break;
 
 						}
