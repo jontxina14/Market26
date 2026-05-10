@@ -19,7 +19,6 @@ import enums.ReportReason;
 @Entity
 public class Report {
 	
-	@XmlTransient
 	@Id
 	@GeneratedValue
 	private int id;

@@ -18,7 +18,7 @@ import configuration.UtilDate;
 @Entity
 public class Complaint implements Serializable {
 	
-	@XmlTransient
+	
 	@Id
 	@GeneratedValue
 	private int id;

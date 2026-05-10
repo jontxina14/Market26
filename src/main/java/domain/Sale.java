@@ -32,7 +32,6 @@ public class Sale implements Serializable {
 	private float price;
 	private Date pubDate;
 	private String fileName;
-	@XmlIDREF
 	private Registered seller;
 	
 	// 0 salduGabe, 1 salduta TODO saleStatusType era aldatu

@@ -18,7 +18,6 @@ import enums.OfferStatusType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Offer implements Serializable{
-	@XmlTransient
 	@Id
 	@GeneratedValue
 	private int offerId;
@@ -39,7 +38,6 @@ public class Offer implements Serializable{
 	@XmlIDREF
 	@OneToOne
 	private Registered registered;
-	@XmlIDREF
 	@OneToOne
 	private Request request;
 	
