@@ -33,7 +33,7 @@ public class Registered extends User implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Sale> wishList = new ArrayList<>();
-
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Sale> bought = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class Registered extends User implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Report> reports = new ArrayList<>();
-	
+	@XmlIDREF
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Request> requests = new ArrayList<>();
 	

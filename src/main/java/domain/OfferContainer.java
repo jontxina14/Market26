@@ -8,21 +8,21 @@ public class OfferContainer {
 
     private Offer offer;
     private Request request;
-    //private Registered registered;
+    private Registered registered;
 
     public OfferContainer(Offer o) {
         this.offer = o;
         this.request = o.getRequest();
-       // this.registered = o.getRegistered();
+        this.registered = o.getRegistered();
     }
 
     public OfferContainer() {
         offer = null;
         request = null;
-     //   registered = null;
+        registered = null;
     }
 
     public Offer getOffer() { return offer; }
     public Request getRequest() { return request; }
-   // public Registered getRegistered() { return registered; }
+   public Registered getRegistered() { return registered; }
 }

@@ -51,7 +51,6 @@ public class ShowOfferGUI extends JFrame {
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("ShowOfferGUI.Name"));
 		
 		BLFacade facade = MainGUInonReg.getBusinessLogic();
-		Registered r= facade.getRegistered(requesterEmail);
 		List<String> status;
 		status=Utils.getStatus();
 		
@@ -62,7 +61,7 @@ public class ShowOfferGUI extends JFrame {
 			);
 
 		fieldUser.setText(
-			    r.getEmail() != null ? r.getEmail() : ""
+			    offer.getRegistered().getEmail() != null ? offer.getRegistered().getEmail(): ""
 			);
 
 		fieldPrice.setText(String.valueOf(offer.getOffer().getPrice()));
