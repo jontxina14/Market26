@@ -99,11 +99,12 @@ public class QueryOfferGUI extends JFrame {
 
 
 		//TODO
-		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
-		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale");
+		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QueryOfferGUI.Offers");
+		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QueryOfferGUI.NoOffers");
 
 
 		jButtonSearch.addActionListener(e -> refreshQuery());
+		refreshQuery();
 
 
 		tableProducts.addMouseListener(new MouseAdapter() {

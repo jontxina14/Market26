@@ -99,8 +99,8 @@ public class QueryRequestGUI extends JFrame {
 		
 	
 		//TODO
-		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
-		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.NoOnSale");
+		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QueryRequestGUI.Request");
+		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QueryRequestGUI.NoRequest");
 
 
 		jButtonSearch.addActionListener(e -> refreshQuery());

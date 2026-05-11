@@ -99,8 +99,8 @@ public class QueryReviewGUI extends JFrame {
 		getContentPane().add(jButtonSearch);
 
 
-		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.OnSale");
-		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QueryReviews.Empty");
+		QueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QueryReviews.Review");
+		emptyQueryMessagge = ResourceBundle.getBundle("Etiquetas").getString("QueryReviews.NoReview");
 
 
 		jButtonSearch.addActionListener(e -> refreshQuery());

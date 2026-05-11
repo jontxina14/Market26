@@ -503,44 +503,38 @@ public class DataAccess  {
 			return false;
 		}
 	}
+	
 	public boolean buySale(String mail, ArrayList<Integer> saleNumbers) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
 		Registered buyer = db.find(Registered.class, mail);
 		if (buyer == null) return false;
 
-
 		ArrayList<Sale> sales = new ArrayList<Sale>();
 		Sale first = db.find(Sale.class, saleNumbers.get(0));
 		if(first == null) {
-			//db.getTransaction().rollback();
 			return false;
 		}
 
-
 		sales.add(first);
-
-
 		float totalPrize = first.getPrice();
 		Registered seller = first.getSeller();
 
 		int i = 1;
 		while(i < saleNumbers.size()) {
 			Sale s = db.find(Sale.class, saleNumbers.get(i));
-			if(s == null || seller != s.getSeller()) return false;
+			if(s == null || seller != s.getSeller()) 
+				return false;
 			sales.add(s);
 			totalPrize += s.getPrice();
 			i++;
 		}
 
-		if (totalPrize > buyer.getBalance()) {
-			//db.getTransaction().rollback();
+		if (totalPrize > buyer.getBalance()) 
 			throw new NotEnoughMoneyException();
-		}
-
-		for(Sale sale : sales) {
+		
+		for(Sale sale : sales) 
 			sale.setSaleStatus(SaleStatusType.BOUGHT);
-		}
-
+		
 		double newBuyerBalance = buyer.getBalance()-totalPrize;
 		buyer.addToBought(sales);
 		buyer.setBalance(newBuyerBalance);
@@ -554,7 +548,6 @@ public class DataAccess  {
 		cleanWishLists(sales);
 
 		db.getTransaction().commit();
-
 
 		return true;
 
