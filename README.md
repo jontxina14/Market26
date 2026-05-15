@@ -8,24 +8,19 @@ Tadekideak:
 
 Implementatutako erabilpen kasuak.
 
-* Buy (Aldatu)
-* Report a sale
-* Make a complaint
-* Manage Reports
-* Manage Complaints
-* Manage Money
-* Show Movements
-* Show Profile
+* Buy (Aldatu) --> Erosketa anitzak sartu
+* Make a review
+* Make a request
+* Make an offer
 
 Internalizazioa: BAI
 
 Izandako arazo nagusienak:
 
-* Window builder-arekin arazo bat izan genuen. Klase batzuetan herentzia implementatzean, eraikitzailearekin arazo bat ematen digu GUI-a aurreikustaraztean.
-* Web zerbitzua implentatzean, erlazio zirkularrak arazoak ematzen zizkigun eta containerrak sortu behar izan ditugu null pointer ekiditeko.
+  * Window builder-arekin arazo bat izan genuen. Produktu batzuek ez zuten argazkirik, baina GUI batean argazkia jartzeko lekua zegoen. Arazoa izan genuen ez ginelako gogoratzen eta botoi berri batzuk jartzean agarzkiaren azpian egiten zen eta GUIean erditik moztuta ikusten ziren.
 
-Erabilitako orduak: +-50
+Erabilitako orduak: +-40
 
-Bideoaren link-a: https://youtu.be/OiBspvtbhcU
+Bideoaren link-a: https://youtu.be/6EalGI3ohs0
 
 GitHub-eko direktorioa: https://github.com/jontxina14/Market26.git
