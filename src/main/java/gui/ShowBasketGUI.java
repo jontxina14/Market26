@@ -94,8 +94,8 @@ public class ShowBasketGUI extends JFrame {
 
 				try{
 					facade.buySale(currentMail, numbBasket);
-					basket.clear();
 					dispose();
+					parent.dispose();
 				}catch (NotEnoughMoneyException ex){
 					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
 				}

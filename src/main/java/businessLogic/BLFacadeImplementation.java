@@ -238,19 +238,13 @@ public class BLFacadeImplementation  implements BLFacade {
 		return null;
 	}
 
-	@WebMethod public Registered isRegistered(String mail, String pass){
+	@WebMethod public boolean isRegistered(String mail){
 		dbManager.open();
-		Registered b = dbManager.isRegistered(mail,pass);
+		boolean b = dbManager.isRegistered(mail);
 		dbManager.close();
 		return b;
 	}
 
-	@WebMethod public Admin isAdmin(String mail, String pass){
-		dbManager.open();
-		Admin a = dbManager.isAdmin(mail,pass);
-		dbManager.close();
-		return a;
-	}
 	@WebMethod public User isLogin(String mail, String pass){
 		dbManager.open();
 		User a = dbManager.isLogin(mail,pass);

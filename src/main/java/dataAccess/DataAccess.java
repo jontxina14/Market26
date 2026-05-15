@@ -340,8 +340,6 @@ public class DataAccess  {
 				offers.add(o);
 			}
 		}
-		//TODO
-		//offers.sort();
 
 		return offers;
 
@@ -435,42 +433,15 @@ public class DataAccess  {
 	}
 
 
-	public Registered isRegistered(String email, String pass) {
-		if(pass.isEmpty()) {
-			TypedQuery<Registered> query = db.createQuery(
-					"SELECT s FROM Registered s WHERE s.email = ?1",
-					Registered.class
-					);
-			query.setParameter(1, email);
-
-			//@Id-aren gatik bilatzen ari garenez, elementu bakarra dago 0 posizioan
-			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
-
-		}else {
-			TypedQuery<Registered> query = db.createQuery(
-					"SELECT s FROM Registered s WHERE s.email = ?1 AND s.pass = ?2",
-					Registered.class
-					);
-
-			query.setParameter(1, email);
-			query.setParameter(2, pass);
-
-			return query.getResultList().isEmpty()? null: query.getResultList().get(0);
-		}
-	}
-
-	public Admin isAdmin(String email, String pass) {
-		TypedQuery<Admin> query = db.createQuery(
-				"SELECT s FROM Admin s WHERE s.email = ?1 AND s.password = ?2",
-				Admin.class
+	public boolean isRegistered(String email) {
+		TypedQuery<Registered> query = db.createQuery(
+				"SELECT s FROM Registered s WHERE s.email = ?1",
+				Registered.class
 				);
-
 		query.setParameter(1, email);
-		query.setParameter(2, pass);
-
-		return query.getResultList().isEmpty() ? null : query.getResultList().get(0);
-
+		return !query.getResultList().isEmpty();
 	}
+
 
 	public User isLogin(String email, String pass) {
 		TypedQuery<User> query = db.createQuery(
@@ -503,18 +474,19 @@ public class DataAccess  {
 			return false;
 		}
 	}
-	
+
 	public boolean buySale(String mail, ArrayList<Integer> saleNumbers) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
+		
+		//Existitzen badira ==> Egoera aldatu + email-a balidatu + prezioa igo
 		Registered buyer = db.find(Registered.class, mail);
-		if (buyer == null) return false;
-
 		ArrayList<Sale> sales = new ArrayList<Sale>();
 		Sale first = db.find(Sale.class, saleNumbers.get(0));
-		if(first == null) {
+		if(first == null || buyer == null) {
+			db.getTransaction().rollback();
 			return false;
 		}
-
+		first.setSaleStatus(SaleStatusType.BOUGHT);
 		sales.add(first);
 		float totalPrize = first.getPrice();
 		Registered seller = first.getSeller();
@@ -522,19 +494,21 @@ public class DataAccess  {
 		int i = 1;
 		while(i < saleNumbers.size()) {
 			Sale s = db.find(Sale.class, saleNumbers.get(i));
-			if(s == null || seller != s.getSeller()) 
+			if(s == null || seller != s.getSeller()) {
+				db.getTransaction().rollback();
 				return false;
+			}
+			s.setSaleStatus(SaleStatusType.BOUGHT);
 			sales.add(s);
 			totalPrize += s.getPrice();
 			i++;
 		}
 
-		if (totalPrize > buyer.getBalance()) 
+		if (totalPrize > buyer.getBalance()) {
+			db.getTransaction().rollback();
 			throw new NotEnoughMoneyException();
-		
-		for(Sale sale : sales) 
-			sale.setSaleStatus(SaleStatusType.BOUGHT);
-		
+		}
+
 		double newBuyerBalance = buyer.getBalance()-totalPrize;
 		buyer.addToBought(sales);
 		buyer.setBalance(newBuyerBalance);
@@ -548,7 +522,6 @@ public class DataAccess  {
 		cleanWishLists(sales);
 
 		db.getTransaction().commit();
-
 		return true;
 
 	}
@@ -682,7 +655,7 @@ public class DataAccess  {
 	public void declineReport(int reportID) {
 		db.getTransaction().begin();
 
-		Report r = db.find(Report.class, reportID); // ✅ BIEN
+		Report r = db.find(Report.class, reportID);
 
 		if (r == null) {
 			db.getTransaction().commit();
@@ -694,7 +667,6 @@ public class DataAccess  {
 
 		if (reg != null) reg.getReports().remove(r);
 		if (sale != null) sale.getReports().remove(r);
-
 		db.remove(r);
 
 		if (sale != null) {
@@ -766,9 +738,6 @@ public class DataAccess  {
 		if (reg== null) return;
 		reg.addOffer(request,status,price,description);
 		db.getTransaction().commit();
-
-
-
 	}
 
 	public void acceptOffer(Offer offer) throws NotEnoughMoneyException{

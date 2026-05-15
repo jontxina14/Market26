@@ -51,6 +51,7 @@ public class LoginGUI extends JFrame {
 		JLabel lblPassword = new JLabel(bundle.getString("LoginGUI.Password"));
 		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
 		textFieldPassword = new JPasswordField();
+		textFieldPassword.setText("123");
 
 		formPanel.add(lblUsername);
 		formPanel.add(textFieldUsername);

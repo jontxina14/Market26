@@ -94,12 +94,7 @@ public class RegisterGUI extends JFrame {
 		btnClose.setFont(new Font("Tahoma", Font.BOLD, 12));
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
-		btnClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				toMainRegGUI();
-			}
-		});
-
+		btnClose.addActionListener(e -> toMainNonRegGUI());
 
 
 		//Error Label
@@ -124,9 +119,9 @@ public class RegisterGUI extends JFrame {
 					isValidPassWord(password);
 					if(username.length() > 0) {
 						if(password.equals(password2)) {
-							if(facade.isRegistered(email, "") == null) {
+							if(!facade.isRegistered(email)) {
 								facade.register(new Registered(textFieldEmail.getText(),username,password));
-								toMainRegGUI();
+								toMainNonRegGUI();
 							}else {
 								errorLabel.setText(bundle.getString("RegisterGUI.UserAlreadyExists"));
 
@@ -171,7 +166,7 @@ public class RegisterGUI extends JFrame {
 		}
 		return true;
 	}
-	public void toMainRegGUI() {
+	public void toMainNonRegGUI() {
 		dispose();
 		MainGUInonReg a = new MainGUInonReg(null);
 		a.setVisible(true);	

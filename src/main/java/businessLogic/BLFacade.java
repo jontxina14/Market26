@@ -100,10 +100,8 @@ public interface BLFacade  {
 	
 	@WebMethod public Image downloadImage(String imageName);
 	
-	@WebMethod public Registered isRegistered(String mail, String pass);
-	
-	@WebMethod public Admin isAdmin(String mail, String pass);
-	
+	@WebMethod public boolean isRegistered(String mail);
+		
 	@WebMethod public User isLogin(String mail, String pass);
 
 	@WebMethod public void register(Registered seller);
@@ -149,7 +147,5 @@ public interface BLFacade  {
 	@WebMethod public void makeReview(String currentUserMail, Sale sale, int rating, String desc);
 
 	@WebMethod public boolean hasReviewed(String currentUserMail, Sale s);
-
-
-
+	
 }
